@@ -19,11 +19,11 @@ module.exports = {
       },
       extends: [
         "eslint:recommended",
-        "plugin:@typescript-eslint/strict",
-        "plugin:react/strict",
-        "plugin:react-hooks/strict",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
         "plugin:jsx-a11y/strict",
-        "plugin:prettier/strict",
+        "plugin:prettier/recommended",
       ],
       parserOptions: {
         project: ["./tsconfig.json"], // Specify it only for TypeScript files
