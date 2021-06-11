@@ -39,7 +39,7 @@ module.exports = {
             allowConciseArrowFunctionExpressionsStartingWithVoid: true,
           },
         ],
-        "prettier/prettier": ["error", {}, { usePrettierrc: true }],
+        "prettier/prettier": ["warn", {}, { usePrettierrc: true }],
         "jsx-a11y/anchor-is-valid": "off",
         "jsx-a11y/label-has-for": 0,
         "jsx-a11y/click-events-have-key-events": 0,
