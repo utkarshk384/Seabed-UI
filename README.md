@@ -1,9 +1,12 @@
 # Things to change
 
 1. Project name in `package.json`
-2. a. Remove `postcss.config.js`, `tailwind.config.js` and `/styles/tailwind.scss` if your not using tailwindcss in your project
-<br />
-b. Remove `@use "tailwind";` line from `main.scss` in `"/styles/main.scss"`
+2. If your not using tailwindcss in your project then: 
+
+    a. Remove `postcss.config.js`, `tailwind.config.js` and `/styles/tailwind.scss`
+    
+    b. Remove `@use "tailwind";` line from `main.scss` in `"/styles/main.scss"`
+
 ## Add tailwind css
 
 First install the required packages 
