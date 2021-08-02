@@ -1,0 +1,53 @@
+@use "sass:list";
+@use "../styles/functions" as *;
+
+$sizes: ["xs", "sm", "md", "lg", "xl", "2xl"];
+
+
+.btn-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn{
+    position: relative;
+    border: none;
+    border-radius: var(--sbu-border-radius);
+}
+
+
+///Add proper padding for the button
+@for $i from 1 through 5{
+    .btn-#{list.nth($sizes, $i)}{
+        padding: #{$i * 0.25}rem #{($i * 0.25) + 0.25}rem; 
+    }
+
+}
+
+.btn-solid{
+    background: vars(--sbu-primary);
+
+    @supports (hover:hover){
+        &:hover{
+            background: rgba(var(--sbu-primary), 0.75);
+        }
+    } 
+}
+ 
+.btn-outline{
+    outline: 2px solid vars(--sbu-primary);
+}
+ 
+.btn-ghost{
+    background: vars(--sbu-primary);
+}
+ 
+.btn-solid{
+    background: vars(--sbu-primary);
+}
+ 
+.btn-solid{
+    background: vars(--sbu-primary);
+}
+ 

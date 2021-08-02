@@ -1,31 +1,34 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "typeRoots": ["node_modules/@types", "types"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "experimentalDecorators": true,
-    "noEmit": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "strictPropertyInitialization": false,
+    "noEmit": true,
+    "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": {}
+    "strictPropertyInitialization": false,
+    "noImplicitAny": true,
+    "paths": {
+      "@seabedUI/*": ["packages/*"],
+    }
   },
   "include": [
-    "next-env.d.ts",
-    "html.d.ts",
-    "graphql.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "sts.config.js"
-  ],
-  "exclude": ["node_modules", "types/**/*"]
+    ".storybook/*.tsx", 
+    "packages"  
+  ]
 }

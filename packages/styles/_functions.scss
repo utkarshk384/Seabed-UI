@@ -1,0 +1,12 @@
+@function Hex2Rgb($color){
+    $red: color.red($color);
+    $green: color.green($color);
+    $blue: color.blue($color);
+
+
+    @return [$red, $green, $blue];
+}
+
+@function vars($color){
+    @return rgb(var(#{$color}));
+}
