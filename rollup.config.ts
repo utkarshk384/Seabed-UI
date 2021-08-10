@@ -1,24 +1,32 @@
 import path from "path"
 import commonjs from "@rollup/plugin-commonjs"
-import { nodeResolve } from "@rollup/plugin-node-resolve"
+import nodeResolve from "@rollup/plugin-node-resolve"
 import typescript from "@rollup/plugin-typescript"
 import css from "rollup-plugin-import-css";
 
-const PACKAGE_ROOT_PATH = process.cwd()
+/* 
+	******
+	Consts
+	******
+*/
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const pkgJSON = require(path.join(PACKAGE_ROOT_PATH, "./package.json"))
+const PACKAGE_ROOT_PATH = process.cwd() //Current package root
+const pkgJSON = require(path.join(PACKAGE_ROOT_PATH, "./package.json")) // `package.json` of current package
+const ENV = process.env.BUILD //Current environment 
 
+
+/* 
+	*******
+	Helpers
+	*******
+*/
+
+/* Get dir for current folder */
 const dir = {
 	module: pkgJSON.module.split("/"),
 	main: pkgJSON.main.split("/"),
 }
-
-const dep = [];
-const devDep = []
-
-if(pkgJSON.devDependencies) Object.keys(pkgJSON.devDependencies).forEach(key => dep.push(key))
-if(pkgJSON.dependencies) Object.keys(pkgJSON.dependencies).forEach(key => dep.push(key))
 
 for (const key in dir) {
 	dir[key].pop()
@@ -26,33 +34,47 @@ for (const key in dir) {
 	dir[key] = dir[key].join("/")
 }
 
+/* External Dependencies from `package.json` */
+const pkgDep = [];
+
+if(pkgJSON.devDependencies) Object.keys(pkgJSON.devDependencies).forEach(key => pkgDep.push(key))
+if(pkgJSON.dependencies) Object.keys(pkgJSON.dependencies).forEach(key => pkgDep.push(key))
+
+/* Extensions */
+const extensions = [".ts", ".tsx"]
+
+
+/* 
+	*************
+	Config Options
+	*************
+*/
+
+/* Output */
 const output = [
-	{
+	{	
 		dir: dir.main,
-		preserveModules: true,
-		preserveModulesRoot: "src",
-		format: "cjs",
-		sourcemap: true,
-		exports: "named",
 		name: pkgJSON.name,
+		format: "cjs",
+		exports: "named",
+		sourcemap: true,
+		preserveModules: true,
+		preserveModulesRoot: "src",		
+
 	},
 	{
 		dir: dir.module,
-		preserveModules: true,
-		preserveModulesRoot: "src",
-		format: "esm",
-		sourcemap: true,
-		exports: "named",
 		name: pkgJSON.name,
-	},
+		format: "esm",
+		exports: "named",
+		sourcemap: true,
+		preserveModules: true,
+		preserveModulesRoot: "src",		
+	}
 ]
 
-const watch = {
-	include: "../**"
-}
 
-const extensions = [".ts", ".tsx"]
-
+/* Plugins */
 const plugins = [
 	typescript({ tsconfig: "./tsconfig.json" }),
 	nodeResolve({
@@ -66,27 +88,59 @@ const plugins = [
 	commonjs(),
 ]
 
+
+/* External Dependencies */
 const external = [
-	...dep,
-	...devDep,
-	"react", 					//		 For 
-	"react-dom",				//		 avoiding 
-	"@linaria/core",			//		 node_modules 
-	"@linaria/react",			//		 folder 
-	"tslib",					//		 in 
-	"@emotion/is-prop-valid",	//		 the
-	"@emotion/memoize",			//		 final
-	"lodash",					//		 built	
-	"walkjs",					//		 bundle
-	"react/jsx-runtime", 		//		 For `assets` package
+	//For avoiding node_modules folder in the final built bundle for `assets` package
+    "react", 					
+	"react-dom",				
+	"@linaria/core",			
+	"@linaria/react",			
+	"tslib",					
+	"@emotion/is-prop-valid",	
+	"@emotion/memoize",			
+	"lodash",					
+	"walkjs",					
+	"react/jsx-runtime", 		
 ]
 
+
+/* Watch */
+const watch = {
+	include: "./src"
+}
+
+
+/* 
+	Main Config
+*/
 const config = {
 	input: path.join(PACKAGE_ROOT_PATH, "./src/index.ts"),
 	output,
 	plugins,
-	watch,
 	external,
+	watch,
 }
+
+
+/* 
+	ENV: Development
+*/
+
+if(ENV === "development"){
+	console.log("Hit")
+	config.output[0].dir = path.join(PACKAGE_ROOT_PATH, "../../.build/cjs")
+	config.output[1].dir = path.join(PACKAGE_ROOT_PATH, "../../.build/esm")
+}
+
+
+/* 
+	ENV: Production
+*/
+if(ENV === "production"){
+	delete config.watch
+	config.external = [...config.external, ...pkgDep]
+}
+
 
 export default config

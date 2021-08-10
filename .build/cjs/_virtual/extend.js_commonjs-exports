@@ -1,0 +1,8 @@
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var extend = {};
+
+exports.__exports = extend;
+//# sourceMappingURL=extend.js_commonjs-exports.map

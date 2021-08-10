@@ -1,0 +1,4 @@
+var sizes = {};
+
+export { sizes as __exports };
+//# sourceMappingURL=sizes.js_commonjs-exports.map

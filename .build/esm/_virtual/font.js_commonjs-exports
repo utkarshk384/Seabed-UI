@@ -1,0 +1,4 @@
+var font = {};
+
+export { font as __exports };
+//# sourceMappingURL=font.js_commonjs-exports.map

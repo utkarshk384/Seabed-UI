@@ -40,7 +40,7 @@
     "prebuild": "rimraf dist",
     "build": "run-p build:*",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
-    "watch": "yarn rollup -c=../../rollup.config.ts --watch"
+    "watch": "yarn rollup -c=../../rollup.config.ts --watch --environment BUILD:development && rimraf ../../.build"
   },
   "devDependencies": {
 

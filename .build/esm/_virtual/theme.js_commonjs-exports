@@ -1,0 +1,4 @@
+var theme = {};
+
+export { theme as __exports };
+//# sourceMappingURL=theme.js_commonjs-exports.map

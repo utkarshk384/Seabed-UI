@@ -32,9 +32,9 @@
     "test": "echo \"Error: run tests from root\" && exit 1",
     "prebuild": "rimraf dist",
     "build": "run-p build:*",
-    "build:module": "yarn rollup -c ../../rollup.config.ts",
+    "build:module": "yarn rollup -c=../../rollup.config.ts --environment INCLUDE_DEPS,BUILD:production",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
-    "watch": "yarn rollup -c=../../rollup.config.ts --watch"
+    "watch": "yarn rollup -c=../../rollup.config.ts --watch --environment BUILD:development && rimraf ../../.build"
   },
   "devDependencies": {
 

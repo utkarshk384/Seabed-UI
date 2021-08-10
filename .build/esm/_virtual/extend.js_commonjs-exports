@@ -1,0 +1,4 @@
+var extend = {};
+
+export { extend as __exports };
+//# sourceMappingURL=extend.js_commonjs-exports.map

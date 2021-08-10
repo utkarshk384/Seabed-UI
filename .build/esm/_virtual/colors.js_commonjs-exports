@@ -1,0 +1,4 @@
+var colors = {};
+
+export { colors as __exports };
+//# sourceMappingURL=colors.js_commonjs-exports.map

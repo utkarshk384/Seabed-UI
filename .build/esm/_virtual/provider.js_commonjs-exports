@@ -1,0 +1,4 @@
+var provider = {};
+
+export { provider as __exports };
+//# sourceMappingURL=provider.js_commonjs-exports.map

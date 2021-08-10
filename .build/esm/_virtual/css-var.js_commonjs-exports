@@ -1,0 +1,4 @@
+var cssVar = {};
+
+export { cssVar as __exports };
+//# sourceMappingURL=css-var.js_commonjs-exports.map

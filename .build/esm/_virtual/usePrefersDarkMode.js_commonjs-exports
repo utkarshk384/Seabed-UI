@@ -1,0 +1,4 @@
+var usePrefersDarkMode = {};
+
+export { usePrefersDarkMode as __exports };
+//# sourceMappingURL=usePrefersDarkMode.js_commonjs-exports.map
