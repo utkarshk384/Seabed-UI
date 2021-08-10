@@ -1,0 +1,48 @@
+{
+  "name": "@seabedui/types",
+  "version": "0.0.1",
+  "description": "Typescript types for @SeabedUI Library",
+  "keywords": [
+    "typescript",
+    "types",
+    "@seabedui/types",
+    "@seabedui",
+    "seabedui"
+  ],
+  "author": "Utkarsh Kumar <utkarshk384@gmail.com>",
+  "license": "MIT",
+  "main": "dist/index.d.ts",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "node": "./dist/index.d.ts",
+      "require": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/Utkarsh-Kumar384/Seabed-UI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Utkarsh-Kumar384/Seabed-UI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Utkarsh-Kumar384/Seabed-UI/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com",
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "prebuild": "rimraf dist",
+    "build": "run-p build:*",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
+    "watch": "yarn rollup -c=../../rollup.config.ts --watch"
+  },
+  "devDependencies": {
+
+  }
+}

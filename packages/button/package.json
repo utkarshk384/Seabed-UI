@@ -1,0 +1,53 @@
+{
+  "name": "@seabedui/button",
+  "version": "0.0.1",
+  "description": "Button components for @SeabedUI Component Library",
+  "keywords": [
+    "button",
+    "react",
+    "components",
+    "seabedui"
+  ],
+  "author": "Utkarsh Kumar <utkarshk384@gmail.com>",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "typings": "dist/types/index.d.ts",
+  "exports": {
+    "node": "./dist/cjs/index.js",
+    "require": "./dist/esm/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/Utkarsh-Kumar384/Seabed-UI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Utkarsh-Kumar384/Seabed-UI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Utkarsh-Kumar384/Seabed-UI/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "prebuild": "rimraf dist",
+    "build": "run-p build:*",
+    "build:module": "yarn rollup -c ../../rollup.config.ts",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
+    "watch": "yarn rollup -c=../../rollup.config.ts --watch"
+  },
+  "dependencies": {
+    "@seabedui/assets": "^0.0.1",
+    "@seabedui/core": "^0.0.1",
+    "@seabedui/theme": "^0.0.1",
+    "@seabedui/utils": "^0.0.1"
+  },
+  "devDependencies": {
+    "@seabedui/types": "^0.0.1"
+  }
+}

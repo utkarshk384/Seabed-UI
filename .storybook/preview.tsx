@@ -1,15 +1,25 @@
-import "@seabedUI/styles/index.scss"
-import "@seabedUI/styles/normalize.scss"
 
-import { useEffect } from "react"
-
-import {ExtendTheme, Colors} from "@seabedUI/core"
-import {SeabedProvider} from "@seabedUI/theme"
-import {useDarkMode as useDark} from "@seabedUI/hooks"
 
 import {useDarkMode} from "storybook-dark-mode"
 
+import { themes } from '@storybook/theming'
+import { Colors } from "../packages/core"
+import { ExtendTheme, SeabedProvider} from "../packages/theme"
+
+
 export const parameters = {
+  darkMode: {
+    dark: {
+      ...themes.dark,          
+      appContentBg: `rgb${Colors.gray[800]}`, 
+      barBg: `rgb${Colors.gray[800]}`
+    },
+    light: {
+      ...themes.normal,
+      appContentBg: `rgb${Colors.gray[800]}`, 
+      barBg: `rgb${Colors.gray[800]}`
+    }
+  },
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
     matchers: {
@@ -20,21 +30,47 @@ export const parameters = {
 }
 
 
-const LightTheme = ExtendTheme({colorMode: "light", colors: {light: {primary: Colors.gray[100], secondary: Colors.gray[700], accent: Colors.teal[400], }}})
-const DarkTheme = ExtendTheme({colorMode: "dark", colors: {dark: {primary: Colors.gray[700], secondary: Colors.gray[100], accent: Colors.teal[400], }}})
+const LightTheme = ExtendTheme({
+  colorScheme: "light", 
+  colors: {
+    light: {
+      background: {
+        primary: Colors.white,
+        secondary: Colors.gray[200]
+      },
+      text: {
+        primary: Colors.gray[900],
+        secondary: Colors.gray[800]
+      },
+      accent: Colors.blue[500],
+      muted: Colors.gray[400]
+    },
+  }
+})
+const DarkTheme = ExtendTheme({
+  colorScheme: "dark", 
+  colors: {
+    dark: {
+      background: {
+        primary: Colors.gray[800],
+        secondary: Colors.gray[900]
+      },
+      text: {
+        primary: Colors.white,
+        secondary: Colors.gray[200]
+      },
+      accent: Colors.blue[500],
+      muted: Colors.gray[400]
+    },
+  }
+})
 
 
 const ThemeWrapper:React.FC = (props) => {
-  const [_, setDark] = useDark()
   const isDark = useDarkMode()
 
-  useEffect(() => {
 
-    if(isDark) setDark(true)
-    else setDark(false)
-  }, [isDark])
-
-  return (<SeabedProvider theme={isDark ? DarkTheme : LightTheme}>{props.children}</SeabedProvider>)
+  return (<SeabedProvider theme={DarkTheme}>{props.children}</SeabedProvider>)
 }
 
 export const decorators = [(Story:React.FC) => (<ThemeWrapper><Story /></ThemeWrapper>),]

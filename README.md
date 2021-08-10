@@ -1,46 +1,90 @@
-# Getting Started with Create React App
+# Seabed UI ( Extremely early stage of build )
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React Component library made with build-time css-in-js using [@linaria](https://github.com/callstack/linaria).
 
-## Available Scripts
+<br/>
+<br/>
 
-In the project directory, you can run:
+## 🐳 &nbsp; Features  
+---
 
-### `yarn start`
+1. No runtime css using javascript.
+2. Uses css variables for dynamic styling.
+3. Acessible components based on WAI-ARIA standards.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<br/>
+<br/>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🐟 &nbsp; Installation 
+---
 
-### `yarn test`
+```sh
+# javascript
+yarn add @seabedui/core @seabedui/theme
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# typescript
+yarn add @seabedui/core @seabedui/theme @seabedui/types
+```
+or 
+```sh
+# javascript
+npm install --save @seabedui/core @seabedui/theme
 
-### `yarn build`
+# typescript
+npm install --save @seabedui/core @seabedui/theme @seabedui/types
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🐬 &nbsp; Usage 
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Inorder to start using the components, the following steps should be taken:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Wrap the areas where you want to use the components with `SeabedProvider` under the `@seabedui/theme` package.
 
-### `yarn eject`
+```typescript
+    import { SeabedProvider, ExtendTheme } from "@seabedui/theme"
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    import type { ThemeType } from "@seabedui/types" 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    const WrapperComponent = ({ children }) => {
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+        const theme:ThemeType = ExtendTheme({}) // `ThemeType` is used for typescript users
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+        return (
+        <SeabedProvider theme={theme}> 
+            {children} 
+        </SeabedProvider>
+        )
+    }
+```
 
-## Learn More
+<br/>
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+2. Now your ready to use the component library by importing components from `@seabedui/core` as a one place import or from `@seabedui/{component-name}.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br/>
+
+### Example
+```typescript
+
+    import { Button } from "@seabedui/core" // One place import
+    import { Button } from "@seabedui/button" //Component based import
+
+    const Example = (props) => {
+
+        return (
+        <Button variant="solid"> 
+            Seabed UI Button 
+        </Button>
+        )
+    }
+```
+<br/>
+<br/>
+<br/>
+
+## 🐋 &nbsp; Inspiration
+---
+Since I am a performance driven person, I didn't want to comprimse on loading speeds of websites therefore, leading me to built this component library. 
+
+The project was largely inspired by the folks at [@chakra-ui](https://github.com/chakra-ui/chakra-ui). Props to them for creating such an amazing library. 

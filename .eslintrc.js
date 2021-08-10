@@ -4,12 +4,16 @@ module.exports = {
     node: true,
     es6: true,
   },
+  parserOptions: {
+    "ecmaVersion": 2018,
+    "soruceType": "module",
+  },    
   ignorePatterns: ["node_modules/*", ".next/*", ".out/*", "!.prettierrc.js"],
   plugins: ["prettier", "@typescript-eslint", "jsx-a11y"],
   extends: ["eslint:recommended"],
   overrides: [
     {
-      files: ["*.ts", "*.tsx"], // Your TypeScript files extension
+      files: ["*.ts", "*.tsx"],
       parser: "@typescript-eslint/parser",
       settings: { react: { version: "detect" } },
       env: {

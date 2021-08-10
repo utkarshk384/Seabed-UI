@@ -1,0 +1,47 @@
+{
+  "name": "@seabedui/core",
+  "version": "0.0.1",
+  "description": "Core packages for @SeabedUI Library",
+  "keywords": [
+    "core",
+    "main",
+    "seabedui"
+  ],
+  "author": "Utkarsh Kumar <utkarshk384@gmail.com>",
+  "license": "MIT",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "typings": "dist/types/index.d.ts",
+  "exports": {
+    "@seabedui/core/styles/normalize.css": "./dist/esm/normalize.css",
+    "node": "./dist/cjs/index.js",
+    "require": "./dist/esm/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/Utkarsh-Kumar384/Seabed-UI",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Utkarsh-Kumar384/Seabed-UI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Utkarsh-Kumar384/Seabed-UI/issues"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.com",
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "prebuild": "rimraf dist",
+    "build": "run-p build:*",
+    "build:module": "yarn rollup -c ../../rollup.config.ts",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
+    "watch": "yarn rollup -c=../../rollup.config.ts --watch"
+  },
+  "devDependencies": {
+    "@seabedui/types": "^0.0.1"
+  }
+}
