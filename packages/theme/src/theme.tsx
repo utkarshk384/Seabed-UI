@@ -1,17 +1,23 @@
 import _ from "lodash"
-
-import { DefaultFont, Theme } from "./defaults"
+import { render, RenderOptions, RenderResult } from "@testing-library/react"
 import {
 	CssVar,
 	ParseBorderRadiusSize,
-	PREFIX,
 	ResolveColor,
 	SetProperty,
 	ThrowError,
 } from "@seabedui/utils"
 
+import { SeabedProvider } from "./provider"
+import { DefaultFont, Theme } from "./defaults"
+
 import type { DefaultThemeType, Dict, SchemeType, ThemeType } from "@seabedui/types"
 
+/**
+ * @param { ThemeType | DefaultThemeType } [theme] - The theme object to extend from
+ * @return {ThemeType} - The extended theme object
+ * A function that extends the user theme with the default theme.
+ */
 export function ExtendTheme(theme?: ThemeType | DefaultThemeType): ThemeType {
 	if (!theme) theme = Theme as ThemeType
 	const defaultTheme: DefaultThemeType & Dict<unknown> = Theme
@@ -22,14 +28,26 @@ export function ExtendTheme(theme?: ThemeType | DefaultThemeType): ThemeType {
 	return _.mergeWith(defaultTheme, theme)
 }
 
+/**
+ *
+ * @param { DefaultThemeType } theme - The theme object
+ * @param { boolean } isDark - A flag to indicate the current color scheme
+ * @returns { ThemeType } - The theme object
+ * A function that sets the current theme to the `__colors` in the @type { DefaultThemeType }.
+ */
 export function SetTheme(theme: DefaultThemeType, isDark: boolean): ThemeType {
 	if (isDark) theme.__colors = theme.colors.dark
-	else theme.__colors = theme.colors.dark
+	else theme.__colors = theme.colors.light
 
 	return theme as ThemeType
 }
 
-export function ApplyTheme(theme: DefaultThemeType): void {
+/**
+ *
+ * @param { DefaultThemeType } theme - The theme object
+ * A helper function that helps in applying default styles
+ */
+export function ApplyDefaults(theme: DefaultThemeType): void {
 	if (typeof document === "undefined")
 		throw new Error("Window is undefined. Try calling the function inside of a useEffect")
 
@@ -43,6 +61,12 @@ export function ApplyTheme(theme: DefaultThemeType): void {
 		DefaultFont()
 }
 
+/**
+ *
+ * @param { DefaultThemeType } theme -  The theme object
+ * @returns { DefaultThemeType } - The final theme object
+ * A fucntion that normails the theme object.
+ */
 export function NormalizeTheme(theme: DefaultThemeType): DefaultThemeType {
 	//Convert border Radius to `rem` if it's not done
 	theme.borderRadius = ParseBorderRadiusSize(theme.borderRadius as string)
@@ -64,32 +88,50 @@ export function NormalizeTheme(theme: DefaultThemeType): DefaultThemeType {
 	return theme
 }
 
+/**
+ * @template T
+ * @param { T extends DefaultThemeType } theme -  A generic theme object
+ * @returns { T } - The generic theme object
+ * A helper function that helps in normalizing the theme object
+ */
 const normalizeStateColors = <T extends DefaultThemeType>(theme: T): T => {
 	for (const key in theme.__colors.states) {
 		const color = ResolveColor(theme.__colors.states[key] as SchemeType, theme)
-		if (color.err) throw ThrowError(color.err, "Couldn't normalize theme object")
+		if (color.err) throw ThrowError(color.err, " Couldn't normalize theme object.")
 		theme.__colors.states[key] = color.color
 	}
 
 	return theme
 }
 
+/**
+ *
+ * @param { DefaultThemeType } theme - The final theme object
+ * @returns { DefaultThemeType } - The final theme object
+ * A function that makes css variable on certain theme properties
+ */
 export const MakeThemeCSSVar = (theme: DefaultThemeType): DefaultThemeType => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const { colorScheme, colors, ...sanitizedTheme } = theme as DefaultThemeType
 	const FontPrefix = ["heading", "body", "code"]
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	CssVar(sanitizedTheme as Dict<any>, (node, root) => {
+	CssVar(sanitizedTheme as Dict<any>, theme.cssPrefix, (node, root) => {
 		if (FontPrefix.includes(node.key as string))
-			SetProperty(`${node.parent?.key}-${node.key}`, node.val, root, PREFIX)
-		else SetProperty(`${node.key}`, node.val, root, PREFIX)
+			SetProperty(`${node.parent?.key}-${node.key}`, node.val, root, theme.cssPrefix)
+		else SetProperty(`${node.key}`, node.val, root, theme.cssPrefix)
 	})
 
 	return theme
 }
 
-export const ApplyThemeColors = (theme: DefaultThemeType, isDark: boolean): void => {
+/**
+ *
+ * @param { DefaultThemeType } theme - The final theme object
+ * @param { boolean } isDark - A flag that indicates current color scheme.
+ * A function that takes the theme colors and makes css variables depending on the current color scheme.
+ */
+export const ApplyDefaultsColors = (theme: DefaultThemeType, isDark: boolean): void => {
 	//set Current Theme Colors in theme object
 	const colors: Dict<string | Dict> = {}
 
@@ -104,14 +146,20 @@ export const ApplyThemeColors = (theme: DefaultThemeType, isDark: boolean): void
 	}
 
 	if (Object.keys(colors).length === 0) throw new Error("Colors couldn't be parsed.")
-	CssVar(colors)
+	CssVar(colors, theme.cssPrefix)
 }
 
-export const DefaultColorsCssVar = (colors: Dict<unknown>): void => {
-	CssVar(colors, (node, root) => {
+/**
+ *
+ * @param { Dict<unknown> } colors - The default color palaette
+ * @param { string } cssPrefix  - The `cssprefix` in `theme.cssPrefix`
+ */
+export const DefaultColorsCssVar = (colors: Dict<unknown>, cssPrefix: string): void => {
+	CssVar(colors, cssPrefix, (node, root) => {
 		const pre = node.parent?.key
 
-		if (pre) SetProperty(`${node.parent?.key}-${node.key}`, node.val, root, PREFIX)
-		else SetProperty(`${node.key}`, node.val, root, PREFIX)
+		if (pre) SetProperty(`${node.parent?.key}-${node.key}`, node.val, root, cssPrefix)
+		else SetProperty(`${node.key}`, node.val, root, cssPrefix)
 	})
 }
+

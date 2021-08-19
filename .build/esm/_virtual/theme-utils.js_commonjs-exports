@@ -1,4 +1,0 @@
-var themeUtils = {};
-
-export { themeUtils as __exports };
-//# sourceMappingURL=theme-utils.js_commonjs-exports.map

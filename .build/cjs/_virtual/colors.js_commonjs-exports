@@ -1,8 +1,0 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var colors = {};
-
-exports.__exports = colors;
-//# sourceMappingURL=colors.js_commonjs-exports.map

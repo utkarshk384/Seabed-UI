@@ -3,13 +3,14 @@ module.exports = {
   env: {
     node: true,
     es6: true,
+    jest: true
   },
   parserOptions: {
     "ecmaVersion": 2018,
     "soruceType": "module",
   },    
-  ignorePatterns: ["node_modules/*", ".next/*", ".out/*", "!.prettierrc.js"],
-  plugins: ["prettier", "@typescript-eslint", "jsx-a11y"],
+  ignorePatterns: ["node_modules/*", ".next/*", ".out/*", "!.prettierrc.js", "rollup.config.ts"],
+  plugins: ["prettier", "@typescript-eslint", "jsx-a11y", "testing-library", "jest-dom"],
   extends: ["eslint:recommended"],
   overrides: [
     {
@@ -22,6 +23,8 @@ module.exports = {
         es6: true,
       },
       extends: [
+        "plugin:jest-dom/recommended",
+        "plugin:testing-library/react",
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",

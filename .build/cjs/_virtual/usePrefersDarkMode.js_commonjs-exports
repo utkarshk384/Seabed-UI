@@ -1,8 +1,0 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var usePrefersDarkMode = {};
-
-exports.__exports = usePrefersDarkMode;
-//# sourceMappingURL=usePrefersDarkMode.js_commonjs-exports.map

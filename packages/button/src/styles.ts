@@ -1,8 +1,6 @@
 import { useMemo } from "react"
-
-import { Colors } from "@seabedui/core"
 import { MemoizedStylesReturnType } from "./types"
-import { classnames, ResolveColor, ThrowError } from "@seabedui/utils"
+import { Colors, classnames, ResolveColor, ThrowError } from "@seabedui/utils"
 import { css } from "@linaria/core"
 
 import type { Dict } from "@seabedui/types"
@@ -43,15 +41,6 @@ const sizes: Dict = {
 	lg: "2rem 4rem",
 	xl: "3rem 6rem",
 }
-
-/* 
-	Button Wrapper Styles
-*/
-export const wrapper = css`
-	display: flex;
-	align-content: center;
-	justify-content: center;
-`
 
 const transitions = css`
 	/* 
@@ -113,7 +102,7 @@ const variants = css`
 
 	/* Disabled */
 	&[data-loading^="true"],
-	&[data-disabled^="true"] {
+	&[disabled^="true"] {
 		background: rgb(var(--disabled));
 		outline: none;
 	}

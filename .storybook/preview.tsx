@@ -1,10 +1,7 @@
-
-
-import {useDarkMode} from "storybook-dark-mode"
-
 import { themes } from '@storybook/theming'
-import { Colors } from "../packages/core"
+import { Colors } from "../packages/utils/src/colors"
 import { ExtendTheme, SeabedProvider} from "../packages/theme"
+import '@storybook/addon-console'
 
 
 export const parameters = {
@@ -30,8 +27,10 @@ export const parameters = {
 }
 
 
-const LightTheme = ExtendTheme({
-  colorScheme: "light", 
+const Theme = ExtendTheme({
+  colorScheme: "both",
+
+  borderRadius: 15,
   colors: {
     light: {
       background: {
@@ -45,11 +44,6 @@ const LightTheme = ExtendTheme({
       accent: Colors.blue[500],
       muted: Colors.gray[400]
     },
-  }
-})
-const DarkTheme = ExtendTheme({
-  colorScheme: "dark", 
-  colors: {
     dark: {
       background: {
         primary: Colors.gray[800],
@@ -61,16 +55,15 @@ const DarkTheme = ExtendTheme({
       },
       accent: Colors.blue[500],
       muted: Colors.gray[400]
-    },
+    }
   }
 })
 
 
 const ThemeWrapper:React.FC = (props) => {
-  const isDark = useDarkMode()
 
 
-  return (<SeabedProvider theme={DarkTheme}>{props.children}</SeabedProvider>)
+  return (<SeabedProvider theme={Theme}>{props.children}</SeabedProvider>)
 }
 
 export const decorators = [(Story:React.FC) => (<ThemeWrapper><Story /></ThemeWrapper>),]

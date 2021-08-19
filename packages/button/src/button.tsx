@@ -3,7 +3,7 @@ import { forwardRef } from "react"
 import { useTheme } from "@seabedui/theme"
 import { styled } from "@linaria/react"
 import { Spinner } from "@seabedui/assets"
-import { wrapper, MemoizedStyles, MemoizedClasses } from "./styles"
+import { MemoizedStyles, MemoizedClasses } from "./styles"
 
 import type { ButtonProps } from "./types"
 import type { DefaultThemeType } from "@seabedui/types"
@@ -13,6 +13,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 		loadingText = "loading",
 		isActive = false,
 		isLoading = false,
+		isDisabled = false,
 		containerWidth = false,
 		size = "md",
 		color = "accent",
@@ -28,32 +29,32 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 	const composedStyles = MemoizedStyles({ size, color, textColor, textSize }, theme)
 	const classNames = MemoizedClasses(className)
 	return (
-		<div className={wrapper}>
-			<StyledButton
-				style={composedStyles}
-				ref={ref}
-				className={classNames}
-				disabled={isLoading || variant === "disabled" ? true : false}
-				data-emphasis={variant}
-				data-active={isActive}
-				aria-busy={isLoading}
-				data-loading={isLoading}
-				data-disabled={variant === "disabled" && true}
-				{...htmlAttributes}
-				containerWidth={containerWidth}
-			>
-				{props.leftIcon && !isLoading && props.leftIcon}
-				{props.loadingIcon ? isLoading && props.loadingIcon : isLoading && <Spinner />}
-				{isLoading ? loadingText : props.children}
-				{props.rightIcon && !isLoading && props.rightIcon}
-			</StyledButton>
-		</div>
+		<StyledButton
+			prefix={theme.cssPrefix}
+			style={composedStyles}
+			ref={ref}
+			className={classNames}
+			disabled={isLoading || (variant === "disabled" && true) || isDisabled}
+			aria-disabled={isLoading || (variant === "disabled" && true) || isDisabled}
+			data-emphasis={variant}
+			data-active={isActive}
+			aria-pressed={isActive}
+			aria-busy={isLoading}
+			data-loading={isLoading}
+			{...htmlAttributes}
+			containerWidth={containerWidth}
+		>
+			{props.leftIcon && !isLoading && props.leftIcon}
+			{props.loadingIcon ? isLoading && props.loadingIcon : isLoading && <Spinner />}
+			{isLoading ? loadingText : props.children}
+			{props.rightIcon && !isLoading && props.rightIcon}
+		</StyledButton>
 	)
 })
 
 Button.displayName = "Button"
 
-const StyledButton = styled.button<ButtonProps>`
+const StyledButton = styled.button<ButtonProps & { prefix: string }>`
 	/* 
 		Base Styles
 	*/
@@ -63,8 +64,8 @@ const StyledButton = styled.button<ButtonProps>`
 	background: transparent;
 	cursor: pointer;
 	border: none;
-	border-radius: var(--sbu-border-radius);
-	font-family: var(--sbu-font-family-heading);
+	border-radius: ${(props) => `var(--${props.prefix}-border-radius)`};
+	font-family: ${(props) => `var(--${props.prefix}-font-family-heading)`};
 	font-size: var(--size);
 
 	/* 

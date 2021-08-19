@@ -1,4 +1,4 @@
-import { Colors } from "@seabedui/core"
+import { Colors } from "@seabedui/utils"
 
 import type { DefaultThemeType } from "@seabedui/types"
 

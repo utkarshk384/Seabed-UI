@@ -1,28 +1,29 @@
-import { createContext, useContext, useEffect, useMemo } from "react"
+import React, { createContext, useContext, useEffect, useMemo } from "react"
 
-import { Colors } from "@seabedui/core"
+import { Colors } from "@seabedui/utils"
 import { useDarkMode } from "@seabedui/hooks"
-// import "@seabedui/core/esm/normalize.css"
 
 import {
 	MakeThemeCSSVar,
 	DefaultColorsCssVar,
-	ApplyThemeColors,
+	ApplyDefaultsColors,
 	NormalizeTheme,
-	ApplyTheme,
+	ApplyDefaults,
+	ExtendTheme,
 	SetTheme,
 } from "./theme"
 import { Theme } from "./defaults"
-import { ExtendTheme } from "./extend"
 
 import type { DefaultThemeType, ThemeType, Component } from "@seabedui/types"
-
-export const SeabedContext = createContext<ThemeType>(Theme as ThemeType)
 
 export type Props = {
 	theme?: ThemeType
 }
 
+/* Seabed Context */
+export const SeabedContext = createContext<ThemeType>(Theme as ThemeType)
+
+/* Seabed Provider */
 export const SeabedProvider: React.FC<Props> = ({ children, theme = Theme }) => {
 	//Hook to determine the color Mode
 	const [isDark] = useDarkMode()
@@ -41,12 +42,12 @@ export const SeabedProvider: React.FC<Props> = ({ children, theme = Theme }) => 
 
 	useEffect(() => {
 		//Set the `__colors` property of the theme
-		ApplyThemeColors(FinalTheme as DefaultThemeType, isDark)
+		ApplyDefaultsColors(FinalTheme as DefaultThemeType, isDark)
 	}, [isDark, FinalTheme])
 
 	useEffect(() => {
 		//Apply required styles to `document`
-		ApplyTheme(FinalTheme as DefaultThemeType)
+		ApplyDefaults(FinalTheme as DefaultThemeType)
 
 		//Normalize theme to remove unecessary theme ExcludeProperties
 		const normalizedTheme = NormalizeTheme(FinalTheme as DefaultThemeType)
@@ -59,12 +60,17 @@ export const SeabedProvider: React.FC<Props> = ({ children, theme = Theme }) => 
 		Make CSS Variables from default colors
 	*/
 	useEffect(() => {
-		DefaultColorsCssVar(Colors)
-	}, [])
+		DefaultColorsCssVar(Colors, theme.cssPrefix as string)
+	}, [theme.cssPrefix])
 
 	return <SeabedContext.Provider value={FinalTheme as ThemeType}>{children}</SeabedContext.Provider>
 }
 
+/**
+ *
+ * @returns { ThemeType }
+ * Custom hook for using the theme with react
+ */
 export const useTheme = (): Readonly<ThemeType> => {
 	const theme = useContext(SeabedContext)
 	if (!theme) throw new Error("`useTheme` can't be used outside of  `<SeabedProvider />`")
@@ -72,6 +78,12 @@ export const useTheme = (): Readonly<ThemeType> => {
 	return theme
 }
 
+/**
+ *
+ * @param Component
+ * A HOC Component that includes the theme object as props
+ *
+ */
 export const withTheme = <T,>(Component: Component<T>): Component<T> => {
 	const NewComponent: Component<T> = (props) => {
 		const theme = useTheme() as DefaultThemeType

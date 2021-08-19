@@ -1,3 +1,6 @@
+/**
+ * A function that creates an @type { HTMLLinkElement } and loads the default font when a font is not given in the theme object
+ */
 export function DefaultFont(): void {
 	const head = document.querySelector("head")
 

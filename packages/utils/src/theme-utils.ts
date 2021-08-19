@@ -1,6 +1,7 @@
 import _ from "lodash"
 
-import { BorderRadiusSizes, Colors } from "@seabedui/core"
+import { BorderRadiusSizes } from "./sizes"
+import { Colors } from "./colors"
 
 import type { DefaultThemeType, SchemeType } from "@seabedui/types"
 
@@ -11,6 +12,7 @@ import type { DefaultThemeType, SchemeType } from "@seabedui/types"
 	**********
 
 */
+
 export function Hex2Rgb(hex: string): string {
 	hex = hex.replace("#", "")
 
@@ -20,6 +22,7 @@ export function Hex2Rgb(hex: string): string {
 
 	return `${r}, ${g}, ${b}`
 }
+
 export function Rgb2Hex(rgb: number[]): string {
 	let hex = "#"
 
@@ -53,10 +56,13 @@ export function ResolveColor(
 	color: SchemeType,
 	theme: DefaultThemeType
 ): { color: string; err?: Error } {
+	const splitColor = color.split(",")
+	if (splitColor.length === 3) return { color }
+
 	let selectedColor = ""
 	let err
 	const error = new Error(
-		`${color} is not defined in the theme object or the default color palette.`
+		`${splitColor} is not defined in the theme object or the default color palette.`
 	)
 
 	switch (color) {

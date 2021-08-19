@@ -1,8 +1,0 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var cssVar = {};
-
-exports.__exports = cssVar;
-//# sourceMappingURL=css-var.js_commonjs-exports.map

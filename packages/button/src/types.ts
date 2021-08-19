@@ -19,6 +19,7 @@ export type VariantsType = "solid" | "outline" | "ghost" | "link" | "disabled"
 export interface ButtonProps extends DefaultPropsType<HTMLButtonElement, "color">, sharedProps {
 	isLoading?: boolean
 	isActive?: boolean
+	isDisabled?: boolean
 	containerWidth?: boolean
 	loadingIcon?: React.ReactElement
 	leftIcon?: React.ReactElement

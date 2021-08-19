@@ -1,8 +1,0 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var theme = {};
-
-exports.__exports = theme;
-//# sourceMappingURL=theme.js_commonjs-exports.map

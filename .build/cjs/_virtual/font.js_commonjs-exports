@@ -1,8 +1,0 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var font = {};
-
-exports.__exports = font;
-//# sourceMappingURL=font.js_commonjs-exports.map

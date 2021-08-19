@@ -24,10 +24,7 @@
     "dist"
   ],
   "homepage": "https://github.com/Utkarsh-Kumar384/Seabed-UI",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Utkarsh-Kumar384/Seabed-UI.git"
-  },
+  "repository": "https://github.com/Utkarsh-Kumar384/Seabed-UI/tree/master/packages/types",
   "bugs": {
     "url": "https://github.com/Utkarsh-Kumar384/Seabed-UI/issues"
   },
@@ -36,13 +33,11 @@
     "access": "public"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1",
-    "prebuild": "rimraf dist",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "build": "run-p build:*",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
-    "watch": "yarn rollup -c=../../rollup.config.ts --watch --environment BUILD:development && rimraf ../../.build"
+    "watch": "yarn rollup -c=../../rollup.config.ts --watch --environment BUILD:development"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }

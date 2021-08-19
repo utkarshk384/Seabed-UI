@@ -11,6 +11,8 @@ export type Dict<T = string, K extends string | number = string> = Record<K, T>
 */
 export type Component<T> = ComponentType<T & { theme: DefaultThemeType }>
 
+export type SeabedComponentType<T = Dict<unknown>> = React.ForwardRefExoticComponent<T>
+
 /* 
     Deep Required
 */

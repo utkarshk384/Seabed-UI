@@ -1,8 +1,10 @@
 import path from "path"
+
 import commonjs from "@rollup/plugin-commonjs"
 import nodeResolve from "@rollup/plugin-node-resolve"
 import typescript from "@rollup/plugin-typescript"
-import css from "rollup-plugin-import-css";
+import css from "rollup-plugin-import-css"
+
 
 /* 
 	******
@@ -81,11 +83,11 @@ const plugins = [
 		mainFields: ["module", "main"],
 		dedupe: ["@seabedui/core"],
 		exportConditions: ["require", "node"],
-		moduleDirectories: ["node_modules"],
+		moduleDirectories: ["node_modules", "../**"],
 		extensions,
 	}),
 	css({minify: true, output: "normalize.css"}),
-	commonjs(),
+	commonjs({ requireReturnsDefault : true}),
 ]
 
 
@@ -101,13 +103,18 @@ const external = [
 	"@emotion/memoize",			
 	"lodash",					
 	"walkjs",					
-	"react/jsx-runtime", 		
+	"react/jsx-runtime",
+	"@testing-library/react",
+	"jest",
+	"react-dom/test-utils",
+	"ansi-styles",
+	"ansi-regex" 		
 ]
 
 
 /* Watch */
 const watch = {
-	include: "./src"
+	include: ""
 }
 
 
@@ -120,17 +127,6 @@ const config = {
 	plugins,
 	external,
 	watch,
-}
-
-
-/* 
-	ENV: Development
-*/
-
-if(ENV === "development"){
-	console.log("Hit")
-	config.output[0].dir = path.join(PACKAGE_ROOT_PATH, "../../.build/cjs")
-	config.output[1].dir = path.join(PACKAGE_ROOT_PATH, "../../.build/esm")
 }
 
 

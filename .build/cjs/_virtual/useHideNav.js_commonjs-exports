@@ -1,8 +1,0 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-var useHideNav = {};
-
-exports.__exports = useHideNav;
-//# sourceMappingURL=useHideNav.js_commonjs-exports.map
