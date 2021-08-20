@@ -1,6 +1,6 @@
 import { themes } from '@storybook/theming'
 import { Colors } from "../packages/utils/src/colors"
-import { ExtendTheme, SeabedProvider} from "../packages/theme"
+import { ExtendTheme, SeabedProvider } from "../packages/theme"
 import '@storybook/addon-console'
 
 
@@ -28,22 +28,10 @@ export const parameters = {
 
 
 const Theme = ExtendTheme({
-  colorScheme: "both",
+  colorScheme: "dark",
 
   borderRadius: 15,
   colors: {
-    light: {
-      background: {
-        primary: Colors.white,
-        secondary: Colors.gray[200]
-      },
-      text: {
-        primary: Colors.gray[900],
-        secondary: Colors.gray[800]
-      },
-      accent: Colors.blue[500],
-      muted: Colors.gray[400]
-    },
     dark: {
       background: {
         primary: Colors.gray[800],

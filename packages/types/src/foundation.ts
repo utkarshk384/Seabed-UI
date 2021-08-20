@@ -92,8 +92,8 @@ export type SchemeType =
 	*Note:  Muted is also used for the `disabled` state
 */
 export type PaletteType = Dict<unknown> & {
-	background: basicColorType
-	text: basicColorType
+	background?: basicColorType
+	text?: basicColorType
 	states?: StateType
 	accent?: string
 	muted?: string

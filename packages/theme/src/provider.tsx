@@ -6,7 +6,7 @@ import { useDarkMode } from "@seabedui/hooks"
 import {
 	MakeThemeCSSVar,
 	DefaultColorsCssVar,
-	ApplyDefaultsColors,
+	MakeColorsCSSVars,
 	NormalizeTheme,
 	ApplyDefaults,
 	ExtendTheme,
@@ -41,8 +41,8 @@ export const SeabedProvider: React.FC<Props> = ({ children, theme = Theme }) => 
 	}, [theme, isDark])
 
 	useEffect(() => {
-		//Set the `__colors` property of the theme
-		ApplyDefaultsColors(FinalTheme as DefaultThemeType, isDark)
+		//Set the `__colors` property of the theme and use that to make css variables
+		MakeColorsCSSVars(FinalTheme as DefaultThemeType, isDark)
 	}, [isDark, FinalTheme])
 
 	useEffect(() => {
@@ -60,8 +60,8 @@ export const SeabedProvider: React.FC<Props> = ({ children, theme = Theme }) => 
 		Make CSS Variables from default colors
 	*/
 	useEffect(() => {
-		DefaultColorsCssVar(Colors, theme.cssPrefix as string)
-	}, [theme.cssPrefix])
+		DefaultColorsCssVar(Colors)
+	}, [])
 
 	return <SeabedContext.Provider value={FinalTheme as ThemeType}>{children}</SeabedContext.Provider>
 }

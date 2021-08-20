@@ -41,7 +41,9 @@
     "@seabedui/assets": "^0.0.1",
     "@seabedui/core": "^0.0.1",
     "@seabedui/theme": "^0.0.1",
-    "@seabedui/utils": "^0.0.1"
+    "@seabedui/utils": "^0.0.1",
+    "@linaria/core": "^3.0.0-beta.4",
+    "@linaria/react": "^3.0.0-beta.7"
   },
   "devDependencies": {
     "@seabedui/types": "^0.0.1"

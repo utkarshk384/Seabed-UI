@@ -30,7 +30,7 @@ export function Rgb2Hex(rgb: number[]): string {
 	return hex
 }
 
-export function InvertColor(color: string): string {
+export function InvertGrayscale(color: string): string {
 	const values = color.split(",")
 
 	if (!values) throw new Error(`The given color of ${color} returned undefined while inverting it`)
@@ -73,12 +73,12 @@ export function ResolveColor(
 			if (!theme.__colors.text.secondary) throw error
 			return { color: theme.__colors.text.secondary }
 		case "text.primary":
-			if (!theme.__colors.background.primary) throw error
-			return { color: theme.__colors.background.primary }
+			if (!theme.__colors.text.primary) throw error
+			return { color: theme.__colors.text.primary }
 
 		case "text.secondary":
-			if (!theme.__colors.background.secondary) throw error
-			return { color: theme.__colors.background.secondary }
+			if (!theme.__colors.text.secondary) throw error
+			return { color: theme.__colors.text.secondary }
 
 		case "accent":
 			if (!theme.__colors.accent) throw error

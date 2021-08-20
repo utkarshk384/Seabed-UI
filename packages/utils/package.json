@@ -35,7 +35,7 @@
     "build": "run-p build:*",
     "build:module": "yarn rollup -c=../../rollup.config.ts --environment INCLUDE_DEPS,BUILD:production",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
-    "watch": "yarn rollup -c=../../rollup.config.ts --watch --environment BUILD:development"
+    "watch": "watcher -c ../../watcher.config.js -i src"
   },
   "devDependencies": {
     "@seabedui/types": "^0.0.1"

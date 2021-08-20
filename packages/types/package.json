@@ -37,7 +37,7 @@
     "test:watch": "jest --watchAll",
     "build": "run-p build:*",
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist",
-    "watch": "yarn rollup -c=../../rollup.config.ts --watch --environment BUILD:development"
+    "watch": "watcher -c ../../watcher.config.js -i src"
   },
   "devDependencies": {}
 }

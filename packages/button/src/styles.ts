@@ -93,7 +93,6 @@ const variants = css`
 		text-decoration: underline;
 		outline: none;
 
-		//TODO:
 		/* &:active,
 		&:focus {
 			color: ;

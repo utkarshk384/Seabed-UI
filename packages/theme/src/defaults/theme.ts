@@ -3,7 +3,6 @@ import { Colors } from "@seabedui/utils"
 import type { DefaultThemeType } from "@seabedui/types"
 
 export const Theme: DefaultThemeType = {
-	cssPrefix: "sbu",
 	colorScheme: "both",
 	__colors: {
 		background: {

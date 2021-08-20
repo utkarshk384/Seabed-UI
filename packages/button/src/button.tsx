@@ -30,7 +30,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 	const classNames = MemoizedClasses(className)
 	return (
 		<StyledButton
-			prefix={theme.cssPrefix}
 			style={composedStyles}
 			ref={ref}
 			className={classNames}
@@ -54,7 +53,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 
 Button.displayName = "Button"
 
-const StyledButton = styled.button<ButtonProps & { prefix: string }>`
+const StyledButton = styled.button<ButtonProps>`
 	/* 
 		Base Styles
 	*/
@@ -64,8 +63,8 @@ const StyledButton = styled.button<ButtonProps & { prefix: string }>`
 	background: transparent;
 	cursor: pointer;
 	border: none;
-	border-radius: ${(props) => `var(--${props.prefix}-border-radius)`};
-	font-family: ${(props) => `var(--${props.prefix}-font-family-heading)`};
+	border-radius: var(--sbu-border-radius);
+	font-family: var(--sbu-font-family-heading);
 	font-size: var(--size);
 
 	/* 

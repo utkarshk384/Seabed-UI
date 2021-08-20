@@ -27,7 +27,6 @@ type baseThemeType = {
 	borderRadius?: BorderRadiusType
 	breakpoints?: BreakpointType
 	typography?: TypographyType
-	cssPrefix?: string | "sbu"
 }
 
 /* 
