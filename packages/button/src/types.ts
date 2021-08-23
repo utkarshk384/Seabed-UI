@@ -6,19 +6,28 @@ import type {
 	SchemeType,
 	ExtendedSizeType,
 	SizeType,
+	SpacingType,
 } from "@seabedui/types"
 
-type sharedProps = {
+export type SharedStylesProps = {
 	size?: SizeType
 	color?: SchemeType
 	textColor?: SchemeType
 	textSize?: ExtendedSizeType
 }
 
+/**
+ * Button Variants
+ */
 export type VariantsType = "solid" | "outline" | "ghost" | "link" | "disabled"
-export interface ButtonProps extends DefaultPropsType<HTMLButtonElement, "color">, sharedProps {
+
+/**
+ * Button Props
+ */
+export interface ButtonProps
+	extends DefaultPropsType<HTMLButtonElement, "color">,
+		SharedStylesProps {
 	isLoading?: boolean
-	isActive?: boolean
 	isDisabled?: boolean
 	containerWidth?: boolean
 	loadingIcon?: React.ReactElement
@@ -28,7 +37,24 @@ export interface ButtonProps extends DefaultPropsType<HTMLButtonElement, "color"
 	variant?: VariantsType
 }
 
+/**
+ * Button Styles
+ */
 export type MemoizedStylesReturnType = (
-	props: Required<sharedProps>,
+	props: Required<SharedStylesProps>,
 	theme: DefaultThemeType
 ) => React.CSSProperties
+
+/**
+ * Button Group Styles
+ */
+export type ButtonGroupStyles = { gap?: SpacingType }
+
+/**
+ * Button Group Props
+ */
+export interface ButtonGroupProps
+	extends DefaultPropsType<HTMLDivElement, "direction">,
+		ButtonGroupStyles {
+	direction?: "row" | "column"
+}

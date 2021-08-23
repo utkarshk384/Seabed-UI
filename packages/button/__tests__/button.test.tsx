@@ -52,14 +52,3 @@ it("Should be in loading state", () => {
 	expect(screen.getByTestId("btn")).toHaveAttribute("aria-busy", "true")
 	expect(screen.getByTestId("btn")).toHaveAttribute("data-loading", "true")
 })
-
-it("Should be in active state", () => {
-	renderer(
-		<Button data-testid="btn" isActive>
-			Example Button
-		</Button>
-	)
-
-	expect(screen.getByTestId("btn")).toHaveAttribute("data-active", "true")
-	expect(screen.getByTestId("btn")).toHaveAttribute("aria-pressed", "true")
-})

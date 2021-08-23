@@ -1,4 +1,4 @@
-import { Button } from "../src"
+import { Button } from "../src/button"
 
 import { Meta } from "@storybook/react"
 
@@ -8,7 +8,7 @@ export default {
 } as Meta
 
 export const Solid: React.VFC<Record<string, never>> = () => (
-	<Button variant="solid" size="md">
+	<Button variant="solid" size="md" mt="10">
 		Example Button
 	</Button>
 )

@@ -1,17 +1,17 @@
-import { forwardRef } from "react"
-
-import { useTheme } from "@seabedui/theme"
+import { forwardRef, useRef } from "react"
 import { styled } from "@linaria/react"
-import { Spinner } from "@seabedui/assets"
-import { MemoizedStyles, MemoizedClasses } from "./styles"
 
-import type { ButtonProps } from "./types"
+import { Spinner } from "@seabedui/assets"
+import { useTheme } from "@seabedui/theme"
+import { useMergeRefs, DefaultProps } from "@seabedui/utils"
+import { useStyles, useClasses } from "./styles"
+
+import type { ButtonProps } from "../types"
 import type { DefaultThemeType } from "@seabedui/types"
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
 	const {
 		loadingText = "loading",
-		isActive = false,
 		isLoading = false,
 		isDisabled = false,
 		containerWidth = false,
@@ -22,26 +22,26 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 		variant = "solid",
 		className,
 		...htmlAttributes
-	} = props
+	} = DefaultProps(props)
 
 	const theme = useTheme() as DefaultThemeType
+	const btnRef = useRef(null)
 
-	const composedStyles = MemoizedStyles({ size, color, textColor, textSize }, theme)
-	const classNames = MemoizedClasses(className)
+	const composedStyles = useStyles({ size, color, textColor, textSize }, theme)
+	const classNames = useClasses(className)
+
 	return (
 		<StyledButton
 			style={composedStyles}
-			ref={ref}
+			ref={useMergeRefs(ref, btnRef)}
 			className={classNames}
 			disabled={isLoading || (variant === "disabled" && true) || isDisabled}
 			aria-disabled={isLoading || (variant === "disabled" && true) || isDisabled}
 			data-emphasis={variant}
-			data-active={isActive}
-			aria-pressed={isActive}
 			aria-busy={isLoading}
 			data-loading={isLoading}
-			{...htmlAttributes}
 			containerWidth={containerWidth}
+			{...htmlAttributes}
 		>
 			{props.leftIcon && !isLoading && props.leftIcon}
 			{props.loadingIcon ? isLoading && props.loadingIcon : isLoading && <Spinner />}
@@ -71,7 +71,7 @@ const StyledButton = styled.button<ButtonProps>`
 		Beautifying Styles
 	*/
 
-	color: rgb(var(--text-color)); /* Inverted color using Invert function */
+	color: rgb(var(--text-color));
 	outline: 10px solid transparent;
 	outline-offset: -10px;
 
@@ -82,6 +82,6 @@ const StyledButton = styled.button<ButtonProps>`
 	&:active,
 	&:focus {
 		outline-offset: 0;
-		outline-color: rgb(var(--color), 0.15);
+		outline-color: rgb(var(--bg-color), 0.15);
 	}
 `

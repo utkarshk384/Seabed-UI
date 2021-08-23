@@ -2,7 +2,7 @@ import _ from "lodash"
 import { Dict } from "@seabedui/types"
 import { WalkBuilder, WalkNode } from "walkjs"
 
-const PREFIX = "sbu"
+import { PREFIX } from "./consts"
 
 /**
  *

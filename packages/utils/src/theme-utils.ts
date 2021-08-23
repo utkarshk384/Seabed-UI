@@ -1,10 +1,16 @@
 import _ from "lodash"
 
-import { BorderRadiusSizes } from "./sizes"
+import { BorderRadiusSizes, GapSizes } from "./consts"
 import { Colors } from "./colors"
 
-import type { DefaultThemeType, SchemeType } from "@seabedui/types"
-
+import type {
+	DefaultProps,
+	DefaultThemeType,
+	SchemeType,
+	HandleReturn,
+	SpacingType,
+	Dict,
+} from "@seabedui/types"
 /* 
 
 	**********
@@ -100,12 +106,55 @@ export function ResolveColor(
 /* 
 
 	********************
-	   Border Radius
+	   Sizes & Spacing
 	********************
 
 */
-export function ParseBorderRadiusSize(size: string | number): string {
-	if (typeof size === "number") return `${size / 16}rem`
-	else if (typeof size === "string" && size.includes("rem")) return size
-	return BorderRadiusSizes[size]
+export function ParseBorderSizes(size: string | number): HandleReturn<string | null> {
+	if (typeof size === "number") return { data: `${size / 16}rem` }
+	else if (typeof size === "string" && size.includes("rem")) return { data: size }
+
+	const borderSize = BorderRadiusSizes[size]
+
+	if (typeof borderSize === undefined)
+		return { error: new Error(`Couldn't Parse border Sizes of ${size}`), data: null }
+	return { data: BorderRadiusSizes[size] }
+}
+
+export function ParseSizes(size: SpacingType): HandleReturn<string | null> {
+	let parsedSize = ""
+
+	if (typeof size === "string" && size.includes("rem")) return { data: size }
+	else if (typeof size === "number" || typeof size === "string") parsedSize = GapSizes[size]
+
+	if (!parsedSize) return { error: new Error(`Couldn't parse the size of ${size}`), data: null }
+	return { data: parsedSize }
+}
+
+/* 
+	**********
+	 Defaults
+	**********
+*/
+
+export function DefaultSpacing<T extends DefaultProps>(props: T): T {
+	if (!props.m) props.m = "0"
+	else if (!props.mt) props.mt = "0"
+	else if (!props.mr) props.mr = "0"
+	else if (!props.mb) props.mb = "0"
+	else if (!props.ml) props.ml = "0"
+
+	if (!props.p) props.p = "0"
+	else if (!props.pt) props.pt = "0"
+	else if (!props.pr) props.pr = "0"
+	else if (!props.pb) props.pb = "0"
+	else if (!props.pl) props.pl = "0"
+
+	return props
+}
+
+export function DefaultProps<P = Dict>(props: P): P {
+	props = DefaultSpacing(props)
+
+	return props
 }

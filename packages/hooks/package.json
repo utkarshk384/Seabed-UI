@@ -38,5 +38,10 @@
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
     "watch": "watcher -c ../../watcher.config.js -i src"
   },
-  "devDependencies": {}
+  "dependencies": {
+    "@seabedui/utils": "^0.0.1"
+  },
+  "devDependencies": {
+    "@seabedui/types": "^0.0.1"
+  }
 }

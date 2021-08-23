@@ -19,6 +19,6 @@ it("Should resolve the given colors", () => {
 })
 
 it("Should correctly parse border radius", () => {
-	expect(utils.ParseBorderRadiusSize(16)).toEqual("1rem")
-	expect(utils.ParseBorderRadiusSize("sm")).toEqual("0.125rem")
+	expect(utils.ParseBorderSizes(16).data).toEqual("1rem")
+	expect(utils.ParseBorderSizes("sm").data).toEqual("0.125rem")
 })

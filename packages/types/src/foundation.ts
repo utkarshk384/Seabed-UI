@@ -5,27 +5,27 @@ import { Dict } from "./general"
 
     These states are applied via tailwind classnames to all UI elements depending on the type of UI element.
 
-    Ex: A button element might receive a enabled, muted, hover, focused, pressed states. 
+    Ex: A button element might receive a enabled, muted, hover, focused, active states. 
         Whereas, a text element will receive enabled and muted states only.
 
     The states are as follows:
 
-    * `enabled`: The component is enabled.
-    * `muted`: The component is in a muted state.
+    * `visited`: Used to show a link is clicked
+    * `disabled`: Used to show that a component is disabled
     * `hover`: The component is hovered.
     * `focus`: The component is focused.
     * `selected`: The component that is selected in a list.
-    * `pressed`: The component that is being pressed.
+    * `active`: The component that is being pressed.
     * `dragged`: The component that is being dragged.
 
 */
 export type StateType = Dict & {
-	enabled?: SchemeType
-	muted?: SchemeType
+	disabled?: SchemeType
+	visited?: SchemeType
 	hover?: SchemeType
 	focused?: SchemeType
 	selected?: SchemeType
-	pressed?: SchemeType
+	active?: SchemeType
 	draggered?: SchemeType
 }
 
@@ -66,6 +66,62 @@ export type FontSizeType = Dict & {
 /* 
     Foundational sizing of fonts, buttons etc...
 */
+export type SpacingType =
+	| "0"
+	| "1"
+	| "2"
+	| "3"
+	| "4"
+	| "5"
+	| "6"
+	| "7"
+	| "8"
+	| "9"
+	| "10"
+	| "12"
+	| "14"
+	| "16"
+	| "18"
+	| "20"
+	| "22"
+	| "24"
+	| "26"
+	| "28"
+	| "30"
+	| "32"
+	| "34"
+	| "36"
+	| "38"
+	| "40"
+	| "42"
+	| "44"
+	| "46"
+	| "48"
+	| "50"
+	| "52"
+	| "54"
+	| "56"
+	| "58"
+	| "60"
+	| "62"
+	| "64"
+	| "66"
+	| "68"
+	| "70"
+	| "72"
+	| "74"
+	| "76"
+	| "78"
+	| "80"
+	| "82"
+	| "84"
+	| "86"
+	| "88"
+	| "90"
+	| "92"
+	| "94"
+	| "96"
+	| "98"
 export type SizeType = "sm" | "md" | "lg" | "xl" | "2xl"
 export type ExtendedSizeType = SizeType | "3xl" | "4xl" | "5xl" | "6xl" | "7xl" | "8xl" | "9xl"
 

@@ -1,11 +1,5 @@
 import _ from "lodash"
-import {
-	CssVar,
-	ParseBorderRadiusSize,
-	ResolveColor,
-	SetProperty,
-	ThrowError,
-} from "@seabedui/utils"
+import { CssVar, ParseBorderSizes, ResolveColor, SetProperty, ThrowError } from "@seabedui/utils"
 
 import { DefaultFont, Theme } from "./defaults"
 
@@ -67,7 +61,10 @@ export function ApplyDefaults(theme: DefaultThemeType): void {
  */
 export function NormalizeTheme(theme: DefaultThemeType): DefaultThemeType {
 	//Convert border Radius to `rem` if it's not done
-	theme.borderRadius = ParseBorderRadiusSize(theme.borderRadius as string)
+	const borderSize = ParseBorderSizes(theme.borderRadius as string)
+
+	if (borderSize.error) throw borderSize.error
+	theme.borderRadius = borderSize.data as string
 
 	//If the type of `fontFamily` is string, convert it to `FontType` notation
 	const fontFamily = theme.typography.fontFamily
