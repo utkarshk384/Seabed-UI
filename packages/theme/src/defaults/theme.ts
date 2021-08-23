@@ -1,9 +1,10 @@
-import { Colors } from "@seabedui/utils"
+import { Colors, PREFIX } from "@seabedui/utils"
 
 import type { DefaultThemeType } from "@seabedui/types"
 
 export const Theme: DefaultThemeType = {
 	colorScheme: "both",
+	__prefix: PREFIX,
 	__colors: {
 		background: {
 			primary: Colors.green[100],

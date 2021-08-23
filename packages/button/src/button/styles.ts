@@ -1,5 +1,5 @@
 import { css } from "@linaria/core"
-import { Colors, classnames, ResolveColor, ThrowError, Memoizer } from "@seabedui/utils"
+import { classnames, ResolveColor, ThrowError, Memoizer } from "@seabedui/utils"
 
 import type { SharedStylesProps } from "../types"
 import type { DefaultThemeType, Dict } from "@seabedui/types"
@@ -27,7 +27,8 @@ export const useStyles = Memoizer<Required<SharedStylesProps>, Dict>((props, The
 		"--bg-color": btnColor.color,
 		"--text-color": textColor.color,
 		"--size": fontSize,
-		"--disabled": Colors.gray[600],
+		"--disabled": `var(--${theme.__prefix}-disabled)`,
+		"--active": `var(--${theme.__prefix}-active)`,
 	}
 })
 
@@ -92,19 +93,15 @@ const variants = css`
 
 		&:active,
 		&:focus {
-			color: rgb(var(--sbu-active));
+			color: rgb(var(--active));
 		}
 	}
 
 	/* Disabled */
-	&[data-loading^="true"],
-	&[disabled^="true"] {
-		background: rgb(var(--disabled));
-		outline: none;
-	}
-
+	&[data-loading^=""],
+	&[disabled^=""],
 	&[data-emphasis^="disabled"] {
-		background: rgb(var(--bg-color), 0.5);
+		background: rgb(var(--disabled));
 		filter: brightness(80%);
 		cursor: not-allowed;
 	}

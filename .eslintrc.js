@@ -9,7 +9,7 @@ module.exports = {
     "ecmaVersion": 2018,
     "soruceType": "module",
   },    
-  ignorePatterns: ["node_modules/*", ".next/*", ".out/*", "!.prettierrc.js", "rollup.config.ts"],
+  ignorePatterns: ["node_modules/*", ".next/*", ".out/*", "!.prettierrc.js", "rollup.config.ts", "**/dist/**"],
   plugins: ["prettier", "@typescript-eslint", "jsx-a11y", "testing-library", "jest-dom"],
   extends: ["eslint:recommended"],
   overrides: [

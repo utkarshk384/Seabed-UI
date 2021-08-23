@@ -25,7 +25,7 @@ it("Should render", () => {
 
 it("Should be well spaced", () => {
 	renderer(
-		<ButtonGroup data-testid="btn-group" spacing="lg">
+		<ButtonGroup data-testid="btn-group" gap="10">
 			<Button>Button One</Button>
 			<Button>Button Two</Button>
 			<Button>Button Three</Button>

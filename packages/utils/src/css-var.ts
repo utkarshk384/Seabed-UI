@@ -2,7 +2,12 @@ import _ from "lodash"
 import { Dict } from "@seabedui/types"
 import { WalkBuilder, WalkNode } from "walkjs"
 
-import { PREFIX } from "./consts"
+type CSSVarOptions = {
+	Customizer?: (node: WalkNode, root: HTMLElement) => void
+	prefix?: string
+}
+
+//TODO: Update comments of prefix
 
 /**
  *
@@ -12,10 +17,7 @@ import { PREFIX } from "./consts"
  * 			@param { HTMLElement } - The element root html element.
  * A function that makes css variables based on given object that will be traversed.
  */
-export function CssVar(
-	obj: Dict<unknown>,
-	Customizer?: (node: WalkNode, root: HTMLElement) => void
-): void {
+export function CssVar(obj: Dict<unknown>, opts: CSSVarOptions): void {
 	const root = document.documentElement as HTMLElement
 	if (!root)
 		throw new Error("Document is not defined. Try calling the function inside a useEffect.")
@@ -23,8 +25,8 @@ export function CssVar(
 	new WalkBuilder()
 		.withSimpleCallback((node: WalkNode) => {
 			if (node.nodeType === "value") {
-				if (Customizer) Customizer(node, root)
-				else SetProperty(node.key as string, node.val, root)
+				if (opts.Customizer) opts.Customizer(node, root)
+				else SetProperty(node.key as string, node.val, root, opts.prefix)
 			}
 		})
 		.walk(obj)
@@ -36,8 +38,9 @@ export function CssVar(
  * @returns { string } - A kebab cased string that may or maynot include the prefix.
  * A function that takes in a css variable name and returns a kebab cased version of it.
  */
-const addCSSPrefix = (varName: string): string => {
-	return `--${PREFIX}-${_.kebabCase(varName)}`
+const addCSSPrefix = (varName: string, prefix?: string): string => {
+	if (prefix) return `--${prefix}-${_.kebabCase(varName)}`
+	return `--${_.kebabCase(varName)}`
 }
 
 /**
@@ -50,9 +53,10 @@ const addCSSPrefix = (varName: string): string => {
 export const SetProperty = (
 	varName: string,
 	val: string,
-	root: HTMLElement = document.documentElement
+	root: HTMLElement = document.documentElement,
+	prefix?: string
 ): void => {
-	root.style.setProperty(addCSSPrefix(varName as string), `${val}`)
+	root.style.setProperty(addCSSPrefix(varName as string, prefix), `${val}`)
 }
 
 /**
@@ -61,7 +65,7 @@ export const SetProperty = (
  * @param { HTMLElement } root - The root element of the document.
  * A function that gets the value of the css variable.
  */
-export const GetProperty = (varName: string, root: HTMLElement): void => {
+export const GetProperty = (varName: string, root: HTMLElement, prefix?: string): void => {
 	const computedStyle = getComputedStyle(root)
-	computedStyle.getPropertyValue(addCSSPrefix(varName))
+	computedStyle.getPropertyValue(addCSSPrefix(varName, prefix))
 }

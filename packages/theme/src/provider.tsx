@@ -41,11 +41,6 @@ export const SeabedProvider: React.FC<Props> = ({ children, theme = Theme }) => 
 	}, [theme, isDark])
 
 	useEffect(() => {
-		//Set the `__colors` property of the theme and use that to make css variables
-		MakeColorsCSSVars(FinalTheme as DefaultThemeType, isDark)
-	}, [isDark, FinalTheme])
-
-	useEffect(() => {
 		//Apply required styles to `document`
 		ApplyDefaults(FinalTheme as DefaultThemeType)
 
@@ -56,12 +51,18 @@ export const SeabedProvider: React.FC<Props> = ({ children, theme = Theme }) => 
 		MakeThemeCSSVar(normalizedTheme)
 	}, [FinalTheme])
 
+	useEffect(() => {
+		//Set the `__colors` property of the theme and use that to make css variables
+		MakeColorsCSSVars(FinalTheme as DefaultThemeType)
+	}, [isDark, FinalTheme])
+
 	/* 
 		Make CSS Variables from default colors
 	*/
 	useEffect(() => {
-		DefaultColorsCssVar(Colors)
-	}, [])
+		DefaultColorsCssVar(Colors, (theme as DefaultThemeType).__prefix)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []) //Intentionally ignoring line since, css Variable name only changes in development phase.
 
 	return <SeabedContext.Provider value={FinalTheme as ThemeType}>{children}</SeabedContext.Provider>
 }

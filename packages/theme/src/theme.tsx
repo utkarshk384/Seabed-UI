@@ -107,14 +107,16 @@ const normalizeStateColors = <T extends DefaultThemeType>(theme: T): T => {
  */
 export const MakeThemeCSSVar = (theme: DefaultThemeType): DefaultThemeType => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const { colorScheme, colors, __colors, ...sanitizedTheme } = theme as DefaultThemeType
+	const { colorScheme, colors, __colors, __prefix, ...sanitizedTheme } = theme as DefaultThemeType
 	const FontPrefix = ["heading", "body", "code"]
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	CssVar(sanitizedTheme as Dict<any>, (node, root) => {
-		if (FontPrefix.includes(node.key as string))
-			SetProperty(`${node.parent?.key}-${node.key}`, node.val, root)
-		else SetProperty(`${node.key}`, node.val, root)
+	CssVar(sanitizedTheme as Dict<any>, {
+		Customizer: (node, root) => {
+			if (FontPrefix.includes(node.key as string))
+				SetProperty(`${node.parent?.key}-${node.key}`, node.val, root, theme.__prefix)
+			else SetProperty(`${node.key}`, node.val, root, theme.__prefix)
+		},
 	})
 
 	return theme
@@ -126,32 +128,28 @@ export const MakeThemeCSSVar = (theme: DefaultThemeType): DefaultThemeType => {
  * @param { boolean } isDark - A flag that indicates current color scheme.
  * A function that takes the theme colors and makes css variables depending on the current color scheme.
  */
-export const MakeColorsCSSVars = (theme: DefaultThemeType, isDark: boolean): void => {
+export const MakeColorsCSSVars = (theme: DefaultThemeType): void => {
 	//set Current Theme Colors in theme object
 	const colors: Dict<string | Dict> = {}
 
-	if (isDark) {
-		colors.accent = theme.colors.dark.accent
-		colors.muted = theme.colors.dark.muted
-		colors.states = theme.colors.dark.states
-	} else {
-		colors.accent = theme.colors.light.accent
-		colors.muted = theme.colors.light.muted
-		colors.states = theme.colors.light.states
-	}
+	colors.accent = theme.__colors.accent
+	colors.muted = theme.__colors.muted
+	colors.states = theme.__colors.states
 
 	if (Object.keys(colors).length === 0) throw new Error("Colors couldn't be parsed.")
-	CssVar(colors)
+	CssVar(colors, { prefix: theme.__prefix })
 }
 
 /**
  *
  * @param { Dict<unknown> } colors - The default color palaette
  */
-export const DefaultColorsCssVar = (colors: Dict<unknown>): void => {
-	CssVar(colors, (node, root) => {
-		const pre = node.parent?.key
-		if (pre) SetProperty(`${node.parent?.key}-${node.key}`, node.val, root)
-		else SetProperty(`${node.key}`, node.val, root)
+export const DefaultColorsCssVar = (colors: Dict<unknown>, prefix: string): void => {
+	CssVar(colors, {
+		Customizer: (node, root) => {
+			const pre = node.parent?.key
+			if (pre) SetProperty(`${node.parent?.key}-${node.key}`, node.val, root, prefix)
+			else SetProperty(`${node.key}`, node.val, root, prefix)
+		},
 	})
 }

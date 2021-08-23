@@ -39,6 +39,7 @@ type defaultTheme = Omit<baseThemeType, "borderRadius" | "typography"> & {
 	colorScheme?: ColorSchemeType
 	colors?: RequiredColorsType
 	__colors?: PaletteType
+	__prefix?: string
 	typography?: DeepRequired<TypographyType>
 }
 
