@@ -10,6 +10,7 @@ import type { ButtonProps } from "../types"
 import type { DefaultThemeType } from "@seabedui/types"
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+	props = DefaultProps(props)
 	const {
 		loadingText = "loading",
 		isLoading = false,
@@ -22,7 +23,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 		variant = "solid",
 		className,
 		...htmlAttributes
-	} = DefaultProps(props)
+	} = props
 
 	const theme = useTheme() as DefaultThemeType
 	const btnRef = useRef(null)

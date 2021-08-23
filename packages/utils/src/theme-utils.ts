@@ -138,19 +138,22 @@ export function ParseSizes(size: SpacingType): HandleReturn<string | null> {
 */
 
 export function DefaultSpacing<T extends DefaultProps>(props: T): T {
-	if (!props.m) props.m = "0"
-	else if (!props.mt) props.mt = "0"
-	else if (!props.mr) props.mr = "0"
-	else if (!props.mb) props.mb = "0"
-	else if (!props.ml) props.ml = "0"
+	const {
+		m = 0,
+		mt = "0",
+		mr = "0",
+		mb = "0",
+		ml = "0",
+		pt = "0",
+		pr = "0",
+		pb = "0",
+		pl = "0",
+		p = "0",
+	} = props
 
-	if (!props.p) props.p = "0"
-	else if (!props.pt) props.pt = "0"
-	else if (!props.pr) props.pr = "0"
-	else if (!props.pb) props.pb = "0"
-	else if (!props.pl) props.pl = "0"
+	const newProps = { ...props, m, mt, mr, mb, ml, pt, pr, pb, pl, p }
 
-	return props
+	return newProps
 }
 
 export function DefaultProps<P = Dict>(props: P): P {
