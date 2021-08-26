@@ -11,6 +11,7 @@ import type {
 
 export type SharedStylesProps = {
 	size?: SizeType
+	fontFamily?: "heading" | "body" | "code"
 	color?: SchemeType
 	textColor?: SchemeType
 	textSize?: ExtendedSizeType
@@ -30,7 +31,8 @@ export interface ButtonProps
 	isLoading?: boolean
 	isDisabled?: boolean
 	containerWidth?: boolean
-	loadingIcon?: React.ReactElement
+	spinner?: React.ReactElement
+	spinnerPosition?: "start" | "end"
 	leftIcon?: React.ReactElement
 	rightIcon?: React.ReactElement
 	loadingText?: string

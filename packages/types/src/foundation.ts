@@ -32,17 +32,21 @@ export type StateType = Dict & {
 /* 
 	Foundational type for typography object.
 */
-export type FontType<T = ""> = T extends "both"
+export type fontVariants<T> = T extends "both"
 	? {
 			heading?: string | number
 			body: string | number
 			code?: string | number
-	  } & Dict<string | number>
+	  }
 	: {
 			heading?: string
 			body: string
 			code?: string
-	  } & Dict
+	  }
+
+export type FontType<T = ""> = T extends "both"
+	? fontVariants<T> & Dict<string | number>
+	: fontVariants<T> & Dict
 
 /* 
 	  Foundational types for the `typography.fontSizes` section of the theme object.
@@ -159,4 +163,4 @@ export type PaletteType = Dict<unknown> & {
 	Foundational types for Color Scheme
 */
 
-export type ColorSchemeType = "light" | "dark" | "both"
+export type ColorSchemeType<T = ""> = "light" | "dark" | T

@@ -1,9 +1,10 @@
-import { forwardRef, useRef } from "react"
+import { forwardRef, useRef, useEffect } from "react"
 import { styled } from "@linaria/react"
 
-import { Spinner } from "@seabedui/assets"
+import { Spinner } from "@seabedui/spinner"
 import { useTheme } from "@seabedui/theme"
-import { useMergeRefs, DefaultProps } from "@seabedui/utils"
+import { DefaultProps } from "@seabedui/theme-utils"
+import { useMergeRefs } from "@seabedui/utils"
 import { useStyles, useClasses } from "./styles"
 
 import type { ButtonProps } from "../types"
@@ -12,10 +13,12 @@ import type { DefaultThemeType } from "@seabedui/types"
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
 	props = DefaultProps(props)
 	const {
+		spinner = <Spinner />,
 		loadingText = "loading",
 		isLoading = false,
 		isDisabled = false,
 		containerWidth = false,
+		fontFamily = "heading",
 		size = "md",
 		color = "accent",
 		textColor = "text.primary",
@@ -28,7 +31,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 	const theme = useTheme() as DefaultThemeType
 	const btnRef = useRef(null)
 
-	const composedStyles = useStyles({ size, color, textColor, textSize }, theme)
+	useEffect(() => {
+		console.log("Button")
+		console.log(theme)
+	}, [theme])
+
+	const composedStyles = useStyles({ size, color, textColor, textSize, fontFamily }, theme)
 	const classNames = useClasses(className)
 
 	return (
@@ -44,10 +52,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 			containerWidth={containerWidth}
 			{...htmlAttributes}
 		>
-			{props.leftIcon && !isLoading && props.leftIcon}
-			{props.loadingIcon ? isLoading && props.loadingIcon : isLoading && <Spinner />}
-			{isLoading ? loadingText : props.children}
-			{props.rightIcon && !isLoading && props.rightIcon}
+			{isLoading ? props.spinnerPosition === "start" && spinner : props.leftIcon && props.leftIcon}
+
+			{isLoading ? loadingText : <span>{props.children}</span>}
+
+			{isLoading ? props.spinnerPosition === "end" && spinner : props.rightIcon && props.rightIcon}
 		</StyledButton>
 	)
 })
@@ -64,8 +73,8 @@ const StyledButton = styled.button<ButtonProps>`
 	background: transparent;
 	cursor: pointer;
 	border: none;
-	border-radius: var(--sbu-border-radius);
-	font-family: var(--sbu-font-family-heading);
+	border-radius: var(--border-radius);
+	font-family: var(--font-family);
 	font-size: var(--size);
 
 	/* 

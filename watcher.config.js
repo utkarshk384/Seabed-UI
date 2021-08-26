@@ -10,14 +10,14 @@ module.exports = {
                     console.log("\n")
                     return
                 }
-                // else if(err) {
-                //     console.log("Error Occured");
-                //     console.log("\n")
-                //     return
-                // }
+                else if(err) {
+                    console.log("Error Occured");
+                    console.log("\n")
+                    return
+                }
                 
-                // console.log(stdout)
-                // console.log("\n")
+                console.log(stdout)
+                console.log("\n")
             })
         }
     }

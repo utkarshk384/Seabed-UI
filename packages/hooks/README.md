@@ -21,7 +21,7 @@ import { useDarkmode } from '@seabedui/hooks'
 import { Button } from '@seabedui/button'
 
 const Example = () => {
-    cosnt [isDark, setDark] = useDarkmode() // Hook used to get current theme setting and set currrent theme
+    const [isDark, setDark] = useDarkmode() // Hook used to get current theme setting and set currrent theme
 
 
     return (

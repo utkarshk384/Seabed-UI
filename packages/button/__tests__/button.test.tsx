@@ -30,12 +30,7 @@ it("Should be in disabled state", () => {
 
 it("Should be in loading state", () => {
 	renderer(
-		<Button
-			data-testid="btn"
-			isLoading
-			loadingText="Loading..."
-			loadingIcon={<div>Some Spinner</div>}
-		>
+		<Button data-testid="btn" isLoading loadingText="Loading..." spinner={<div>Some Spinner</div>}>
 			Example Button
 		</Button>
 	)

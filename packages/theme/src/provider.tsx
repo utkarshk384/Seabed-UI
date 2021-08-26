@@ -1,70 +1,66 @@
-import React, { createContext, useContext, useEffect, useMemo } from "react"
+import React, { createContext, useContext, useEffect, useState } from "react"
 
-import { Colors } from "@seabedui/utils"
-import { useDarkMode } from "@seabedui/hooks"
+import { useColorMode } from "@seabedui/color-mode"
 
 import {
 	MakeThemeCSSVar,
-	DefaultColorsCssVar,
 	MakeColorsCSSVars,
 	NormalizeTheme,
 	ApplyDefaults,
 	ExtendTheme,
 	SetTheme,
 } from "./theme"
-import { Theme } from "./defaults"
+import { Theme as DefaultTheme } from "@seabedui/theme-utils"
 
+import type { Props } from "./seabed-provider"
 import type { DefaultThemeType, ThemeType, Component } from "@seabedui/types"
 
-export type Props = {
-	theme?: ThemeType
-}
-
 /* Seabed Context */
-export const SeabedContext = createContext<ThemeType>(Theme as ThemeType)
+export const SeabedContext = createContext<ThemeType>(DefaultTheme as ThemeType)
 
 /* Seabed Provider */
-export const SeabedProvider: React.FC<Props> = ({ children, theme = Theme }) => {
-	//Hook to determine the color Mode
-	const [isDark] = useDarkMode()
+export const Provider: React.FC<Props> = ({ children, theme }) => {
+	const [colorMode] = useColorMode()
 
-	/* 
-		Memoized version of the the theme that is merged with the default theme.
-	*/
-	const FinalTheme = useMemo(() => {
+	const [Theme, setTheme] = useState<ThemeType>(() => {
 		//Merge `theme` with the default theme
-		let mergedTheme = ExtendTheme(theme as ThemeType)
+		let _theme = ExtendTheme(theme as ThemeType)
 
-		mergedTheme = SetTheme(mergedTheme as DefaultThemeType, isDark)
+		/* Set the `__colors` property of the theme  */
+		_theme = SetTheme(_theme as DefaultThemeType, colorMode)
 
-		return mergedTheme
-	}, [theme, isDark])
+		//Normalize theme to remove unecessary theme ExcludeProperties
+		_theme = NormalizeTheme(_theme as DefaultThemeType)
+
+		return _theme
+	})
+
+	useEffect(() => {
+		//Merge `theme` with the default theme
+		let _theme = ExtendTheme(Theme as ThemeType)
+
+		/* Set the `__colors` property of the theme  */
+		_theme = SetTheme(_theme as DefaultThemeType, colorMode)
+
+		//Normalize theme to remove unecessary theme ExcludeProperties
+		_theme = NormalizeTheme(_theme as DefaultThemeType)
+
+		MakeColorsCSSVars(Theme as DefaultThemeType, colorMode)
+
+		setTheme(_theme)
+		console.log("Provider")
+		console.log(_theme)
+	}, [Theme, colorMode])
 
 	useEffect(() => {
 		//Apply required styles to `document`
-		ApplyDefaults(FinalTheme as DefaultThemeType)
-
-		//Normalize theme to remove unecessary theme ExcludeProperties
-		const normalizedTheme = NormalizeTheme(FinalTheme as DefaultThemeType)
+		ApplyDefaults(Theme as DefaultThemeType)
 
 		//Create CSS Variables from theme
-		MakeThemeCSSVar(normalizedTheme)
-	}, [FinalTheme])
+		MakeThemeCSSVar(Theme as DefaultThemeType)
+	}, [Theme])
 
-	useEffect(() => {
-		//Set the `__colors` property of the theme and use that to make css variables
-		MakeColorsCSSVars(FinalTheme as DefaultThemeType)
-	}, [isDark, FinalTheme])
-
-	/* 
-		Make CSS Variables from default colors
-	*/
-	useEffect(() => {
-		DefaultColorsCssVar(Colors, (theme as DefaultThemeType).__prefix)
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []) //Intentionally ignoring line since, css Variable name only changes in development phase.
-
-	return <SeabedContext.Provider value={FinalTheme as ThemeType}>{children}</SeabedContext.Provider>
+	return <SeabedContext.Provider value={Theme as ThemeType}>{children}</SeabedContext.Provider>
 }
 
 /**

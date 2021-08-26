@@ -1,8 +1,9 @@
 import { css } from "@linaria/core"
-import { classnames, ResolveColor, ThrowError, Memoizer } from "@seabedui/utils"
+import { classnames, ThrowError } from "@seabedui/utils"
+import { ResolveColor, Memoizer, ParseFont } from "@seabedui/theme-utils"
 
 import type { SharedStylesProps } from "../types"
-import type { DefaultThemeType, Dict } from "@seabedui/types"
+import type { DefaultThemeType, Dict, fontVariants } from "@seabedui/types"
 
 export const useClasses = Memoizer<string | undefined>((className) =>
 	classnames(variants, transitions, className || "")
@@ -15,20 +16,30 @@ export const useStyles = Memoizer<Required<SharedStylesProps>, Dict>((props, The
 	const btnSize = sizes[props.size]
 	if (!btnSize) throw new Error(`Couldn't parse button size. Value: ${btnSize}`)
 
-	const btnColor = ResolveColor(props.color, theme)
-	if (btnColor.err) throw ThrowError(btnColor.err, "Button color is undefined")
+	const [btnColor, btnErr] = ResolveColor(props.color, theme)
+	if (btnErr) throw ThrowError(btnErr, "Button color is undefined")
 
-	const textColor = ResolveColor(props.textColor, theme)
-	if (textColor.err) throw ThrowError(textColor.err, "Button text color is undefined")
+	const [textColor, textErr] = ResolveColor(props.textColor, theme)
+	if (textErr) throw ThrowError(textErr, "Button text color is undefined")
+
 	const fontSize = theme.typography.fontSize[props.textSize]
+	if (!fontSize) throw new Error(`Couldn't parse font size. Value: ${fontSize}`)
+
+	const [fontFamily, fontErr] = ParseFont(
+		props.fontFamily,
+		theme.typography.fontFamily as fontVariants<"">
+	)
+	if (fontErr) throw ThrowError(fontErr, "Font family is undefined")
 
 	return {
 		"--padding": btnSize,
-		"--bg-color": btnColor.color,
-		"--text-color": textColor.color,
+		"--bg-color": btnColor as string,
+		"--text-color": textColor as string,
 		"--size": fontSize,
 		"--disabled": `var(--${theme.__prefix}-disabled)`,
 		"--active": `var(--${theme.__prefix}-active)`,
+		"--font-family": `var(--${theme.__prefix}-font-family-${fontFamily})`,
+		"--border-radius": `var(--${theme.__prefix}-border-radius)`,
 	}
 })
 

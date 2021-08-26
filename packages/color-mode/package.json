@@ -1,11 +1,11 @@
 {
-  "name": "@seabedui/theme",
+  "name": "@seabedui/color-mode",
   "version": "0.0.1",
   "description": "Theme related packages for @SeabedUI Library",
   "keywords": [
     "react",
-    "theme",
-    "theme-provider",
+    "color-mode",
+    "color-mode-provider",
     "seabedui"
   ],
   "author": "Utkarsh Kumar <utkarshk384@gmail.com>",
@@ -22,7 +22,7 @@
     "dist"
   ],
   "homepage": "https://github.com/Utkarsh-Kumar384/Seabed-UI",
-  "repository": "https://github.com/Utkarsh-Kumar384/Seabed-UI/tree/master/packages/theme",
+  "repository": "https://github.com/Utkarsh-Kumar384/Seabed-UI/tree/master/packages/color-mode",
   "bugs": {
     "url": "https://github.com/Utkarsh-Kumar384/Seabed-UI/issues"
   },
@@ -39,9 +39,7 @@
     "watch": "watcher -c ../../watcher.config.js -i src"
   },
   "dependencies": {
-    "@seabedui/color-mode": "^0.0.1",
     "@seabedui/hooks": "^0.0.1",
-    "@seabedui/theme-utils": "^0.0.1",
     "@seabedui/utils": "^0.0.1"
   },
   "devDependencies": {

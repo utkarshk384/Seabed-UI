@@ -1,8 +1,11 @@
-import { Colors, PREFIX } from "@seabedui/utils"
+import { Colors } from "./colors"
+import { PREFIX } from "./consts"
 
 import type { DefaultThemeType } from "@seabedui/types"
 
 export const Theme: DefaultThemeType = {
+	initalColorMode: "dark",
+	useSystemColors: true,
 	colorScheme: "both",
 	__prefix: PREFIX,
 	__colors: {
@@ -84,7 +87,11 @@ export const Theme: DefaultThemeType = {
 
 	borderRadius: 10,
 	typography: {
-		fontFamily: "'Ubuntu', sans-serif",
+		fontFamily: {
+			heading: "'Ubuntu', sans-serif",
+			body: "'Ubuntu', sans-serif",
+			code: "'Ubuntu', sans-serif",
+		},
 		fontSize: {
 			xs: "0.5rem",
 			sm: "0.75rem",

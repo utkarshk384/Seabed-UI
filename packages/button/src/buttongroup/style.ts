@@ -1,4 +1,5 @@
-import { Memoizer, ParseSizes, classnames } from "@seabedui/utils"
+import { classnames, ThrowError } from "@seabedui/utils"
+import { Memoizer, ParseSizes } from "@seabedui/theme-utils"
 
 import type { Dict } from "@seabedui/types"
 
@@ -11,11 +12,11 @@ export const useClasses = Memoizer<string | undefined>((className) => {
 })
 
 export const useStyles = Memoizer<Required<ButtonGroupStyles>, Dict>((props) => {
-	const gap = ParseSizes(props.gap)
+	const [gap, err] = ParseSizes(props.gap)
 
-	if (gap.error) throw gap.error
+	if (err) throw ThrowError(err)
 
 	return {
-		"--gap": gap.data as string,
+		"--gap": gap as string,
 	}
 })

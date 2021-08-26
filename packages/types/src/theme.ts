@@ -1,6 +1,6 @@
 import type { TypographyType } from "./typography"
 import type { ColorsType, RequiredColorsType } from "./colors"
-import type { ColorSchemeType, PaletteType, SizeType } from "./foundation"
+import type { PaletteType, SizeType, ColorSchemeType } from "./foundation"
 import type { DeepRequired, Dict } from "./general"
 
 /* 
@@ -27,6 +27,8 @@ type baseThemeType = {
 	borderRadius?: BorderRadiusType
 	breakpoints?: BreakpointType
 	typography?: TypographyType
+	initalColorMode?: ColorSchemeType
+	useSystemColors?: boolean
 }
 
 /* 
@@ -36,7 +38,7 @@ export type ThemeType = ColorsType & baseThemeType
 
 type defaultTheme = Omit<baseThemeType, "borderRadius" | "typography"> & {
 	borderRadius?: string | BorderRadiusType
-	colorScheme?: ColorSchemeType
+	colorScheme?: ColorSchemeType<"both">
 	colors?: RequiredColorsType
 	__colors?: PaletteType
 	__prefix?: string

@@ -28,10 +28,7 @@ export type RequiredBy<P, T extends keyof P> = Required<Pick<P, T>> & P
 /**
  * A golang inspired way of handling error
  */
-export type HandleReturn<T = string> = {
-	error?: Error
-	data: T
-}
+export type HandleReturn<T = string> = [data: T, error?: Error]
 
 /* 
     General Types

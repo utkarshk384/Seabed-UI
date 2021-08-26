@@ -1,11 +1,11 @@
 {
-  "name": "@seabedui/theme",
+  "name": "@seabedui/spinner",
   "version": "0.0.1",
-  "description": "Theme related packages for @SeabedUI Library",
+  "description": "Helper components for @SeabedUI Library",
   "keywords": [
+    "assets",
+    "components",
     "react",
-    "theme",
-    "theme-provider",
     "seabedui"
   ],
   "author": "Utkarsh Kumar <utkarshk384@gmail.com>",
@@ -14,20 +14,15 @@
   "module": "dist/esm/index.js",
   "types": "dist/types/index.d.ts",
   "typings": "dist/types/index.d.ts",
-  "exports": {
-    "node": "./dist/cjs/index.js",
-    "require": "./dist/esm/index.js"
-  },
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/Utkarsh-Kumar384/Seabed-UI",
-  "repository": "https://github.com/Utkarsh-Kumar384/Seabed-UI/tree/master/packages/theme",
+  "homepage": "https://github.com/Utkarsh-Kumar384/Seabed-UI/",
+  "repository": "https://github.com/Utkarsh-Kumar384/Seabed-UI/tree/master/packages/spinner",
   "bugs": {
     "url": "https://github.com/Utkarsh-Kumar384/Seabed-UI/issues"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.com",
     "access": "public"
   },
   "scripts": {
@@ -38,13 +33,5 @@
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
     "watch": "watcher -c ../../watcher.config.js -i src"
   },
-  "dependencies": {
-    "@seabedui/color-mode": "^0.0.1",
-    "@seabedui/hooks": "^0.0.1",
-    "@seabedui/theme-utils": "^0.0.1",
-    "@seabedui/utils": "^0.0.1"
-  },
-  "devDependencies": {
-    "@seabedui/types": "^0.0.1"
-  }
+  "devDependencies": {}
 }

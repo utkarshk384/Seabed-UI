@@ -1,5 +1,5 @@
 import { themes } from '@storybook/theming'
-import { Colors } from "../packages/utils/src/colors"
+import { Colors } from "../packages/theme-utils/src/defaults"
 import { ExtendTheme, SeabedProvider } from "../packages/theme"
 import '@storybook/addon-console'
 
@@ -28,11 +28,23 @@ export const parameters = {
 
 
 const Theme = ExtendTheme({
-  colorScheme: "dark",
+  colorScheme: "both",
 
   borderRadius: 15,
   colors: {
     dark: {
+      background: {
+        primary: Colors.gray[800],
+        secondary: Colors.gray[900]
+      },
+      text: {
+        primary: Colors.white,
+        secondary: Colors.gray[200]
+      },
+      accent: Colors.green[500],
+      muted: Colors.gray[400]
+    },
+    light: {
       background: {
         primary: Colors.gray[800],
         secondary: Colors.gray[900]
@@ -51,7 +63,12 @@ const Theme = ExtendTheme({
 const ThemeWrapper:React.FC = (props) => {
 
 
-  return (<SeabedProvider theme={Theme}>{props.children}</SeabedProvider>)
+  return (
+   
+  <SeabedProvider theme={Theme}>
+      {props.children}
+  </SeabedProvider>
+  )
 }
 
 export const decorators = [(Story:React.FC) => (<ThemeWrapper><Story /></ThemeWrapper>),]
