@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useEffect } from "react"
+import { forwardRef, useRef } from "react"
 import { styled } from "@linaria/react"
 
 import { Spinner } from "@seabedui/spinner"
@@ -30,11 +30,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 
 	const theme = useTheme() as DefaultThemeType
 	const btnRef = useRef(null)
-
-	useEffect(() => {
-		console.log("Button")
-		console.log(theme)
-	}, [theme])
 
 	const composedStyles = useStyles({ size, color, textColor, textSize, fontFamily }, theme)
 	const classNames = useClasses(className)
