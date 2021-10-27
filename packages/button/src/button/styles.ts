@@ -3,9 +3,9 @@ import { classnames, ThrowError } from "@seabedui/utils"
 import { ResolveColor, Memoizer, ParseFont } from "@seabedui/theme-utils"
 
 import type { SharedStylesProps } from "../types"
-import type { DefaultThemeType, Dict, fontVariants } from "@seabedui/types"
+import type { DefaultThemeType, Dict } from "@seabedui/types"
 
-export const useClasses = Memoizer<string | undefined>((className) =>
+export const useClasses = Memoizer<string | undefined, string>((className) =>
 	classnames(variants, transitions, className || "")
 )
 
@@ -25,10 +25,7 @@ export const useStyles = Memoizer<Required<SharedStylesProps>, Dict>((props, The
 	const fontSize = theme.typography.fontSize[props.textSize]
 	if (!fontSize) throw new Error(`Couldn't parse font size. Value: ${fontSize}`)
 
-	const [fontFamily, fontErr] = ParseFont(
-		props.fontFamily,
-		theme.typography.fontFamily as fontVariants<"">
-	)
+	const [fontFamily, fontErr] = ParseFont(props.fontFamily, theme.typography.fontFamily)
 	if (fontErr) throw ThrowError(fontErr, "Font family is undefined")
 
 	return {

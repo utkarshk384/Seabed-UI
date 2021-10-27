@@ -1,6 +1,6 @@
 import { BorderRadiusSizes } from "./defaults"
 
-import type { fontVariants, HandleReturn, SpacingType } from "@seabedui/types"
+import type { FontInterface, FontNumberInterface, HandleReturn, SpacingType } from "@seabedui/types"
 import { GapSizes } from "./defaults"
 
 export function ParseBorderSizes(size: string | number): HandleReturn<string | null> {
@@ -24,7 +24,10 @@ export function ParseSizes(size: SpacingType): HandleReturn<string | null> {
 	return [parsedSize]
 }
 
-export function ParseFont(family: string, families: fontVariants<"">): HandleReturn<string | null> {
+export function ParseFont(
+	family: string,
+	families: FontInterface | FontNumberInterface
+): HandleReturn<string | null> {
 	let selectedFamily = ""
 
 	Object.keys(families).forEach((key) => {

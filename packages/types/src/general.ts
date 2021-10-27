@@ -1,6 +1,27 @@
 import { ComponentType } from "react"
+import type { StyledMeta } from "@linaria/core"
 
 import { DefaultThemeType } from "./theme"
+
+/* 
+	Styled Component type
+*/
+
+export type StyledComponent<T> = StyledMeta &
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	(T extends React.FunctionComponent<any>
+		? T
+		: React.FunctionComponent<
+				T & {
+					as?: React.ElementType
+				}
+		  >)
+
+/* 
+	Export CSS Properties from csstype
+*/
+export type { Property as CSSProperties } from "csstype"
+
 /* 
     A general type used for allowing indexing using square brackets
 */

@@ -1,8 +1,8 @@
-import { Dict, PaletteType } from "@seabedui/types"
+import { Dict, PaletteInterface } from "@seabedui/types"
 import { ExtendTheme } from "../src"
 
 it("Should extend and merge with the default theme", () => {
-	const colorExtend: PaletteType = {
+	const colorExtend: PaletteInterface = {
 		accent: "Green",
 		background: {
 			primary: "",

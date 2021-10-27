@@ -48,9 +48,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
 			{...htmlAttributes}
 		>
 			{isLoading ? props.spinnerPosition === "start" && spinner : props.leftIcon && props.leftIcon}
-
 			{isLoading ? loadingText : <span>{props.children}</span>}
-
 			{isLoading ? props.spinnerPosition === "end" && spinner : props.rightIcon && props.rightIcon}
 		</StyledButton>
 	)

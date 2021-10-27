@@ -5,7 +5,7 @@ import type { Dict } from "@seabedui/types"
 
 import type { ButtonGroupStyles } from "../types"
 
-export const useClasses = Memoizer<string | undefined>((className) => {
+export const useClasses = Memoizer<string | undefined, string>((className) => {
 	const classNames = classnames(className)
 
 	return classNames

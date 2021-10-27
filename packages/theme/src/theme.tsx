@@ -82,7 +82,7 @@ export function NormalizeTheme(theme: DefaultThemeType): ThemeType {
 	if (err) throw ThrowError(err, "Border Size is undefined")
 	theme.borderRadius = borderSize as string
 
-	//If the type of `fontFamily` is string, convert it to `FontType` notation
+	//If the type of `fontFamily` is string, convert it to `FontInterface` notation
 	const fontFamily = theme.typography.fontFamily
 	if (typeof fontFamily === "string") {
 		theme.typography.fontFamily = {

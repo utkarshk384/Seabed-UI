@@ -50,7 +50,7 @@ export function ResolveColor(
 	const splitColor = color.split(",")
 	if (splitColor.length === 3) return [color]
 
-	let selectedColor = ""
+	let selectedColor: string | null = null
 	let err
 	const error = new Error(
 		`${splitColor} is not defined in the theme object or the default color palette.`
@@ -80,10 +80,10 @@ export function ResolveColor(
 			return [theme.__colors.muted]
 
 		default:
-			selectedColor = _.get(Colors, color as string, null)
+			selectedColor = _.get(Colors, color, null)
 	}
 
 	if (!selectedColor) err = error
 
-	return [null, err]
+	return [selectedColor, err]
 }

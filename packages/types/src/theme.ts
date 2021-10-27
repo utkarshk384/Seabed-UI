@@ -1,7 +1,13 @@
 import type { TypographyType } from "./typography"
-import type { ColorsType, RequiredColorsType } from "./colors"
-import type { PaletteType, SizeType, ColorSchemeType } from "./foundation"
+import type {
+	ColorSchemeType,
+	ColorsInterface,
+	PaletteInterface,
+	RequiredColorsType,
+} from "./colors"
+import type { SizeType } from "./sizes"
 import type { DeepRequired, Dict } from "./general"
+import { FontInterface } from "."
 
 /* 
     Typings for the `borderRadius` of the theme object.
@@ -34,15 +40,19 @@ type baseThemeType = {
 /* 
 	Typings for the final Theme Object.
 */
-export type ThemeType = ColorsType & baseThemeType
+export type ThemeType = ColorsInterface & baseThemeType
+
+type defaultTypographyType = Omit<TypographyType, "fontFamily"> & {
+	fontFamily: FontInterface
+}
 
 type defaultTheme = Omit<baseThemeType, "borderRadius" | "typography"> & {
 	borderRadius?: string | BorderRadiusType
 	colorScheme?: ColorSchemeType<"both">
 	colors?: RequiredColorsType
-	__colors?: PaletteType
+	__colors?: PaletteInterface
 	__prefix?: string
-	typography?: DeepRequired<TypographyType>
+	typography?: DeepRequired<defaultTypographyType>
 }
 
 /* 

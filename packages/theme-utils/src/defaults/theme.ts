@@ -93,6 +93,7 @@ export const Theme: DefaultThemeType = {
 			code: "'Ubuntu', sans-serif",
 		},
 		fontSize: {
+			inherit: "inherit",
 			xs: "0.5rem",
 			sm: "0.75rem",
 			md: "1rem",
@@ -112,7 +113,7 @@ export const Theme: DefaultThemeType = {
 			body: 400,
 			code: 400,
 		},
-		letterSpacingTypes: {
+		letterSpacing: {
 			heading: "0.05rem",
 			body: "0.015rem",
 			code: "0.05rem",

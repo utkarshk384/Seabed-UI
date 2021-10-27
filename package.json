@@ -20,6 +20,7 @@
   },
   "scripts": {
     "runs": "yarn manypkg run",
+    "execs": "yarn manypkg exec",
     "clean:modules": "rm -rf node_modules && lerna exec -- rm -rf node_modules",
     "clean:dist": "lerna exec -- yarn rimraf dist",
     "clean": "run-s clean:*",
@@ -47,11 +48,11 @@
   "resolutions": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "@linaria/babel-preset": "^3.0.0-beta.7",
+    "@linaria/babel-preset": "^3.0.0-beta.13",
     "@linaria/core": "^3.0.0-beta.4",
-    "@linaria/react": "^3.0.0-beta.7",
+    "@linaria/react": "^3.0.0-beta.13",
     "@linaria/shaker": "^3.0.0-beta.10",
-    "@linaria/webpack-loader": "^3.0.0-beta.7"
+    "@linaria/webpack-loader": "^3.0.0-beta.13"
   },
   "dependencies": {
     "@babel/cli": "^7.14.8",
@@ -59,11 +60,11 @@
     "@babel/preset-env": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.14.5",
-    "@linaria/babel-preset": "^3.0.0-beta.7",
+    "@linaria/babel-preset": "^3.0.0-beta.13",
     "@linaria/core": "^3.0.0-beta.4",
-    "@linaria/react": "^3.0.0-beta.7",
+    "@linaria/react": "^3.0.0-beta.13",
     "@linaria/shaker": "^3.0.0-beta.10",
-    "@linaria/webpack-loader": "^3.0.0-beta.7",
+    "@linaria/webpack-loader": "^3.0.0-beta.13",
     "@manypkg/cli": "^0.18.0",
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
@@ -118,8 +119,11 @@
   "devDependencies": {
     "husky": "^7.0.2"
   },
-  "lint-staged":{
-    "packages/**/*.ts(x)?" :["yarn lint", "yarn build"] 
+  "lint-staged": {
+    "packages/**/*.ts(x)?": [
+      "yarn lint",
+      "yarn build"
+    ]
   },
   "husky": {
     "pre-commit": "yarn lint"

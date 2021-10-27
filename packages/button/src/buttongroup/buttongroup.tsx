@@ -1,4 +1,4 @@
-import React from "react"
+import { forwardRef } from "react"
 import { styled } from "@linaria/react"
 
 import { DefaultProps } from "@seabedui/theme-utils"
@@ -7,7 +7,7 @@ import { useStyles, useClasses } from "./style"
 
 import type { ButtonGroupProps } from "../types"
 
-const ButtonGroup: React.FC<ButtonGroupProps> = (props) => {
+const ButtonGroup = forwardRef<HTMLDivElement, ButtonGroupProps>((props, ref) => {
 	const { direction = "row", gap = "10", ...htmlAttributes } = DefaultProps(props)
 
 	const styles = useStyles({ gap })
@@ -15,6 +15,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = (props) => {
 
 	return (
 		<StyledButtonGroup
+			ref={ref}
 			className={classNames}
 			style={styles}
 			direction={direction}
@@ -24,7 +25,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = (props) => {
 			{props.children}
 		</StyledButtonGroup>
 	)
-}
+})
 
 const StyledButtonGroup = styled.div<ButtonGroupProps>`
 	display: flex;

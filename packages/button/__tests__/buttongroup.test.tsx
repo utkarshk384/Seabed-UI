@@ -1,7 +1,7 @@
 import React from "react"
 
-import "../../../test-utils/matchMedia.mock"
-import { renderer, testA11y, screen } from "../../../test-utils/utils"
+import "../../../../../test-utils/matchMedia.mock"
+import { renderer, testA11y, screen } from "../../../../../test-utils/utils"
 
 import { Button, ButtonGroup } from "../src"
 

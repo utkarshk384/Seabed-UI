@@ -48,8 +48,6 @@ export const Provider: React.FC<Props> = ({ children, theme }) => {
 		MakeColorsCSSVars(Theme as DefaultThemeType, colorMode)
 
 		setTheme(_theme)
-		console.log("Provider")
-		console.log(_theme)
 	}, [Theme, colorMode])
 
 	useEffect(() => {

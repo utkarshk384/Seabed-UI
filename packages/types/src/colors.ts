@@ -1,33 +1,91 @@
-import { PaletteType } from "./foundation"
+import { Dict } from "./general"
+
+type basicColorInterface = Dict & {
+	primary: string
+	secondary: string
+}
+
+/* 
+
+    These states are applied via tailwind classnames to all UI elements depending on the type of UI element.
+
+    Ex: A button element might receive a enabled, muted, hover, focused, active states. 
+        Whereas, a text element will receive enabled and muted states only.
+
+    The states are as follows:
+
+    * `visited`: Used to show a link is clicked
+    * `disabled`: Used to show that a component is disabled
+    * `hover`: The component is hovered.
+    * `focus`: The component is focused.
+    * `selected`: The component that is selected in a list.
+    * `active`: The component that is being pressed.
+    * `dragged`: The component that is being dragged.
+
+*/
+export type StateInterface = Dict & {
+	disabled?: SchemeType
+	visited?: SchemeType
+	hover?: SchemeType
+	focused?: SchemeType
+	selected?: SchemeType
+	active?: SchemeType
+	draggered?: SchemeType
+}
+
+/* 
+	Foundational Types for Text Colors and Background Colors
+*/
+export type SchemeType =
+	| "bg.primary"
+	| "bg.secondary"
+	| "text.primary"
+	| "text.secondary"
+	| "accent"
+	| "muted"
+	| ColorPaletteType
+
+/* 
+	Foundational Types for defining theme colors
+	
+	*Note:  Muted is also used for the `disabled` state
+*/
+export type PaletteInterface = Dict<unknown> & {
+	background?: basicColorInterface
+	text?: basicColorInterface
+	states?: StateInterface
+	accent?: string
+	muted?: string
+}
 
 /* 
 	Types to do typescript typing based on selected color scheme
 */
-export type ModeColors<T> = T extends "dark"
+export type ColorsMode<T> = T extends "dark"
 	? {
-			dark: PaletteType
+			dark: PaletteInterface
 	  }
 	: T extends "light"
 	? {
-			light: PaletteType
+			light: PaletteInterface
 	  }
-	: { dark: PaletteType; light: PaletteType }
+	: { dark: PaletteInterface; light: PaletteInterface }
 
 /* 
 	  Types for the `color scheme` in the theme object
 */
-export type ColorsType =
+export type ColorsInterface =
 	| {
 			colorScheme?: "light"
-			colors?: ModeColors<"light">
+			colors?: ColorsMode<"light">
 	  }
 	| {
 			colorScheme?: "dark"
-			colors?: ModeColors<"dark">
+			colors?: ColorsMode<"dark">
 	  }
 	| {
 			colorScheme?: "both"
-			colors?: ModeColors<"both">
+			colors?: ColorsMode<"both">
 	  }
 
 /*
@@ -35,113 +93,129 @@ export type ColorsType =
 	  Mostly would be used internally
 */
 export type RequiredColorsType = {
-	dark: PaletteType
-	light: PaletteType
+	dark: PaletteInterface
+	light: PaletteInterface
 }
+
+/* 
+	Foundational types for Color Scheme
+*/
+
+export type ColorSchemeType<T = ""> = "light" | "dark" | T
 
 /* 
 	Foundational Typings for the Default available colors
 */
 export type ColorPaletteType =
-	| "colors.black"
-	| "colors.white"
-	| "colors.amber[50]"
-	| "colors.amber[100]"
-	| "colors.amber[200]"
-	| "colors.amber[300]"
-	| "colors.amber[400]"
-	| "colors.amber[500]"
-	| "colors.amber[600]"
-	| "colors.amber[700]"
-	| "colors.amber[800]"
-	| "colors.amber[900]"
-	| "colors.blue[50]"
-	| "colors.blue[100]"
-	| "colors.blue[200]"
-	| "colors.blue[300]"
-	| "colors.blue[400]"
-	| "colors.blue[500]"
-	| "colors.blue[600]"
-	| "colors.blue[700]"
-	| "colors.blue[800]"
-	| "colors.blue[900]"
-	| "colors.gray[50]"
-	| "colors.gray[100]"
-	| "colors.gray[200]"
-	| "colors.gray[300]"
-	| "colors.gray[400]"
-	| "colors.gray[500]"
-	| "colors.gray[600]"
-	| "colors.gray[700]"
-	| "colors.gray[800]"
-	| "colors.gray[900]"
-	| "colors.red[50]"
-	| "colors.red[100]"
-	| "colors.red[200]"
-	| "colors.red[300]"
-	| "colors.red[400]"
-	| "colors.red[500]"
-	| "colors.red[600]"
-	| "colors.red[700]"
-	| "colors.red[800]"
-	| "colors.red[900]"
-	| "colors.green[50]"
-	| "colors.green[100]"
-	| "colors.green[200]"
-	| "colors.green[300]"
-	| "colors.green[400]"
-	| "colors.green[500]"
-	| "colors.green[600]"
-	| "colors.green[700]"
-	| "colors.green[800]"
-	| "colors.green[900]"
-	| "colors.violet[50]"
-	| "colors.violet[100]"
-	| "colors.violet[200]"
-	| "colors.violet[300]"
-	| "colors.violet[400]"
-	| "colors.violet[500]"
-	| "colors.violet[600]"
-	| "colors.violet[700]"
-	| "colors.violet[800]"
-	| "colors.violet[900]"
-	| "colors.indigo[50]"
-	| "colors.indigo[100]"
-	| "colors.indigo[200]"
-	| "colors.indigo[300]"
-	| "colors.indigo[400]"
-	| "colors.indigo[500]"
-	| "colors.indigo[600]"
-	| "colors.indigo[700]"
-	| "colors.indigo[800]"
-	| "colors.indigo[900]"
-	| "colors.pink[50]"
-	| "colors.pink[100]"
-	| "colors.pink[200]"
-	| "colors.pink[300]"
-	| "colors.pink[400]"
-	| "colors.pink[500]"
-	| "colors.pink[600]"
-	| "colors.pink[700]"
-	| "colors.pink[800]"
-	| "colors.pink[900]"
-	| "colors.orange[50]"
-	| "colors.orange[100]"
-	| "colors.orange[200]"
-	| "colors.orange[300]"
-	| "colors.orange[400]"
-	| "colors.orange[500]"
-	| "colors.orange[600]"
-	| "colors.orange[700]"
-	| "colors.orange[800]"
-	| "colors.orange[900]"
-	| "colors.teal[50]"
-	| "colors.teal[100]"
-	| "colors.teal[200]"
-	| "colors.teal[300]"
-	| "colors.teal[400]"
-	| "colors.teal[500]"
-	| "colors.teal[600]"
-	| "colors.teal[700]"
-	| "colors.teal[800]"
-	| "colors.teal[900]"
+	| "black"
+	| "white"
+	| "yellow[50]"
+	| "yellow[100]"
+	| "yellow[200]"
+	| "yellow[300]"
+	| "yellow[400]"
+	| "yellow[500]"
+	| "yellow[600]"
+	| "yellow[700]"
+	| "yellow[800]"
+	| "yellow[900]"
+	| "amber[50]"
+	| "amber[100]"
+	| "amber[200]"
+	| "amber[300]"
+	| "amber[400]"
+	| "amber[500]"
+	| "amber[600]"
+	| "amber[700]"
+	| "amber[800]"
+	| "amber[900]"
+	| "blue[50]"
+	| "blue[100]"
+	| "blue[200]"
+	| "blue[300]"
+	| "blue[400]"
+	| "blue[500]"
+	| "blue[600]"
+	| "blue[700]"
+	| "blue[800]"
+	| "blue[900]"
+	| "gray[50]"
+	| "gray[100]"
+	| "gray[200]"
+	| "gray[300]"
+	| "gray[400]"
+	| "gray[500]"
+	| "gray[600]"
+	| "gray[700]"
+	| "gray[800]"
+	| "gray[900]"
+	| "red[50]"
+	| "red[100]"
+	| "red[200]"
+	| "red[300]"
+	| "red[400]"
+	| "red[500]"
+	| "red[600]"
+	| "red[700]"
+	| "red[800]"
+	| "red[900]"
+	| "green[50]"
+	| "green[100]"
+	| "green[200]"
+	| "green[300]"
+	| "green[400]"
+	| "green[500]"
+	| "green[600]"
+	| "green[700]"
+	| "green[800]"
+	| "green[900]"
+	| "violet[50]"
+	| "violet[100]"
+	| "violet[200]"
+	| "violet[300]"
+	| "violet[400]"
+	| "violet[500]"
+	| "violet[600]"
+	| "violet[700]"
+	| "violet[800]"
+	| "violet[900]"
+	| "indigo[50]"
+	| "indigo[100]"
+	| "indigo[200]"
+	| "indigo[300]"
+	| "indigo[400]"
+	| "indigo[500]"
+	| "indigo[600]"
+	| "indigo[700]"
+	| "indigo[800]"
+	| "indigo[900]"
+	| "pink[50]"
+	| "pink[100]"
+	| "pink[200]"
+	| "pink[300]"
+	| "pink[400]"
+	| "pink[500]"
+	| "pink[600]"
+	| "pink[700]"
+	| "pink[800]"
+	| "pink[900]"
+	| "orange[50]"
+	| "orange[100]"
+	| "orange[200]"
+	| "orange[300]"
+	| "orange[400]"
+	| "orange[500]"
+	| "orange[600]"
+	| "orange[700]"
+	| "orange[800]"
+	| "orange[900]"
+	| "teal[50]"
+	| "teal[100]"
+	| "teal[200]"
+	| "teal[300]"
+	| "teal[400]"
+	| "teal[500]"
+	| "teal[600]"
+	| "teal[700]"
+	| "teal[800]"
+	| "teal[900]"

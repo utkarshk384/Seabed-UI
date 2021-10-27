@@ -1,3 +1,7 @@
+
+/** @type {import('monorepo-watch/dist/types/types').IConfig}*/ 
 module.exports = {
-    runScripts: ["yarn", "build"]
+    runScripts: ["npm", "run", "build"],
+    resolveDevDependencies: true,
+    autoShowOptions: true,
 }
