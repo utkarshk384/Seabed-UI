@@ -1,7 +1,12 @@
 {
     "extends": "../../tsconfig.json",
     "compilerOptions": {
-        "noEmit": false
+        "isolatedModules": false,
+        "noEmit": false,
+        "rootDir": "src",
+        "emitDeclarationOnly": true,
+        "declaration": true,
+        "declarationDir": "./dist"
     },
     "include": ["src"]
 }

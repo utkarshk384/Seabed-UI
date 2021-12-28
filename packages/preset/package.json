@@ -1,0 +1,40 @@
+{
+    "name": "@seabedui/presets",
+    "version": "0.0.1",
+    "description": "Button components for @SeabedUI Component Library",
+    "keywords": [
+        "tailwind css",
+        "components",
+        "seabedui"
+    ],
+    "author": "Utkarsh Kumar <utkarshk384@gmail.com>",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "dist/types/index.d.ts",
+    "typings": "dist/types/index.d.ts",
+    "files": [
+      "dist"
+    ],
+    "homepage": "https://github.com/Utkarsh-Kumar384/Seabed-UI",
+    "repository": "https://github.com/Utkarsh-Kumar384/Seabed-UI/tree/master/packages/button",
+    "bugs": {
+      "url": "https://github.com/Utkarsh-Kumar384/Seabed-UI/issues"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "scripts": {
+      "clean": "shx rm -r dist",
+      "build": "tsc && node ./index.js",
+      "watch": "watcher -c ../../watcher.config.js -i src"
+    },
+    "dependencies": {
+      "@seabedui/core": "^0.0.1",
+      "@seabedui/utils": "^0.0.1",
+      "@seabedui/components": "^0.0.1"
+    },
+    "devDependencies": {
+      "@seabedui/types": "^0.0.1"
+    }
+  }
+  

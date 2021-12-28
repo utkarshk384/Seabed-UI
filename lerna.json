@@ -1,24 +1,25 @@
 {
-  "packages": [
-    "packages/*"
-  ],
-  "npmClient": "yarn",
-  "version": "independent",
-  "useWorkspaces": true,
-  "watcher": {
-    "exitOnError": false,
-    "packages": {
-      "default": {
-        "include": "**",
-        "exclude": [
-          "**/node_modules/**",
-          "**/.git/**",
-          "**/dist/**",
-          "**/build/**",
-          ".*/**"
-        ],
-        "commands": ["build"]
+    "packages": [
+      "packages/*"
+    ],
+    "npmClient": "yarn",
+    "version": "independent",
+    "useWorkspaces": true,
+    "watcher": {
+      "exitOnError": false,
+      "packages": {
+        "default": {
+          "include": "**",
+          "exclude": [
+            "**/node_modules/**",
+            "**/.git/**",
+            "**/dist/**",
+            "**/build/**",
+            ".*/**"
+          ],
+          "commands": ["build"]
+        }
       }
     }
   }
-}
+  

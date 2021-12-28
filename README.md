@@ -58,6 +58,8 @@ Inorder to start using the components, the following steps should be taken:
     }
 ```
 
+Please note that use only tailwind v3.0 or higher. Since this package uses tailwind v3.0 features.
+
 <br/>
 
 2. Now your ready to use the component library by importing components from `@seabedui/core` as a one place import or from `@seabedui/{component-name}.

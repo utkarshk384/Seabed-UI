@@ -1,65 +1,30 @@
-import { ComponentType } from "react"
-import type { StyledMeta } from "@linaria/core"
+/* Empty Function */
+export type arrowFunction = () => void
 
-import { DefaultThemeType } from "./theme"
+/* A CSS Type */
+export type CSSType = Dict<Dict<unknown>>
 
-/* 
-	Styled Component type
-*/
-
-export type StyledComponent<T> = StyledMeta &
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	(T extends React.FunctionComponent<any>
-		? T
-		: React.FunctionComponent<
-				T & {
-					as?: React.ElementType
-				}
-		  >)
-
-/* 
-	Export CSS Properties from csstype
-*/
-export type { Property as CSSProperties } from "csstype"
-
-/* 
-    A general type used for allowing indexing using square brackets
-*/
+/* A general type used for allowing indexing using square brackets */
 export type Dict<T = string, K extends string | number = string> = Record<K, T>
 
-/* 
-    Type used to create HOCs with theme object
-*/
-export type Component<T> = ComponentType<T & { theme: DefaultThemeType }>
-
-export type SeabedComponentType<T = Dict<unknown>> = React.ForwardRefExoticComponent<T>
-
-/* 
-    Deep Required
-*/
+/* Deep Required */
 export type DeepRequired<T> = T extends Record<string, unknown>
 	? { [K in keyof T]-?: DeepRequired<T[K]> }
 	: NonNullable<T>
 
-/* 
-	Require certain fields
-*/
+/* Require certain fields */
 export type RequiredBy<P, T extends keyof P> = Required<Pick<P, T>> & P
 
-/**
- * A golang inspired way of handling error
- */
+/* A golang inspired way of handling error */
 export type HandleReturn<T = string> = [data: T, error?: Error]
 
-/* 
-    General Types
-*/
+/* General Types */
 
 export type StrNum = string | number
 
-/* 
-    Keyboard Keys
-*/
+export type NestedDict = Dict<Dict<string>>
+
+/* Keyboard Keys */
 export type KeyboardButtons =
 	| "escape"
 	| "f1"

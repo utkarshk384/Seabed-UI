@@ -1,0 +1,14 @@
+{
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "rootDir": "src",
+        "declaration": true,
+        "allowJs": false,
+        "declarationDir": "dist/types",
+        "resolveJsonModule": false,
+        "module": "CommonJS",
+        "outDir": "dist/",
+    },
+    "include": ["src"]
+}

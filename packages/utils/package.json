@@ -1,43 +1,43 @@
 {
-  "name": "@seabedui/utils",
-  "version": "0.0.1",
-  "description": "Utility packages for @SeabedUI library components",
-  "keywords": [
-    "seabedui",
-    "@seabedui/utils",
-    "@seabedui"
-  ],
-  "author": "Utkarsh Kumar <utkarshk384@gmail.com>",
-  "license": "MIT",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/types/index.d.ts",
-  "typings": "dist/types/index.d.ts",
-  "exports": {
-    "node": "./dist/cjs/index.js",
-    "require": "./dist/esm/index.js"
-  },
-  "files": [
-    "dist"
-  ],
-  "homepage": "https://github.com/Utkarsh-Kumar384/Seabed-UI",
-  "repository": "https://github.com/Utkarsh-Kumar384/Seabed-UI/tree/master/packages/utils",
-  "bugs": {
-    "url": "https://github.com/Utkarsh-Kumar384/Seabed-UI/issues"
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.com",
-    "access": "public"
-  },
-  "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watchAll",
-    "build": "run-p build:*",
-    "build:module": "yarn rollup -c=../../rollup.config.ts --environment INCLUDE_DEPS,BUILD:production",
-    "build:types": "tsc --emitDeclarationOnly --declaration --declarationDir dist/types",
-    "watch": "watcher -c ../../watcher.config.js -i src"
-  },
-  "devDependencies": {
-    "@seabedui/types": "^0.0.1"
+    "name": "@seabedui/utils",
+    "version": "0.0.1",
+    "description": "Utility packages for @SeabedUI library components",
+    "keywords": [
+      "seabedui",
+      "utilities"
+    ],
+    "author": "Utkarsh Kumar <utkarshk384@gmail.com>",
+    "license": "MIT",
+    "main": "dist/index.js",
+    "types": "dist/types/index.d.ts",
+    "typings": "dist/types/index.d.ts",
+    "exports": {
+      "node": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "files": [
+      "dist"
+    ],
+    "homepage": "https://github.com/Utkarsh-Kumar384/Seabed-UI",
+    "repository": "https://github.com/Utkarsh-Kumar384/Seabed-UI/tree/master/packages/utils",
+    "bugs": {
+      "url": "https://github.com/Utkarsh-Kumar384/Seabed-UI/issues"
+    },
+    "publishConfig": {
+      "registry": "https://registry.npmjs.com",
+      "access": "public"
+    },
+    "scripts": {
+      "test": "jest",
+      "test:watch": "jest --watchAll",
+      "build": "tsc",
+      "watch": "watcher -c ../../watcher.config.js -i src"
+    },
+    "dependencies": {
+      "css": "^3.0.0"
+    },
+    "devDependencies": {
+      "@seabedui/types": "^0.0.1"
+    }
   }
-}
+  

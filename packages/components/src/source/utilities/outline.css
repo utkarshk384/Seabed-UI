@@ -1,0 +1,36 @@
+/* Opacity */
+@for $i from 0 to 100 by 10 {
+  .outline-opacity-$(i) {
+    --outline-opacity: $(i);
+  }
+}
+
+.outline-opacity-5 {
+  --outline-opacity: 0.05;
+}
+
+.outline-opacity-25 {
+  --outline-opacity: 0.25;
+}
+
+.outline-opacity-75 {
+  --outline-opacity: 0.75;
+}
+
+.outline-opacity-95 {
+  --outline-opacity: 0.95;
+}
+
+/* Width */
+@for $i from 3 to 9 {
+  .outline-$(i) {
+    outline-width: $(i)px;
+  }
+}
+
+/* Offset */
+@for $i from 3 to 9 {
+  .outline-offset-$(i) {
+    outline-offset: $(i)px;
+  }
+}

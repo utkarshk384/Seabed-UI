@@ -24,17 +24,6 @@ const ENV = process.env.BUILD //Current environment
 	*******
 */
 
-/* Get dir for current folder */
-const dir = {
-	module: pkgJSON.module.split("/"),
-	main: pkgJSON.main.split("/"),
-}
-
-for (const key in dir) {
-	dir[key].pop()
-	dir[key][0] = "./dist"
-	dir[key] = dir[key].join("/")
-}
 
 /* External Dependencies from `package.json` */
 const pkgDep = [];
@@ -54,21 +43,10 @@ const extensions = [".ts", ".tsx"]
 
 /* Output */
 const output = [
-	{	
-		dir: dir.main,
-		name: pkgJSON.name,
-		format: "cjs",
-		exports: "named",
-		sourcemap: true,
-		preserveModules: true,
-		preserveModulesRoot: "src",		
-
-	},
 	{
-		dir: dir.module,
+		dir: `${PACKAGE_ROOT_PATH}/dist`,
 		name: pkgJSON.name,
-		format: "esm",
-		exports: "named",
+		format: "commonjs",
 		sourcemap: true,
 		preserveModules: true,
 		preserveModulesRoot: "src",		
@@ -80,7 +58,7 @@ const output = [
 const plugins = [
 	typescript({ tsconfig: "./tsconfig.json" }),
 	nodeResolve({
-		mainFields: ["module", "main"],
+		mainFields: ["main"],
 		dedupe: ["@seabedui/core"],
 		exportConditions: ["require", "node"],
 		moduleDirectories: ["node_modules", "../**"],
@@ -111,13 +89,6 @@ const external = [
 	"ansi-regex" 		
 ]
 
-
-/* Watch */
-const watch = {
-	include: ""
-}
-
-
 /* 
 	Main Config
 */
@@ -126,17 +97,15 @@ const config = {
 	output,
 	plugins,
 	external,
-	watch,
 }
 
 
 /* 
 	ENV: Production
 */
-if(ENV === "production"){
-	delete config.watch
+if(ENV === "production")
 	config.external = [...config.external, ...pkgDep]
-}
+
 
 
 export default config

@@ -1,23 +1,14 @@
-import type { TypographyType } from "./typography"
-import type {
-	ColorSchemeType,
-	ColorsInterface,
-	PaletteInterface,
-	RequiredColorsType,
-} from "./colors"
-import type { SizeType } from "./sizes"
-import type { DeepRequired, Dict } from "./general"
-import { FontInterface } from "."
+import { Dict } from "./general"
+import * as css from "csstype"
+import { DeepRequired } from "."
 
-/* 
-    Typings for the `borderRadius` of the theme object.
-*/
+export type SizeType = "sm" | "md" | "lg" | "xl" | "2xl"
 export type BorderRadiusType = "none" | "full" | SizeType | number
 
 /* 
 	Type for the `breakpoint` property in the theme object
 */
-export type BreakpointType = Dict<number> & {
+export type BreakpointType = Dict<string | number> & {
 	"2xl"?: string | number
 	xl?: string | number
 	lg?: string | number
@@ -26,37 +17,58 @@ export type BreakpointType = Dict<number> & {
 	xs?: string | number
 }
 
-/* 
-	Typings for the base theme object.
-*/
-type baseThemeType = {
+export type BrandColors = Dict<string> & {
+	primary: string
+	secondary: string
+	accent: string
+}
+
+export type ThemedColors = Dict<string | Dict<string>> & {
+	brand?: BrandColors
+	text?: string
+	bg?: string
+	states?: StateColors
+}
+
+export type StateColors = {
+	hover?: string
+	focus?: string
+	pressed?: string
+	disabled?: string
+	dragged?: string
+}
+
+export type Colors = {
+	light?: ThemedColors
+	dark?: ThemedColors
+	success?: string
+	info?: string
+	warning?: string
+	error?: string
+}
+
+export type CustomTheme = Dict<unknown> & {
+	colors?: Colors & Dict<string | Dict<Dict<string> | string>>
 	borderRadius?: BorderRadiusType
-	breakpoints?: BreakpointType
-	typography?: TypographyType
-	initalColorMode?: ColorSchemeType
 	useSystemColors?: boolean
+	css?: CustomCSS
 }
 
-/* 
-	Typings for the final Theme Object.
-*/
-export type ThemeType = ColorsInterface & baseThemeType
-
-type defaultTypographyType = Omit<TypographyType, "fontFamily"> & {
-	fontFamily: FontInterface
+export type CustomCSS = Dict<unknown> & {
+	spinner?: CSSStyles
 }
 
-type defaultTheme = Omit<baseThemeType, "borderRadius" | "typography"> & {
-	borderRadius?: string | BorderRadiusType
-	colorScheme?: ColorSchemeType<"both">
-	colors?: RequiredColorsType
-	__colors?: PaletteInterface
-	__prefix?: string
-	typography?: DeepRequired<defaultTypographyType>
+export type CSSStyles = {
+	before?: css.Properties & Dict<string>
+	body?: css.Properties & Dict<string>
+	after?: css.Properties & Dict<string>
+	keyframes?: Dict<Dict<css.Properties>>
 }
 
-/* 
-	Typings for the defualt theme object.
-	Would mostly be used internally
-*/
-export type DefaultThemeType = DeepRequired<defaultTheme>
+export type ThemeType = CustomTheme | "dark" | "light"
+export type InternalTheme = {
+	colors: DeepRequired<Colors & Dict<string | Dict<Dict<string> | string>>>
+	borderRadius: string
+	useSystemColors: boolean
+	css?: CustomCSS
+}

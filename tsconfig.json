@@ -19,14 +19,6 @@
     "baseUrl": ".",
     "strictPropertyInitialization": false,
     "noImplicitAny": true,
-    "paths": {
-      "@/seabedui/button/*": ["./packages/button/dist/*"],
-      "@seabedui/core/*": ["./packages/core/dist/*"],
-      "@seabedui/hooks/*": ["./packages/hooks/dist/*"],
-      "@seabedui/theme/*": ["./packages/theme/dist/*"],
-      "@seabedui/types/*": ["./packages/types/dist/*"],
-      "@seabedui/utils/*": ["./packages/utils/dist/*"],
-    }
   },
   "include": [".storybook/*.tsx", "packages", "test-utils"],
   "exclude": ["rollup.config.ts"]

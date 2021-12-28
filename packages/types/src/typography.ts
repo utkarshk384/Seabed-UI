@@ -1,5 +1,3 @@
-import { Dict } from "./general"
-
 /* 
 	Foundational type for typography object.
 */
@@ -10,10 +8,10 @@ export interface FontNumberInterface {
 	code?: string | number
 }
 
-export interface FontInterface {
-	heading?: string
-	body: string
-	code?: string
+export interface FontInterface<T = string> {
+	heading?: T
+	body: T
+	code?: T
 }
 
 export type FontType = "heading" | "body" | "code"
@@ -21,7 +19,7 @@ export type FontType = "heading" | "body" | "code"
 export type FontSizeType =
 	| "xs"
 	| "sm"
-	| "md"
+	| "base"
 	| "lg"
 	| "xl"
 	| "2xl"
@@ -34,23 +32,6 @@ export type FontSizeType =
 	| "9xl"
 	| "inherit"
 
-export type FontSizeInterface = Dict & {
-	inherit?: string
-	xs?: string
-	sm?: string
-	md?: string
-	lg?: string
-	xl?: string
-	"2xl"?: string
-	"3xl"?: string
-	"4xl"?: string
-	"5xl"?: string
-	"6xl"?: string
-	"7xl"?: string
-	"8xl"?: string
-	"9xl"?: string
-}
-
 /* 
 	Typings for the `typography` section of the theme object.
 */
@@ -58,6 +39,6 @@ export type TypographyType = {
 	letterSpacing?: FontInterface
 	lineHeight?: FontNumberInterface
 	fontFamily?: FontInterface | string
-	fontSize?: FontSizeInterface
+	fontSize?: FontInterface<FontSizeType>
 	fontWeight?: FontNumberInterface
 }
