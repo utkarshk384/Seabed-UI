@@ -23,11 +23,10 @@ import type {
 export default function (tw: tailwindPlugin): void {
 	let theme = tw.config<InternalTheme>("seabedui.theme") || themes
 
-	theme = NormalizeTheme(theme as CustomTheme)
-
 	let colorVariants: boolean = tw.config("seabedui.colorVariants")
-
 	if (typeof colorVariants === "undefined") colorVariants = true
+
+	theme = NormalizeTheme(theme as CustomTheme, colorVariants)
 
 	const clrs = theme.colors
 
@@ -60,17 +59,10 @@ export default function (tw: tailwindPlugin): void {
 		commonClasses = { ...commonClasses, ...classes }
 	})
 
-	/* Generate custom theme colors (genColorVariants) */
-	const light = { ...clrs.light.brand, bg: clrs.light.bg, ...clrs.light.states }
-	const dark = { ...clrs.dark.brand, bg: clrs.dark.bg, ...clrs.dark.states }
+	cssVarLight = { ...cssVarLight, ...theme.__light.css }
+	cssVarDark = { ...cssVarDark, ...theme.__dark.css }
 
-	const lightTheme = generateThemeColors(light, colorVariants)
-	const darkTheme = generateThemeColors(dark, colorVariants)
-
-	cssVarLight = { ...cssVarLight, ...lightTheme.css }
-	cssVarDark = { ...cssVarDark, ...darkTheme.css }
-
-	darkTheme.classes.forEach((cls) => tw.addUtilities(cls))
+	theme.__dark.classes.forEach((cls) => tw.addUtilities(cls))
 	tw.addBase({ "html[data-theme='light']": cssVarLight })
 	tw.addBase({ "html[data-theme='dark']": cssVarDark })
 	tw.addUtilities({ "text-custom": "hsla(var(--text), 1)" })
@@ -115,6 +107,7 @@ const generateThemeColors = (colorObject: BrandColors, ColorVariants: boolean): 
 		const clrs = genShadesTint(colorObject[color])
 		clrs.forEach((clr) => {
 			let cssVar = ""
+
 			if (isBgColor) {
 				cssVar = `--bg-${count}`
 				CSSProperties[cssVar] = clr

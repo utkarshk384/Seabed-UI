@@ -6,19 +6,11 @@ export const themes: CustomTheme = {
 		light: {
 			brand: {
 				primary: "#80CED7",
-
 				secondary: "#263D42",
 				accent: "#F56F51",
 			},
 			text: "#4a4a4a",
 			bg: "#ADADAD",
-			states: {
-				disabled: "#C2C2C2",
-				dragged: "#F67F65",
-				focus: "#F78F78",
-				hover: "#F89F8B",
-				pressed: "#F9AF9F",
-			},
 		},
 
 		dark: {

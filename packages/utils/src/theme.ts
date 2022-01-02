@@ -1,23 +1,92 @@
-import { toHSL } from "./colors"
+import { toHSL, genShadesTint } from "./colors"
+import { createColorClasses } from "./addUtils"
 
 import type {
-	CustomTheme,
 	BorderRadiusType,
+	CustomTheme,
 	InternalTheme,
 	Dict,
 	DeepRequired,
+	ThemedColors,
+	InternalStyles,
 } from "@seabedui/types"
 
-export function NormalizeTheme(theme: CustomTheme): InternalTheme {
+export function NormalizeTheme(userTheme: CustomTheme, colorVariants: boolean): InternalTheme {
+	let theme = userTheme as InternalTheme
+
 	/* Convert all colors to HSL */
 	if (typeof theme.colors == "object") theme.colors = Colors2HSL(theme.colors)
 
 	/* Convert all borderRadius to px */
-	if (theme.borderRadius) theme.borderRadius = BorderRadius(theme.borderRadius) as BorderRadiusType
+	if (theme.borderRadius) theme.borderRadius = BorderRadius(theme.borderRadius as BorderRadiusType)
 
-	/* Set `colorVariants` to `true` if it is undefined */
+	/* Set state colors for all the brand colors */
+	theme = generateThemeColors(theme, colorVariants)
 
-	return theme as InternalTheme
+	return theme
+}
+
+const generateThemeColors = (theme: InternalTheme, colorVariants: boolean): InternalTheme => {
+	const brandColors = ["primary", "secondary", "accent"]
+	const themes = ["dark", "light"]
+
+	themes.forEach((k) => {
+		/* Dark */
+		const baseTheme = theme.colors[k] as Required<ThemedColors>
+		const colorMode = baseTheme.brand
+		const variants: Dict<string[]> = {
+			primary: genShadesTint(colorMode.primary),
+			secondary: genShadesTint(colorMode.secondary),
+			accent: genShadesTint(colorMode.accent),
+			bg: genShadesTint(baseTheme.bg),
+		}
+		const themeName = `__${k}`
+
+		const __theme: InternalStyles = { classes: [], css: {} }
+
+		brandColors.forEach((clr) => {
+			if (!colorMode[`${clr}-hover`]) colorMode[`${clr}-hover`] = variants[clr][1]
+			if (!colorMode[`${clr}-focus`]) colorMode[`${clr}-focus`] = variants[clr][1]
+			if (!colorMode[`${clr}-pressed`]) colorMode[`${clr}-pressed`] = variants[clr][1]
+			if (!colorMode[`${clr}-dragged`]) colorMode[`${clr}-dragged`] = variants[clr][1]
+
+			__theme.css[`--${clr}-hover`] = colorMode[`${clr}-hover`]
+			__theme.css[`--${clr}-focus`] = colorMode[`${clr}-focus`]
+			__theme.css[`--${clr}-pressed`] = colorMode[`${clr}-pressed`]
+			__theme.css[`--${clr}-dragged`] = colorMode[`${clr}-dragged`]
+		})
+
+		Object.keys(variants).forEach((color) => {
+			const clrs = variants[color]
+			let count = 100
+
+			if (!colorVariants) {
+				const cssVar = `--${color}`
+				__theme.css[cssVar] = colorMode[color]
+				__theme.classes.push(createColorClasses({ cssVar }))
+				return
+			}
+
+			clrs.forEach((clr) => {
+				let cssVar = ""
+				// If varaint type is `bg` then create only
+				cssVar = `--${color}-${count}`
+				__theme.css[cssVar] = clr
+
+				if (color == "bg") {
+					__theme.classes.push(
+						createColorClasses({ cssVar, customName: `${count}`, colorTypes: { bg: true } })
+					)
+				} else __theme.classes.push(createColorClasses({ cssVar: cssVar }))
+
+				count += 100
+			})
+		})
+
+		theme[themeName] = __theme
+	})
+
+	return theme
 }
 
 export function BorderRadius(radius: BorderRadiusType): string {
@@ -56,24 +125,6 @@ const Colors2HSL = (clrs: CustomTheme["colors"]): InternalTheme["colors"] => {
 	else if (typeof colors.light == "undefined") colors.light = colors.dark
 
 	colors = recursiveHSL(colors)
-
-	if (typeof colors.dark.states == "undefined")
-		colors.dark.states = {
-			disabled: colors.dark.brand.accent,
-			dragged: colors.dark.brand.accent,
-			focus: colors.dark.brand.accent,
-			hover: colors.dark.brand.accent,
-			pressed: colors.dark.brand.accent,
-		}
-
-	if (typeof colors.light.states == "undefined")
-		colors.light.states = {
-			disabled: colors.light.brand.accent,
-			dragged: colors.light.brand.accent,
-			focus: colors.light.brand.accent,
-			hover: colors.light.brand.accent,
-			pressed: colors.light.brand.accent,
-		}
 
 	return colors
 }

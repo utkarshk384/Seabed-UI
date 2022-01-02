@@ -19,23 +19,27 @@ export type BreakpointType = Dict<string | number> & {
 
 export type BrandColors = Dict<string> & {
 	primary: string
+	"primary-focus"?: string
+	"primary-hover"?: string
+	"primary-pressed"?: string
+	"primary-dragged"?: string
 	secondary: string
+	"secondary-focus"?: string
+	"secondary-hover"?: string
+	"secondary-pressed"?: string
+	"secondary-dragged"?: string
 	accent: string
+	"accent-focus"?: string
+	"accent-hover"?: string
+	"accent-pressed"?: string
+	"accent-dragged"?: string
 }
 
 export type ThemedColors = Dict<string | Dict<string>> & {
 	brand?: BrandColors
 	text?: string
 	bg?: string
-	states?: StateColors
-}
-
-export type StateColors = {
-	hover?: string
-	focus?: string
-	pressed?: string
 	disabled?: string
-	dragged?: string
 }
 
 export type Colors = {
@@ -71,4 +75,8 @@ export type InternalTheme = {
 	borderRadius: string
 	useSystemColors: boolean
 	css?: CustomCSS
-}
+	__dark: InternalStyles
+	__light: InternalStyles
+} & Dict<unknown>
+
+export type InternalStyles = { css: Dict<string>; classes: Dict<Dict<string>>[] }

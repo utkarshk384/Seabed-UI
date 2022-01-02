@@ -5,7 +5,7 @@ module.exports = {
   purge: ["./src/**/*.html", "./src/**/*.tsx", "./src/**/*.stories.tsx"],
   darkMode: false,
   seabedui: {
-    colorVariants: false,
+    colorVariants: true,
     resetCSS: true,
   },
   presets: [require('@seabedui/presets')]
