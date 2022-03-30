@@ -11,6 +11,7 @@ export const themes: CustomTheme = {
 			},
 			text: "#4a4a4a",
 			bg: "#ADADAD",
+			disabled: "#979797",
 		},
 
 		dark: {

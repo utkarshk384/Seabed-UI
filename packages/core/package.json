@@ -25,7 +25,7 @@
     },
     "scripts": {
       "clean": "shx rm -r dist",
-      "build": "tsc && node ./index.js",
+      "build": "tsc && node ../../dist-fix.js",
       "watch": "watcher -c ../../watcher.config.js -i src"
     },
     "dependencies": {

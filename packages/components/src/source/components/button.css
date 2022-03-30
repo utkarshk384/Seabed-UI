@@ -16,7 +16,10 @@
 
     background-color: hsla(var(--hover), var(--tw-bg-opacity));
     border-color: hsla(var(--hover), var(--tw-border-opacity));
-    color: hsla(var(--hover), var(--tw-text-opacity));
+  }
+
+  &:focus{
+
   }
 
   &-loading {
@@ -119,6 +122,8 @@
 
   &:hover {
     @apply bg-opacity-0 border-opacity-0;
+
+    color: hsla(var(--hover), var(--tw-text-opacity));
   }
 }
 
@@ -127,18 +132,34 @@
   --color: var(--text);
   --bg: var(--primary, var(--primary-500));
   --border: var(--primary, var(--primary-500));
+  --hover: var(--primary-hover);
+  --focus: var(--primary-focus);
 }
 
 .btn-secondary {
   --color: var(--text);
   --bg: var(--secondary, var(--secondary-500));
   --border: var(--secondary, var(--secondary-500));
+  --hover: var(--secondary-hover);
+  --focus: var(--secondary-focus);
 }
 
 .btn-accent {
   --color: var(--text);
   --bg: var(--accent, var(--accent-500));
   --border: var(--accent, var(--accent-500));
+  --hover: var(--accent-hover);
+  --focus: var(--accent-focus);
+}
+
+.btn-success,
+.btn-warning,
+.btn-error,
+.btn-info {
+  &:hover {
+    transition: filter 300ms ease-in-out;
+    filter: brightness(115%);
+  }
 }
 
 .btn-success {

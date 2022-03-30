@@ -17,11 +17,29 @@ export function NormalizeTheme(userTheme: CustomTheme, colorVariants: boolean): 
 	/* Convert all colors to HSL */
 	if (typeof theme.colors == "object") theme.colors = Colors2HSL(theme.colors)
 
+	/* Check validity of each property */
+	theme = CheckSetProperties(theme)
+
 	/* Convert all borderRadius to px */
 	if (theme.borderRadius) theme.borderRadius = BorderRadius(theme.borderRadius as BorderRadiusType)
 
 	/* Set state colors for all the brand colors */
 	theme = generateThemeColors(theme, colorVariants)
+
+	return theme
+}
+
+const CheckSetProperties = (theme: InternalTheme): InternalTheme => {
+	const dark = theme.colors.dark,
+		light = theme.colors.light
+
+	/* Check for disabled */
+	if (!dark.disabled && !light.disabled)
+		console.warn(
+			"SeabedUI: No disabled colors found in `theme.colors.dark` or in theme.colors.light"
+		)
+	if (!dark.disabled) theme.colors.dark.disabled = theme.colors.light.disabled
+	else if (!light.disabled) theme.colors.light.disabled = theme.colors.dark.disabled
 
 	return theme
 }

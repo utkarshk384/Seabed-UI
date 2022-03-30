@@ -1,16 +1,9 @@
-import { genShadesTint, createColorClasses, NormalizeTheme } from "@seabedui/utils"
+import { createColorClasses, NormalizeTheme } from "@seabedui/utils"
 import styles from "@seabedui/components"
 
 import { themes, tailwindColors } from "./themes"
 
-import type {
-	tailwindPlugin,
-	InternalTheme,
-	CustomTheme,
-	Dict,
-	BrandColors,
-	CSSStyles,
-} from "@seabedui/types"
+import type { tailwindPlugin, InternalTheme, CustomTheme, Dict, CSSStyles } from "@seabedui/types"
 
 /** 
     Configurations available for the plugin
@@ -84,49 +77,6 @@ export default function (tw: tailwindPlugin): void {
 	/* Reset CSS */
 	if (tw.config("seabedui.resetCSS") == true) tw.addBase(styles.reset)
 }
-
-const generateThemeColors = (colorObject: BrandColors, ColorVariants: boolean): ThemeColors => {
-	const CSSProperties: Dict<string> = {}
-	const classes: Dict<Dict<string>>[] = []
-
-	const excluded = ["disabled", "dragged", "focus", "hover", "pressed"] // To ignore creating variants for stateful colors
-
-	Object.keys(colorObject).forEach((color) => {
-		let count = 100
-
-		/* Run the code below if `color` is in excluded or if generating color variants is disabled by the user */
-		if (excluded.includes(color) || !ColorVariants) {
-			const cssVar = `--${color}`
-			CSSProperties[cssVar] = colorObject[color]
-			classes.push(createColorClasses({ cssVar }))
-			return
-		}
-
-		const isBgColor = color == "bg" // To check if current property is a bg color
-
-		const clrs = genShadesTint(colorObject[color])
-		clrs.forEach((clr) => {
-			let cssVar = ""
-
-			if (isBgColor) {
-				cssVar = `--bg-${count}`
-				CSSProperties[cssVar] = clr
-				classes.push(
-					createColorClasses({ cssVar, customName: `${count}`, colorTypes: { bg: true } })
-				)
-			} else {
-				cssVar = `--${color}-${count}`
-				CSSProperties[cssVar] = clr
-				classes.push(createColorClasses({ cssVar: cssVar }))
-			}
-			count += 100
-		})
-	})
-
-	return { css: CSSProperties, classes }
-}
-
-type ThemeColors = { css: Dict<string>; classes: Dict<Dict<string>>[] }
 
 const addCSS = (CSS: CSSStyles, key: string): void => {
 	let isPresent = true

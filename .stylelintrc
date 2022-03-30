@@ -17,7 +17,6 @@
     ],
     "declaration-block-trailing-semicolon": null,
     "no-descending-specificity": null,
-    "color-function-notation": "legacy",
-
+    "color-function-notation": "legacy"
   }
 }

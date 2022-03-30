@@ -31,7 +31,7 @@
     "clean": "shx rm -r ./src/compiled/**/*",
     "build": "yarn build-css && yarn post:build",
     "build-css": "yarn postcss --config src src/source/**/*.css --base src/source --dir src/compiled",
-    "post:build": "node ./index.js & yarn types && shx cp ./src/index.js ./dist",
+    "post:build": "node ./complie.js & yarn types && shx cp ./src/index.js ./dist",
     "types": "shx cp -r ./src/types ./dist",
     "watch": "watcher -c ./watcher.config.js -i src"
   },
