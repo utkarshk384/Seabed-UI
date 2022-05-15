@@ -2,62 +2,38 @@ import { Dict } from "./general"
 import * as css from "csstype"
 import { DeepRequired } from "."
 
-export type SizeType = "sm" | "md" | "lg" | "xl" | "2xl"
-export type BorderRadiusType = "none" | "full" | SizeType | number
+/* Frequently used types */
+type BasicSizes = "xs" | "sm" | "base" | "lg" | "xl" | "2xl"
 
 /* 
-	Type for the `breakpoint` property in the theme object
+	Types for colors 
 */
-export type BreakpointType = Dict<string | number> & {
-	"2xl"?: string | number
-	xl?: string | number
-	lg?: string | number
-	md?: string | number
-	sm?: string | number
-	xs?: string | number
+export type ColorsType = {
+	background: string
+	foreground: string
+	focus?: string
+	pressed?: string
+}
+export interface NeutralColors extends Dict<string | undefined> {
+	black?: string
+	white?: string
+	gray?: string
+}
+export interface BrandColors extends Dict<ColorsType | undefined> {
+	primary?: ColorsType
+	secondary?: ColorsType
+	accent?: ColorsType
 }
 
-export type BrandColors = Dict<string> & {
-	primary: string
-	"primary-focus"?: string
-	"primary-hover"?: string
-	"primary-pressed"?: string
-	"primary-dragged"?: string
-	secondary: string
-	"secondary-focus"?: string
-	"secondary-hover"?: string
-	"secondary-pressed"?: string
-	"secondary-dragged"?: string
-	accent: string
-	"accent-focus"?: string
-	"accent-hover"?: string
-	"accent-pressed"?: string
-	"accent-dragged"?: string
+export interface StatefulColors {
+	success?: ColorsType
+	info?: ColorsType
+	warning?: ColorsType
+	error?: ColorsType
+	disabled?: Omit<ColorsType, "focus" | "pressed">
 }
 
-export type ThemedColors = Dict<string | Dict<string>> & {
-	brand?: BrandColors
-	text?: string
-	bg?: string
-	disabled?: string
-}
-
-export type Colors = {
-	light?: ThemedColors
-	dark?: ThemedColors
-	success?: string
-	info?: string
-	warning?: string
-	error?: string
-}
-
-export type CustomTheme = Dict<unknown> & {
-	colors?: Colors & Dict<string | Dict<Dict<string> | string>>
-	borderRadius?: BorderRadiusType
-	useSystemColors?: boolean
-	css?: CustomCSS
-}
-
+/* Types for injecting custom CSS */
 export type CustomCSS = Dict<unknown> & {
 	spinner?: CSSStyles
 }
@@ -69,11 +45,82 @@ export type CSSStyles = {
 	keyframes?: Dict<Dict<css.Properties>>
 }
 
-export type ThemeType = CustomTheme | "dark" | "light"
+/* 
+	Types for Border Radius.
+	Config Name: borderRadius
+*/
+export type radiusType = BasicSizes | "3xl"
+export interface radiusInterface extends Dict<string | undefined> {
+	xs?: string
+	sm?: string
+	base?: string
+	lg?: string
+	xl?: string
+	"2xl"?: string
+	"3xl"?: string
+}
+
+/* 
+	Types for breakpoints
+	Config Name: breakpoints
+*/
+export type breakpointType = BasicSizes
+export interface breakpointInterface extends Dict<string | number | undefined> {
+	xs?: string | number
+	sm?: string | number
+	base?: string | number
+	lg?: string | number
+	xl?: string | number
+	"2xl"?: string | number
+}
+
+/* 
+	Types for shadows
+	Config Name: shadows
+*/
+export type shadowTypes = BasicSizes | "3xl" | "outline" | "inner" | "round"
+export interface shadowInterface extends Dict<string | undefined> {
+	xs?: string
+	sm?: string
+	base?: string
+	lg?: string
+	xl?: string
+	"2xl"?: string
+	"3xl"?: string
+	outline?: string
+	inner?: string
+	round?: string
+}
+
+/* 
+	Types for Colors 
+	Config Name: colors
+*/
+export type Colors = BrandColors & StatefulColors
+
+export interface colorsInterface {
+	light?: Colors
+	dark?: Colors
+	neutral?: NeutralColors
+}
+
+export type Theme = Dict<unknown> & {
+	breakpoints?: breakpointInterface
+	shadows?: shadowInterface
+	colors?: colorsInterface
+	radiusConfig?: radiusInterface
+	radius?: radiusType
+	defaultTheme?: "light" | "dark" | "system"
+	css?: CustomCSS
+}
+
 export type InternalTheme = {
-	colors: DeepRequired<Colors & Dict<string | Dict<Dict<string> | string>>>
-	borderRadius: string
-	useSystemColors: boolean
+	breakpoints: breakpointInterface
+	shadows: shadowInterface
+	colors: DeepRequired<colorsInterface>
+	radiusConfig: radiusInterface
+	radius: string
+	defaultTheme: "light" | "dark" | "system"
 	css?: CustomCSS
 	__dark: InternalStyles
 	__light: InternalStyles

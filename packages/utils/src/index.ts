@@ -1,5 +1,4 @@
 export * from "./colors"
-export * from "./theme"
 export * from "./addUtils"
 export * from "./css"
 export * from "./general"

@@ -1,27 +1,22 @@
-import { createColorClasses, NormalizeTheme } from "@seabedui/utils"
+import { makeCSSVariables, flattenObject } from "@seabedui/utils"
 import styles from "@seabedui/components"
 
-import { themes, tailwindColors } from "./themes"
+import { themes } from "./themes"
+import { NormalizeTheme } from "./helpers"
 
-import type { tailwindPlugin, InternalTheme, CustomTheme, Dict, CSSStyles } from "@seabedui/types"
+import type { tailwindPlugin, InternalTheme, Theme, Dict, CSSStyles } from "@seabedui/types"
 
 /** 
     Configurations available for the plugin
 
-    1. Theme - @type {Object}
+    1. Theme - @type {Theme}
     3. States - @type {Object}
 	4. ResetCSS - @type {boolean}
 */
-
 export default function (tw: tailwindPlugin): void {
 	let theme = tw.config<InternalTheme>("seabedui.theme") || themes
 
-	let colorVariants: boolean = tw.config("seabedui.colorVariants")
-	if (typeof colorVariants === "undefined") colorVariants = true
-
-	theme = NormalizeTheme(theme as CustomTheme, colorVariants)
-
-	const clrs = theme.colors
+	theme = NormalizeTheme(theme as Theme)
 
 	/* Include Base Styles */
 	tw.addBase(styles.base)
@@ -29,35 +24,30 @@ export default function (tw: tailwindPlugin): void {
 	/* Include custom utilities */
 	tw.addUtilities(styles.utilities)
 
-	/* Add custom tailwindcss colors */
-	Object.keys(tailwindColors).forEach((color) =>
-		tw.addUtilities(createColorClasses({ cssVar: color }))
-	)
+	// /* Add custom tailwindcss colors */
+	// Object.keys(tailwindColors).forEach((color) =>
+	// 	tw.addUtilities(createColorClasses({ cssVar: color }))
+	// )
 
 	/* Add CSS Variables */
 	const CSSProperties: Dict<string> = {
-		"--border-radius": theme.borderRadius,
-		"--error": clrs.error,
-		"--success": clrs.success,
-		"--warning": clrs.warning,
-		"--info": clrs.info,
+		"--radius-default": theme.radius,
+		...makeCSSVariables(theme.shadows as Dict<string>, "shadow"),
+		...makeCSSVariables(theme.radiusConfig as Dict<string>, "radius"),
+		...makeCSSVariables(theme.breakpoints as Dict<string>, "bp"),
+		...makeCSSVariables(theme.colors.neutral as Dict<string>),
 	}
-	let commonClasses: Dict<Dict<string>> = {}
-	let cssVarDark: Dict<string> = { "--text": clrs.dark.text },
-		cssVarLight: Dict<string> = { "--text": clrs.light.text }
 
-	Object.keys(clrs).forEach((key) => {
-		if (typeof key !== "string") return
-		const classes = createColorClasses({ cssVar: `--${key}` })
-		commonClasses = { ...commonClasses, ...classes }
-	})
+	/* CSS Variables for Light Colors */
+	let flattenedColors = flattenObject<string>(theme.colors.light)
+	const lightColors = makeCSSVariables(flattenedColors)
 
-	cssVarLight = { ...cssVarLight, ...theme.__light.css }
-	cssVarDark = { ...cssVarDark, ...theme.__dark.css }
+	/* CSS Variables for Dark Colors */
+	flattenedColors = flattenObject<string>(theme.colors.dark)
+	const darkColors = makeCSSVariables(flattenedColors)
 
-	theme.__dark.classes.forEach((cls) => tw.addUtilities(cls))
-	tw.addBase({ "html[data-theme='light']": cssVarLight })
-	tw.addBase({ "html[data-theme='dark']": cssVarDark })
+	tw.addBase({ "html[data-theme='light']": lightColors })
+	tw.addBase({ "html[data-theme='dark']": darkColors })
 	tw.addUtilities({ "text-custom": "hsla(var(--text), 1)" })
 	tw.addBase({ ":root": CSSProperties })
 

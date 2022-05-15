@@ -2,7 +2,7 @@
 import { parse, stringify } from "css"
 import fs from "fs"
 
-import type { CSSType, sourceType } from "@seabedui/types"
+import type { CSSType, Dict, sourceType } from "@seabedui/types"
 import type { Declaration, AtRule, Rule, KeyFrame } from "css"
 
 export function styled(css: TemplateStringsArray, ...args: string[]): CSSType {
@@ -99,4 +99,15 @@ const getCSS = (selectorArray: string[], declarations: Declaration[]): CSSType =
 	})
 
 	return styles
+}
+
+export const makeCSSVariables = (obj: Dict<string>, prefix?: string): Dict<string> => {
+	const vars: Dict<string> = {}
+
+	Object.keys(obj).forEach((key) => {
+		if (prefix) vars[`--${prefix}-${key}`] = obj[key]
+		else vars[`--${key}`] = obj[key]
+	})
+
+	return vars
 }

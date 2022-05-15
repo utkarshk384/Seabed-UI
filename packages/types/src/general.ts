@@ -7,10 +7,31 @@ export type CSSType = Dict<Dict<unknown>>
 /* A general type used for allowing indexing using square brackets */
 export type Dict<T = string, K extends string | number = string> = Record<K, T>
 
+export type Primitive = string | number | boolean | bigint | symbol | undefined | null
+export type Builtin = Primitive | Date | Error | RegExp
+
 /* Deep Required */
-export type DeepRequired<T> = T extends Record<string, unknown>
+export type DeepRequired<T> = T extends Error
+	? Required<T>
+	: T extends Builtin
+	? T
+	: T extends Map<infer K, infer V>
+	? Map<DeepRequired<K>, DeepRequired<V>>
+	: T extends ReadonlyMap<infer K, infer V>
+	? ReadonlyMap<DeepRequired<K>, DeepRequired<V>>
+	: T extends WeakMap<infer K, infer V>
+	? WeakMap<DeepRequired<K>, DeepRequired<V>>
+	: T extends Set<infer U>
+	? Set<DeepRequired<U>>
+	: T extends ReadonlySet<infer U>
+	? ReadonlySet<DeepRequired<U>>
+	: T extends WeakSet<infer U>
+	? WeakSet<DeepRequired<U>>
+	: T extends Promise<infer U>
+	? Promise<DeepRequired<U>>
+	: T extends Dict<string>
 	? { [K in keyof T]-?: DeepRequired<T[K]> }
-	: NonNullable<T>
+	: Required<T>
 
 /* Require certain fields */
 export type RequiredBy<P, T extends keyof P> = Required<Pick<P, T>> & P
