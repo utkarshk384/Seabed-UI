@@ -106,7 +106,7 @@ export const Colors: DefaultProp = ({ children = "Button" }) => (
 			<div className="flex gap-x-11 items-center justify-center">
 				<Component className="btn btn-solid btn-success btn-md">{children}</Component>
 				<Component className="btn btn-solid btn-info btn-md">{children}</Component>
-				<Component className="btn btn-solid btn-warning btn-md">{children}</Component>
+				<Component className="btn btn-solid btn-warn btn-md">{children}</Component>
 				<Component className="btn btn-solid btn-error btn-md">{children}</Component>
 			</div>
 		</div>

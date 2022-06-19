@@ -1,6 +1,6 @@
-import { Dict } from "./general"
 import * as css from "csstype"
-import { DeepRequired } from "."
+import { DeepRequired, Dict, NestedDict } from "./general"
+import { FontType } from "./typography"
 
 /* Frequently used types */
 type BasicSizes = "xs" | "sm" | "base" | "lg" | "xl" | "2xl"
@@ -28,7 +28,7 @@ export interface BrandColors extends Dict<ColorsType | undefined> {
 export interface StatefulColors {
 	success?: ColorsType
 	info?: ColorsType
-	warning?: ColorsType
+	warn?: ColorsType
 	error?: ColorsType
 	disabled?: Omit<ColorsType, "focus" | "pressed">
 }
@@ -42,7 +42,7 @@ export type CSSStyles = {
 	before?: css.Properties & Dict<string>
 	body?: css.Properties & Dict<string>
 	after?: css.Properties & Dict<string>
-	keyframes?: Dict<Dict<css.Properties>>
+	keyframes?: NestedDict<css.Properties>
 }
 
 /* 
@@ -110,6 +110,7 @@ export type Theme = Dict<unknown> & {
 	colors?: colorsInterface
 	radiusConfig?: radiusInterface
 	radius?: radiusType
+	fontSize?: FontType
 	defaultTheme?: "light" | "dark" | "system"
 	css?: CustomCSS
 }
@@ -120,10 +121,11 @@ export type InternalTheme = {
 	colors: DeepRequired<colorsInterface>
 	radiusConfig: radiusInterface
 	radius: string
+	fontSize?: FontType
 	defaultTheme: "light" | "dark" | "system"
 	css?: CustomCSS
 	__dark: InternalStyles
 	__light: InternalStyles
 } & Dict<unknown>
 
-export type InternalStyles = { css: Dict<string>; classes: Dict<Dict<string>>[] }
+export type InternalStyles = { css: Dict<string>; classes: NestedDict<string>[] }

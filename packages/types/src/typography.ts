@@ -2,43 +2,48 @@
 	Foundational type for typography object.
 */
 
-export interface FontNumberInterface {
-	heading?: string | number
-	body: string | number
-	code?: string | number
+export interface Display {
+	large: string
+	base: string
 }
 
-export interface FontInterface<T = string> {
-	heading?: T
-	body: T
-	code?: T
+export type DisplayType = "large" | "base"
+
+export interface Title {
+	xs: string
+	sm: string
+	base: string
+	lg: string
+	xl: string
+	"2xl": string
 }
 
-export type FontType = "heading" | "body" | "code"
+export type TitleType = "xs" | "sm" | "base" | "lg" | "xl" | "2xl"
 
-export type FontSizeType =
-	| "xs"
-	| "sm"
-	| "base"
-	| "lg"
-	| "xl"
-	| "2xl"
-	| "3xl"
-	| "4xl"
-	| "5xl"
-	| "6xl"
-	| "7xl"
-	| "8xl"
-	| "9xl"
-	| "inherit"
+export interface Paragraph {
+	xs: string | number
+	sm: string | number
+	base: string | number
+	lg: string | number
+	xl: string | number
+	"2xl": string | number
+	"3xl": string | number
+}
 
-/* 
-	Typings for the `typography` section of the theme object.
-*/
-export type TypographyType = {
-	letterSpacing?: FontInterface
-	lineHeight?: FontNumberInterface
-	fontFamily?: FontInterface | string
-	fontSize?: FontInterface<FontSizeType>
-	fontWeight?: FontNumberInterface
+export type ParagraphType = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl"
+
+export interface ResponsiveDisplay {
+	desktop?: Display
+	mobile?: Display
+}
+
+export interface ResponsiveTitle {
+	desktop?: Title
+	mobile?: Title
+}
+
+export interface FontType {
+	display?: ResponsiveDisplay
+	title?: ResponsiveTitle
+	paragraph?: Paragraph
 }

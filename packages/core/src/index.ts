@@ -29,6 +29,9 @@ export default function (tw: tailwindPlugin): void {
 	// 	tw.addUtilities(createColorClasses({ cssVar: color }))
 	// )
 
+	/* Flattened Fonts */
+	const fonts = flattenObject(theme.fontSize as Dict<unknown>)
+
 	/* Add CSS Variables */
 	const CSSProperties: Dict<string> = {
 		"--radius-default": theme.radius,
@@ -36,6 +39,7 @@ export default function (tw: tailwindPlugin): void {
 		...makeCSSVariables(theme.radiusConfig as Dict<string>, "radius"),
 		...makeCSSVariables(theme.breakpoints as Dict<string>, "bp"),
 		...makeCSSVariables(theme.colors.neutral as Dict<string>),
+		...makeCSSVariables(fonts as Dict<string>, "text"),
 	}
 
 	/* CSS Variables for Light Colors */
@@ -46,28 +50,28 @@ export default function (tw: tailwindPlugin): void {
 	flattenedColors = flattenObject<string>(theme.colors.dark)
 	const darkColors = makeCSSVariables(flattenedColors)
 
+	/* Injet all CSS Variables */
 	tw.addBase({ "html[data-theme='light']": lightColors })
 	tw.addBase({ "html[data-theme='dark']": darkColors })
 	tw.addUtilities({ "text-custom": "hsla(var(--text), 1)" })
 	tw.addBase({ ":root": CSSProperties })
 
-	/* Inject CSS in components */
-
 	// Check for spinner
 	if (theme.css?.spinner) addCSS(theme.css.spinner, ".btn-loading")
 
-	/* States */
+	/* Custom States for Button, Link etc... */
 	// if (typeof tw.config("seabedui.states") == "object") {
 	// 	const states = tw.config("seabedui.states") as Dict<string>
 	// }
 
 	/* Add Components */
-	tw.addComponents(styles.components) // Adding Variants is causing problems
+	tw.addComponents(styles.components)
 
 	/* Reset CSS */
 	if (tw.config("seabedui.resetCSS") == true) tw.addBase(styles.reset)
 }
 
+/* Unknown Code. Might understand later while adding Button states */
 const addCSS = (CSS: CSSStyles, key: string): void => {
 	let isPresent = true
 

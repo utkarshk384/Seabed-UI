@@ -30,22 +30,22 @@
   "scripts": {
     "clean": "shx rm -r ./src/compiled/**/*",
     "build": "yarn build-css && yarn post:build",
-    "build-css": "yarn postcss --config src src/source/**/*.css --base src/source --dir src/compiled",
-    "post:build": "node ./complie.js & yarn types && shx cp ./src/index.js ./dist",
-    "types": "shx cp -r ./src/types ./dist",
+    "build-css": "yarn postcss --config src src/css/**/*.css --base src/css --dir src/compiled",
+    "post:build": "node ./complie.js",
     "watch": "watcher -c ./watcher.config.js -i src"
   },
   "devDependencies": {
     "@seabedui/types": "^0.0.1",
     "@seabedui/utils": "^0.0.1",
+    "@tailwindcss/nesting": "^0.0.0-insiders.565cd3e",
     "autoprefixer": "^10.4.0",
     "cssnano": "^5.0.12",
     "glob": "^7.2.0",
     "node-sass": "^7.0.0",
     "postcss": "^8.4.5",
     "postcss-cli": "^9.0.1",
+    "postcss-each": "^1.1.0",
     "postcss-for": "^2.1.1",
-    "postcss-functions": "^4.0.2",
     "postcss-nested": "^5.0.6"
   }
 }

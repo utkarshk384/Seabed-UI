@@ -1,0 +1,25 @@
+@each $size in base, large {
+  .text-display-$(size) {
+    font-size: var(--text-display-mobile-$(size));
+
+    @media screen and (min-width: var(--bp-sm)) {
+      font-size: var(--text-display-desktop-$(size));
+    }
+  }
+}
+
+@each $size in xs, sm, base, lg, xl, 2xl {
+  .text-title-$(size) {
+    font-size: var(--text-title-mobile-$(size));
+
+    @media screen and (min-width: var(--bp-sm)) {
+      font-size: var(--text-title-desktop-$(size));
+    }
+  }
+}
+
+@each $size in xs, sm, base, lg, xl, 2xl, 3xl {
+  .text-paragraph-$(size) {
+    font-size: var(--text-paragraph-$(size));
+  }
+}

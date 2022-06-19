@@ -1,12 +1,13 @@
 // const theme = require("./.storybook/theme.json")
 
 module.exports = {
-  mode: "jit",
   purge: ["./src/**/*.html", "./src/**/*.tsx", "./src/**/*.stories.tsx"],
-  darkMode: false,
   seabedui: {
     colorVariants: true,
     resetCSS: true,
+    theme: {
+      defaultTheme: 'dark',
+    }
   },
   presets: [require('@seabedui/presets')]
 }

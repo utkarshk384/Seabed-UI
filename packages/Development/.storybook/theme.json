@@ -19,7 +19,7 @@
     },
     "success": "#1FAD9F",
     "info": "#2094F3",
-    "warning": "#F0D02D",
+    "warn": "#F0D02D",
     "error": "#FF661A",
     "disabled": "#7F8E9D"
   },

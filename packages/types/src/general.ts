@@ -1,6 +1,3 @@
-/* Empty Function */
-export type arrowFunction = () => void
-
 /* A CSS Type */
 export type CSSType = Dict<Dict<unknown>>
 
@@ -40,10 +37,7 @@ export type RequiredBy<P, T extends keyof P> = Required<Pick<P, T>> & P
 export type HandleReturn<T = string> = [data: T, error?: Error]
 
 /* General Types */
-
-export type StrNum = string | number
-
-export type NestedDict = Dict<Dict<string>>
+export type NestedDict<T> = Dict<Dict<T>>
 
 /* Keyboard Keys */
 export type KeyboardButtons =
