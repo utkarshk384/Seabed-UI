@@ -121,7 +121,7 @@ export type InternalTheme = {
 	colors: DeepRequired<colorsInterface>
 	radiusConfig: radiusInterface
 	radius: string
-	fontSize?: FontType
+	fontSize: FontType
 	defaultTheme: "light" | "dark" | "system"
 	css?: CustomCSS
 	__dark: InternalStyles

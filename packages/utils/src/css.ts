@@ -5,6 +5,37 @@ import fs from "fs"
 import type { CSSType, Dict, sourceType } from "@seabedui/types"
 import type { Declaration, AtRule, Rule, KeyFrame } from "css"
 
+export const makeCSSVariables = (obj: Dict<string>, prefix?: string): Dict<string> => {
+	const vars: Dict<string> = {}
+
+	Object.keys(obj).forEach((key) => {
+		if (prefix) vars[`--${prefix}-${key}`] = obj[key]
+		else vars[`--${key}`] = obj[key]
+	})
+
+	return vars
+}
+
+export function ParseCSS(source: sourceType): CSSType {
+	let code = source.code ? source.code : ""
+
+	if (source.file) code = fs.readFileSync(source.file, "utf-8")
+
+	if (code == "") throw new Error("Could not load css code")
+
+	const ast = parse(code, { silent: true }),
+		styleSheet = ast.stylesheet
+	let styles: CSSType = {}
+
+	/* If error while parsing */
+	if (styleSheet && styleSheet.parsingErrors && styleSheet.parsingErrors.length > 0)
+		throw new Error(`Error while parsing css: ${styleSheet.parsingErrors[0]}`)
+
+	styleSheet?.rules.forEach((rule) => (styles = { ...styles, ...filterRule(rule) }))
+
+	return styles
+}
+
 export function styled(css: TemplateStringsArray, ...args: string[]): CSSType {
 	let code = "",
 		i = 0
@@ -24,34 +55,14 @@ export function styled(css: TemplateStringsArray, ...args: string[]): CSSType {
 }
 
 export function ValidateCSS(css: CSSType): CSSType {
-	const stringified = stringify(css)
 	try {
+		const stringified = stringify(css)
 		parse(stringified)
 	} catch (err) {
-		throw new Error(`Erorr while validating CSS. ${err}`)
+		throw new Error(`Error while validating CSS. ${err}`)
 	}
 
 	return css
-}
-
-export function ParseCSS(source: sourceType): CSSType {
-	let code = source.code ? source.code : ""
-
-	if (source.file) code = fs.readFileSync(source.file, "utf-8")
-
-	if (code == "") throw new Error("Could not load css code")
-
-	const ast = parse(code, {}),
-		styleSheet = ast.stylesheet
-	let styles: CSSType = {}
-
-	/* If error while parsing */
-	if (styleSheet && styleSheet.parsingErrors && styleSheet.parsingErrors.length > 0)
-		throw new Error(`Error while parsing css: ${styleSheet.parsingErrors[0]}`)
-
-	styleSheet?.rules.forEach((rule) => (styles = { ...styles, ...filterRule(rule) }))
-
-	return styles
 }
 
 const filterRule = (rule: Rule | Comment | AtRule): CSSType => {
@@ -99,15 +110,4 @@ const getCSS = (selectorArray: string[], declarations: Declaration[]): CSSType =
 	})
 
 	return styles
-}
-
-export const makeCSSVariables = (obj: Dict<string>, prefix?: string): Dict<string> => {
-	const vars: Dict<string> = {}
-
-	Object.keys(obj).forEach((key) => {
-		if (prefix) vars[`--${prefix}-${key}`] = obj[key]
-		else vars[`--${key}`] = obj[key]
-	})
-
-	return vars
 }

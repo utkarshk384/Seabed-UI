@@ -15,7 +15,7 @@ declare module "@seabedui/components" {
 		base: CSSType,
 		components: CSSType,
 		reset: CSSType,
-		utilities: CSSType,d
+		utilities: CSSTyped
 	}
 
 	export default styles

@@ -193,7 +193,7 @@ export const defaultColors: DeepRequired<colorsInterface> = {
 	dark: defaultLightColors,
 }
 
-export const themes: Theme = {
+export const defaultTheme: Theme = {
 	radius: "base",
 	radiusConfig: defaultRadius,
 	shadows: defaultShadows,

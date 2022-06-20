@@ -1,7 +1,7 @@
 import { makeCSSVariables, flattenObject } from "@seabedui/utils"
 import styles from "@seabedui/components"
 
-import { themes } from "./themes"
+import { defaultTheme } from "./themes"
 import { NormalizeTheme } from "./helpers"
 
 import type { tailwindPlugin, InternalTheme, Theme, Dict, CSSStyles } from "@seabedui/types"
@@ -14,7 +14,7 @@ import type { tailwindPlugin, InternalTheme, Theme, Dict, CSSStyles } from "@sea
 	4. ResetCSS - @type {boolean}
 */
 export default function (tw: tailwindPlugin): void {
-	let theme = tw.config<InternalTheme>("seabedui.theme") || themes
+	let theme = tw.config<InternalTheme>("seabedui.theme") || defaultTheme
 
 	theme = NormalizeTheme(theme as Theme)
 

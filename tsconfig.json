@@ -20,6 +20,6 @@
     "strictPropertyInitialization": false,
     "noImplicitAny": true,
   },
-  "include": [".storybook/*.tsx", "packages", "test-utils"],
+  "include": [".storybook/*.tsx", "packages", "test-utils", "jest.config.ts"],
   "exclude": ["rollup.config.ts"]
 }
