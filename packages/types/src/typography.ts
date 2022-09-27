@@ -2,48 +2,46 @@
 	Foundational type for typography object.
 */
 
-export interface Display {
-	large: string
-	base: string
+import { Dict } from "./general"
+
+export type FontSizesType =
+	| "xs"
+	| "sm"
+	| "md"
+	| "lg"
+	| "xl"
+	| "2xl"
+	| "3xl"
+	| "4xl"
+	| "5xl"
+	| "6xl"
+	| "7xl"
+
+export type BindingsInterface = Dict<string> & {
+	h1: FontSizesType
+	h2: FontSizesType
+	h3: FontSizesType
+	h4: FontSizesType
+	h5: FontSizesType
+	h6: FontSizesType
+	content: FontSizesType
 }
 
-export type DisplayType = "large" | "base"
-
-export interface Title {
+export type SizeInterface = Dict<string> & {
 	xs: string
 	sm: string
-	base: string
+	md: string
 	lg: string
 	xl: string
 	"2xl": string
+	"3xl": string
+	"4xl": string
+	"5xl": string
+	"6xl": string
+	"7xl": string
 }
 
-export type TitleType = "xs" | "sm" | "base" | "lg" | "xl" | "2xl"
-
-export interface Paragraph {
-	xs: string | number
-	sm: string | number
-	base: string | number
-	lg: string | number
-	xl: string | number
-	"2xl": string | number
-	"3xl": string | number
-}
-
-export type ParagraphType = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl"
-
-export interface ResponsiveDisplay {
-	desktop?: Display
-	mobile?: Display
-}
-
-export interface ResponsiveTitle {
-	desktop?: Title
-	mobile?: Title
-}
-
-export interface FontType {
-	display?: ResponsiveDisplay
-	title?: ResponsiveTitle
-	paragraph?: Paragraph
+export interface FontInterface {
+	sizes: SizeInterface
+	bindings: BindingsInterface
 }

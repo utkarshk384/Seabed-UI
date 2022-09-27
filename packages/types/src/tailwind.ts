@@ -1,4 +1,5 @@
 import { Dict } from "./general"
+import { Theme } from "./theme"
 
 export type Variant =
 	| "responsive"
@@ -31,5 +32,11 @@ export type tailwindPlugin = {
 	addComponents(classes: Dict<unknown>, opts?: Opts | Variant): void
 	addBase(tags: Dict<unknown>): void
 	e(str: string): string
-	config<T>(expr: string): T
+	config<T = configInterface>(expr: string): T
+}
+
+export interface configInterface {
+	disableComponents?: boolean
+	resetCSS?: boolean
+	theme?: Theme
 }

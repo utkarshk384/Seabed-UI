@@ -1,0 +1,25 @@
+/* stylelint-disable function-whitespace-after */
+
+@each $color in primary, secondary, accent, success, info, warn, error, disabled {
+  .color-$(color) {
+    --tw-bg-opacity: 1;
+    --tw-text-opacity: 1;
+
+    color: hsla(var(--$(color)-foreground), var(--tw-text-opacity));
+    background-color: hsla(var(--$(color)-background), var(--tw-bg-opacity));
+  }
+}
+
+@each $color in primary, secondary, accent, success, info, warn, error {
+  .focus-$(color):focus-visible {
+    --tw-outline-opacity: 1;
+
+    outline-color: hsla(var(--$(color)-focus), var(--tw-outline-opacity));
+  }
+
+  .pressed-$(color):focus-within {
+    --tw-bg-opacity: 1;
+
+    background-color: hsla(var(--$(color)-pressed), var(--tw-bg-opacity));
+  }
+}

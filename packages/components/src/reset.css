@@ -1,4 +1,4 @@
-html,
+:where(html,
 body,
 div,
 span,
@@ -51,12 +51,10 @@ fieldset,
 form,
 label,
 legend,
-table,
 caption,
 tbody,
 tfoot,
 thead,
-tr,
 th,
 td,
 article,
@@ -78,7 +76,7 @@ summary,
 time,
 mark,
 audio,
-video {
+video) {
   margin: 0;
   padding: 0;
   border: 0;

@@ -53,4 +53,4 @@ npm install --save @seabedui/core @seabedui/theme @seabedui/types
 
 ## 🐋 &nbsp; Inspiration
 ---
-The project was largely inspired by the folks at [@chakra-ui](https://github.com/chakra-ui/chakra-ui). However, due to the fact that they were using CSS-in-JS, I wanted to build a framework agnostic UI library.
+The project was largely inspired by the folks at [@chakra-ui](https://github.com/chakra-ui/chakra-ui) and [daisy-ui](https://github.com/saadeghi/daisyui). However, due to the fact that Chakra UI was using CSS-in-JS which yields slightly degraded performance in terms of loading and the fact that the library only supports React and daisy-ui supporting fewer components than what I needed, lead me to build my own UI library.

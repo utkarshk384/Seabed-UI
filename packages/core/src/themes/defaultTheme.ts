@@ -2,11 +2,11 @@ import type {
 	Theme,
 	radiusInterface,
 	shadowInterface,
-	breakpointInterface,
 	Colors,
 	colorsInterface,
 	DeepRequired,
-	FontType,
+	FontInterface,
+	Dict,
 } from "@seabedui/types"
 
 export const defaultRadius: radiusInterface = {
@@ -19,47 +19,32 @@ export const defaultRadius: radiusInterface = {
 	"3xl": "1.5rem",
 }
 
-export const defaultFont: FontType = {
-	display: {
-		desktop: {
-			large: "72",
-			base: "3.75rem",
-		},
-		mobile: {
-			base: "3.75rem",
-			large: "3rem",
-		},
-	},
-	title: {
-		desktop: {
-			xs: "0.875rem",
-			sm: "1rem",
-			base: "1.25rem",
-			lg: "1.75rem",
-			xl: "2.25rem",
-			"2xl": "3rem",
-		},
-		mobile: {
-			xs: "0.75rem",
-			sm: "1rem",
-			base: "1.25rem",
-			lg: "1.5rem",
-			xl: "1.875rem",
-			"2xl": "2.25rem",
-		},
-	},
-	paragraph: {
+export const defaultFont: FontInterface = {
+	sizes: {
 		xs: "0.75rem",
 		sm: "0.875rem",
-		base: "1rem",
+		md: "1rem",
 		lg: "1.125rem",
 		xl: "1.25rem",
 		"2xl": "1.5rem",
 		"3xl": "1.875rem",
+		"4xl": "2.25rem",
+		"5xl": "3rem",
+		"6xl": "4rem",
+		"7xl": "5rem",
+	},
+	bindings: {
+		h1: "6xl",
+		h2: "5xl",
+		h3: "4xl",
+		h4: "3xl",
+		h5: "2xl",
+		h6: "xl",
+		content: "md",
 	},
 }
 
-export const defaultBreakpoints: breakpointInterface = {
+export const defaultBreakpoints = {
 	"2xl": "1560px",
 	xl: "1280px",
 	lg: "1024px",
@@ -88,56 +73,7 @@ export const defaultShadows: shadowInterface = {
 }
 
 export const defaultDarkColors: Colors = {
-	primary: {
-		foreground: "#164250",
-		background: "#90CEE0",
-		focus: "#AFDBE9",
-		pressed: "#1A5060",
-	},
-	secondary: {
-		foreground: "#1D4012",
-		background: "#CAEDBF",
-		focus: "#D7F2CF",
-		pressed: "#245016",
-	},
-	accent: {
-		foreground: "#341551",
-		background: "#CEAEEA",
-		focus: "#E1CEF2",
-		pressed: "#491D72",
-	},
-
-	success: {
-		foreground: "#0A4004",
-		background: "#7FDC90",
-		focus: "#8FCC9A",
-		pressed: "#50965D",
-	},
-	error: {
-		foreground: "#3B0D04",
-		background: "#E16F59",
-		focus: "#EABDB4",
-		pressed: "#C45741",
-	},
-	info: {
-		foreground: "#093048",
-		background: "#3AA3E4",
-		focus: "#90CBF0",
-		pressed: "#457FA3",
-	},
-	warn: {
-		foreground: "#534013",
-		background: "#DEA82A",
-		focus: "#F3DCA5",
-		pressed: "#A68026",
-	},
-	disabled: {
-		foreground: "#A9A9B2",
-		background: "#F1F5F9",
-	},
-}
-
-export const defaultLightColors: Colors = {
+	text: "#FFFFFF",
 	primary: {
 		foreground: "#B7C3E1",
 		background: "#273D68",
@@ -187,13 +123,63 @@ export const defaultLightColors: Colors = {
 	},
 }
 
-export const defaultColors: DeepRequired<colorsInterface> = {
-	light: defaultLightColors,
-	neutral: defaultNeutralColors,
-	dark: defaultLightColors,
+export const defaultLightColors: Colors = {
+	text: "#000000",
+	primary: {
+		foreground: "#164250",
+		background: "#90CEE0",
+		focus: "#AFDBE9",
+		pressed: "#1A5060",
+	},
+	secondary: {
+		foreground: "#1D4012",
+		background: "#CAEDBF",
+		focus: "#D7F2CF",
+		pressed: "#245016",
+	},
+	accent: {
+		foreground: "#341551",
+		background: "#CEAEEA",
+		focus: "#E1CEF2",
+		pressed: "#491D72",
+	},
+
+	success: {
+		foreground: "#0A4004",
+		background: "#7FDC90",
+		focus: "#8FCC9A",
+		pressed: "#50965D",
+	},
+	error: {
+		foreground: "#3B0D04",
+		background: "#E16F59",
+		focus: "#EABDB4",
+		pressed: "#C45741",
+	},
+	info: {
+		foreground: "#093048",
+		background: "#3AA3E4",
+		focus: "#90CBF0",
+		pressed: "#457FA3",
+	},
+	warn: {
+		foreground: "#534013",
+		background: "#DEA82A",
+		focus: "#F3DCA5",
+		pressed: "#A68026",
+	},
+	disabled: {
+		foreground: "#A9A9B2",
+		background: "#F1F5F9",
+	},
 }
 
-export const defaultTheme: Theme = {
+export const defaultColors: DeepRequired<colorsInterface> = {
+	light: defaultLightColors,
+	dark: defaultDarkColors,
+}
+
+export const defaultTheme: Theme & { breakpoints: Dict } = {
 	radius: "base",
 	radiusConfig: defaultRadius,
 	shadows: defaultShadows,

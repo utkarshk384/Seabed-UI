@@ -1,10 +1,16 @@
 import { makeCSSVariables, flattenObject } from "@seabedui/utils"
-import styles from "@seabedui/components"
+import plugin from "tailwindcss/plugin"
 
 import { defaultTheme } from "./themes"
 import { NormalizeTheme } from "./helpers"
 
-import type { tailwindPlugin, InternalTheme, Theme, Dict, CSSStyles } from "@seabedui/types"
+import type { PluginCreator } from "tailwindcss/types/config"
+import type { InternalTheme, Theme, Dict, CSSStyles } from "@seabedui/types"
+
+/* Import css */
+import components from "@seabedui/components/dist/components.json"
+import utilities from "@seabedui/components/dist/utils.json"
+import base from "@seabedui/components/dist/base.json"
 
 /** 
     Configurations available for the plugin
@@ -13,79 +19,92 @@ import type { tailwindPlugin, InternalTheme, Theme, Dict, CSSStyles } from "@sea
     3. States - @type {Object}
 	4. ResetCSS - @type {boolean}
 */
-export default function (tw: tailwindPlugin): void {
-	let theme = tw.config<InternalTheme>("seabedui.theme") || defaultTheme
+const Main: PluginCreator = (tw) => {
+	const seabedUI = tw.config("seabedui")
+	let theme = (seabedUI?.theme as unknown as InternalTheme) || defaultTheme
 
 	theme = NormalizeTheme(theme as Theme)
 
 	/* Include Base Styles */
-	tw.addBase(styles.base)
+	// if (tw.config("seabedui.resetCSS") == true) tw.addBase({ ...styles.reset, ...styles.base })
+	tw.addBase(base)
 
 	/* Include custom utilities */
-	tw.addUtilities(styles.utilities)
-
-	// /* Add custom tailwindcss colors */
-	// Object.keys(tailwindColors).forEach((color) =>
-	// 	tw.addUtilities(createColorClasses({ cssVar: color }))
-	// )
+	tw.addUtilities(utilities)
 
 	/* Flattened Fonts */
-	const fonts = flattenObject(theme.fontSize as Dict<unknown>)
+	const fonts = theme.fontSize?.sizes as unknown as Dict<string>
+	const bindings = theme.fontSize?.bindings as unknown as Dict<string>
 
 	/* Add CSS Variables */
 	const CSSProperties: Dict<string> = {
 		"--radius-default": theme.radius,
+		"--text-dark": theme.colors.dark.text as string,
+		"--text-light": theme.colors.light.text as string,
 		...makeCSSVariables(theme.shadows as Dict<string>, "shadow"),
 		...makeCSSVariables(theme.radiusConfig as Dict<string>, "radius"),
-		...makeCSSVariables(theme.breakpoints as Dict<string>, "bp"),
-		...makeCSSVariables(theme.colors.neutral as Dict<string>),
 		...makeCSSVariables(fonts as Dict<string>, "text"),
 	}
 
 	/* CSS Variables for Light Colors */
+
 	let flattenedColors = flattenObject<string>(theme.colors.light)
-	const lightColors = makeCSSVariables(flattenedColors)
+	const lightColors = {
+		"--neutral-text": theme.colors.light.text as string,
+		...makeCSSVariables(flattenedColors),
+	}
 
 	/* CSS Variables for Dark Colors */
 	flattenedColors = flattenObject<string>(theme.colors.dark)
-	const darkColors = makeCSSVariables(flattenedColors)
+	const darkColors = {
+		"--neutral-text": theme.colors.dark.text as string,
+		...makeCSSVariables(flattenedColors),
+	}
+
+	// Check for spinner
+
+	/* Add Components */
+	if (!seabedUI.disableComponents) {
+		if (theme.css?.spinner) addCSS(theme.css.spinner, ".btn-loading", components)
+		tw.addComponents(components)
+	}
 
 	/* Injet all CSS Variables */
 	tw.addBase({ "html[data-theme='light']": lightColors })
 	tw.addBase({ "html[data-theme='dark']": darkColors })
-	tw.addUtilities({ "text-custom": "hsla(var(--text), 1)" })
-	tw.addBase({ ":root": CSSProperties })
+	tw.addUtilities({
+		".seabed-content": makeCSSVariables(bindings),
+	})
 
-	// Check for spinner
-	if (theme.css?.spinner) addCSS(theme.css.spinner, ".btn-loading")
+	console.log(makeCSSVariables(bindings))
+
+	tw.addBase({ ":root": CSSProperties })
 
 	/* Custom States for Button, Link etc... */
 	// if (typeof tw.config("seabedui.states") == "object") {
 	// 	const states = tw.config("seabedui.states") as Dict<string>
 	// }
-
-	/* Add Components */
-	tw.addComponents(styles.components)
-
-	/* Reset CSS */
-	if (tw.config("seabedui.resetCSS") == true) tw.addBase(styles.reset)
 }
 
 /* Unknown Code. Might understand later while adding Button states */
-const addCSS = (CSS: CSSStyles, key: string): void => {
+const addCSS = (CSS: CSSStyles, key: string, components: any): void => {
 	let isPresent = true
 
 	/* After Selector */
-	if (CSS.after) (styles.components[`${key}::after`] = CSS.after), (isPresent = true)
+	if (CSS.after) (components[`${key}::after`] = CSS.after), (isPresent = true)
 
 	/* Before Selector */
-	if (CSS.before) (styles.components[`${key}::before`] = CSS.before), (isPresent = true)
+	if (CSS.before) (components[`${key}::before`] = CSS.before), (isPresent = true)
 
-	if (!CSS.before && isPresent && `${key}::before` in styles.components)
-		delete styles.components[`${key}::before`]
+	if (!CSS.before && isPresent && `${key}::before` in components)
+		delete components[`${key}::before`]
 
 	/* Main selector */
-	if (CSS.body) styles.components[key] = CSS.body
+	if (CSS.body) components[key] = CSS.body
 
-	if (!CSS.body && isPresent && key in styles.components) delete styles.components[key]
+	if (!CSS.body && isPresent && key in components) delete components[key]
 }
+
+export default plugin(Main)
+
+export { defaultTheme }

@@ -6,7 +6,6 @@ const ParseCSS = require("@seabedui/utils").ParseCSS
 /* Remove compiled folder */
 const REMOVE_COMPILED_FOLDER = true;
 
-
 /* Template for typescript declaration types */
 const DECLARATION_TYPE = `
 declare module "@seabedui/components" {
@@ -86,10 +85,18 @@ fs.writeFile('./dist/index.js', INDEX_JS, function(err){
 
 /* Create types folder and ./index.d.ts */
 makeFolder('./dist/types', true)
-fs.writeFile('./dist/types/index.d.ts', DECLARATION_TYPE, function(err){
+fs.writeFileSync('./dist/types/index.d.ts', DECLARATION_TYPE, function(err){
 	if(err)
 		console.log(`Couldn't create index.d.ts file: ${err}`)
 })
+
+
+if(!fs.existsSync("./src/build.css"))
+	fs.writeFileSync("./src/build.css", "")
+else{
+	fs.rmSync("./src/build.css")
+	fs.writeFileSync("./src/build.css", "")
+}
 
 cssFiles.forEach((currFilePath) => {
 
@@ -102,7 +109,10 @@ cssFiles.forEach((currFilePath) => {
 	/* Remove the filename entierly from the path */
 	path = path.replace(`/${fileName}.css`, "")
 
-	const css = ParseCSS({ file: currFilePath })
+	const code = fs.readFileSync(currFilePath, "utf-8")
+	const css = ParseCSS({ code })
+	fs.appendFileSync("./src/build.css", code)
+
 	const filePath = `${path}/${fileName}.json`;
 
 	if(!fs.existsSync(path))

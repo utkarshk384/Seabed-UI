@@ -1,3 +1,19 @@
 button:focus {
   outline: none;
 }
+
+:where(tr, th, td) {
+  color: inherit;
+}
+
+@font-face {
+  font-family: 'Seabed-Icons';
+  src:  url('https://cdn.jsdelivr.net/npm/seabedui-icons@1.0.3/fonts/Seabed-Icons.eot?99v8mq');
+  src:  url('https://cdn.jsdelivr.net/npm/seabedui-icons@1.0.3/fonts/Seabed-Icons.eot?99v8mq#iefix') format('embedded-opentype'),
+    url('https://cdn.jsdelivr.net/npm/seabedui-icons@1.0.3/fonts/Seabed-Icons.ttf?99v8mq') format('truetype'),
+    url('https://cdn.jsdelivr.net/npm/seabedui-icons@1.0.3/fonts/Seabed-Icons.woff?99v8mq') format('woff'),
+    url('https://cdn.jsdelivr.net/npm/seabedui-icons@1.0.3/fonts/Seabed-Icons.svg?99v8mq#Seabed-Icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}

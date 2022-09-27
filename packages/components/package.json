@@ -10,6 +10,12 @@
   "author": "Utkarsh Kumar <utkarshk384@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
+  "exports": {
+    "./dist/components.json": "./dist/components.json",
+    "./dist/base.json": "./dist/base.json",
+    "./dist/utils.json": "./dist/utils.json",
+    "./package.json": "./package.json"
+  },
   "types": "dist/types/index.d.ts",
   "typings": "dist/types/index.d.ts",
   "files": [
@@ -32,7 +38,7 @@
     "build": "yarn build-css && yarn post:build",
     "build-css": "yarn postcss --config src src/css/**/*.css --base src/css --dir src/compiled",
     "post:build": "node ./complie.js",
-    "watch": "watcher -c ./watcher.config.js -i src"
+    "watch": "mode=debug watcher -c ./watcher.config.js -i src/css"
   },
   "devDependencies": {
     "@seabedui/types": "^0.0.1",

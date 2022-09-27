@@ -1,189 +1,44 @@
-# A [NextJS](https://nextjs.org/) template with typescript, tailwindcss and storybook support
+# Svelte + TS + Vite
 
-> The configuration of NextJS, TailwindCSS and Storybook can be **complex** 😰 🤪
-> 👉 So we have decided to make this template public 🎉
+This template should help get you started developing with Svelte and TypeScript in Vite.
 
-This project was bootstrapped with [npx create-next-app](https://nextjs.org/learn/basics/create-nextjs-app/setup) and we have added support for:
+## Recommended IDE Setup
 
-- ✅ [Typescript](https://www.typescriptlang.org/)
-- ✅ [Taillwindcss](https://www.tailwindcss.com)
-- ✅ [Storybook](https://storybook.js.org/)
-- ✅ [Jest](https://jestjs.io/)
-- ✅ [Import SVG as React Component (SVGR)](https://react-svgr.com/) (Thanks to [@neoziro](https://twitter.com/neoziro))
+[VSCode](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
 
-You are welcome to contribute to this project to make it better. Contact us at [contact@elitizon.com](contact@elitizon.com)
+## Need an official Svelte framework?
 
-Created with ❤️ by [Elitizon](https://www.elitizon.com)
+Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
 
-This template is available at [https://github.com/elitizon/nextjs-tailwind-storybook](https://github.com/elitizon/nextjs-tailwind-storybook)
+## Technical considerations
 
-## To use this template:
+**Why use this over SvelteKit?**
 
-- clone it
-- remove the .git folder
-- git init .
-- git add .
-- git commit -m "First commit"
+- It brings its own routing solution which might not be preferable for some users.
+- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+  `vite dev` and `vite build` wouldn't work in a SvelteKit environment, for example.
 
-## Structure of the template
+This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
 
-```bash
-.
-├── CODE_OF_CONDUCT.md
-├── CONTRIBUTING.md
-├── LICENSE
-├── README.md
-├── SECURITY.md
-├── build.toml
-├── next-env.d.ts
-├── nextjs.config.js
-├── out
-│   ├── 404.html
-│   ├── _next
-│   ├── favicon.ico
-│   ├── index.html
-│   └── vercel.svg
-├── package.json
-├── postcss.config.js
-├── public
-│   ├── favicon.ico
-│   └── vercel.svg
-├── src
-│   ├── assets
-│   ├── components
-│   ├── pages
-│   └── styles
-├── tailwind.config.js
-├── tsconfig.json
-└── yarn.lock
+Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
 
+**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+
+Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
+
+**Why enable `allowJs` in the TS template?**
+
+While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
+
+**Why is HMR not preserving my local component state?**
+
+HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
+
+If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
+
+```ts
+// store.ts
+// An extremely simple external store
+import { writable } from 'svelte/store'
+export default writable(0)
 ```
-
-Pages and components are developed in `src` directory.
-
-## Install all the dependencies
-
-### 👉 `yarn install`
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### 👉 `yarn dev`
-
-**Results:**
-
-```bash
-ready - started server on http://localhost:3000
-   ✅ purgeEnabled=false
-
-event - compiled successfully
-event - build page: /next/dist/pages/_error
-wait  - compiling...
-event - compiled successfully
-event - build page: /
-wait  - compiling...```
-
-Run the project in the dev mode.
-````
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### 👉 `yarn storybook`
-
-Runs storybook.
-
-Open [http://localhost:6006](http://localhost:6006) to view it in the browser.
-
-### 👉 `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-> If you get an error that contained this line:
-
-Use this command:
-
-`brew install watchman`
-
-### 👉`yarn build`
-
-Builds the app for production to the `.next` folder.\
-It correctly bundles NextJS in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-👉 **Result of execution**
-
-```bash
-yarn run v1.22.10
-$ cross-env NODE_ENV=production next build
-info  - Creating an optimized production build...
-
-
-   TailwindCSS
-
-   -----------
-
-   ✅ purgeEnabled=true
-
-info  - Compiled successfully
-info  - Collecting page data...
-info  - Generating static pages (0/2)
-info  - Generating static pages (2/2)
-info  - Finalizing page optimization...
-
-Page                                                           Size     First Load JS
-┌ ○ /                                                          1.55 kB        64.3 kB
-├   /_app                                                      0 B            62.7 kB
-├ ○ /404                                                       3.46 kB        66.2 kB
-└ λ /api/hello                                                 0 B            62.7 kB
-+ First Load JS shared by all                                  62.7 kB
-  ├ chunks/f6078781a05fe1bcb0902d23dbbb2662c8d200b3.d4f570.js  13.1 kB
-  ├ chunks/framework.abffcf.js                                 41.8 kB
-  ├ chunks/main.1fee81.js                                      6.62 kB
-  ├ chunks/pages/_app.1315ea.js                                523 B
-  ├ chunks/webpack.50bee0.js                                   751 B
-  └ css/ff7ad52a1259dc7bd680.css                               1.88 kB
-
-λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
-○  (Static)  automatically rendered as static HTML (uses no initial props)
-●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
-   (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
-
-Done in 9.00s.
-
-```
-
-See the section about [deployment](https://nextjs.org/docs/deployment) for more information.
-
-### 👉`yarn start`
-
-Starts a server with the output for the `yarn build` command.
-
-`yarn build` must be executed before to use this command.
-
-### 👉`yarn export`
-
-Export the output of the `yarn build` command execution to the `./out` directory.
-
-`yarn build` must be executed before to use this command.
-
-### 👉`npx serve ./out`
-
-To launch a **static server** from the `./out` directory. This command can be useful to control the outcome of `yarn export`.
-
-`yarn build` and `yarn export` must be executed before to use this command.
-
-## Learn More
-
-You can learn more in the [NextJS documentation](https://nextjs.org/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-To learn how to develop UIs with component and design systems with Storybook, check out the [Learn Storybook documentation](https://www.learnstorybook.com/)

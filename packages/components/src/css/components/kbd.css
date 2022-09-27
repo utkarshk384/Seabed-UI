@@ -1,0 +1,21 @@
+.kbd{
+    @apply bg-white font-bold p-2 rounded-default;
+    font-family: inherit;
+    font-size: var(--text-paragraph-base);
+    filter: drop-shadow(0px 5px 1px #E2E8F0);
+    will-change: filter;
+    transition: filter 0.2s ease-in;
+    user-select: none;
+}
+
+.kbd-disabled {
+    @apply bg-slate-100 text-gray-500;
+}
+
+.kbd:active{
+    filter: drop-shadow(0px 0px 5px #E2E8F0);
+}
+
+.kbd-disabled:active{
+    filter: drop-shadow(0px 5px 1px #E2E8F0);
+}

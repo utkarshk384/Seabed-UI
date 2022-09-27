@@ -1,11 +1,5 @@
-import {
-	defaultBreakpoints,
-	defaultFont,
-	defaultRadius,
-	defaultShadows,
-	defaultColors,
-} from "./themes"
-import { toHSL } from "@seabedui/utils"
+import { defaultFont, defaultRadius, defaultShadows, defaultColors } from "./themes"
+import { toRGB, recursiveFunction } from "@seabedui/utils"
 
 import type {
 	radiusInterface,
@@ -13,9 +7,11 @@ import type {
 	DeepRequired,
 	InternalTheme,
 	Theme,
-	Dict,
-	FontType,
+	FontInterface,
 	colorsInterface,
+	Colors,
+	Dict,
+	SizeInterface,
 } from "@seabedui/types"
 
 export function NormalizeTheme(userTheme: Theme): InternalTheme {
@@ -31,7 +27,7 @@ export function NormalizeTheme(userTheme: Theme): InternalTheme {
 	theme = SetDefaults(theme)
 
 	/* Fill fonts that isn't present */
-	theme.fontSize = resolveFonts(theme.fontSize)
+	theme["fontSize"] = resolveFonts(theme["fontSize"])
 
 	/* Resolve Border Radius */
 	theme.radius = resolveBorderRadius(theme.radius as radiusType, theme.radiusConfig)
@@ -41,13 +37,12 @@ export function NormalizeTheme(userTheme: Theme): InternalTheme {
 
 	/* Convert all colors to HSL */
 	if (typeof theme.colors == "object")
-		theme.colors = recursiveFunction(theme.colors, (val) => toHSL(val))
+		theme.colors = recursiveFunction(theme.colors, (val) => toRGB(val))
 
 	return theme
 }
 
 export const SetDefaults = (theme: InternalTheme): InternalTheme => {
-	if (!theme.breakpoints) theme.breakpoints = defaultBreakpoints
 	if (!theme.radiusConfig) theme.radiusConfig = defaultRadius
 	if (!theme.radius) theme.radius = "base"
 	if (!theme.fontSize) theme.fontSize = defaultFont
@@ -57,43 +52,72 @@ export const SetDefaults = (theme: InternalTheme): InternalTheme => {
 	return theme
 }
 
-export const resolveFonts = (fontSize: FontType): FontType => {
-	if (!fontSize.display) fontSize.display = defaultFont.display
-	if (fontSize.display && !fontSize.display.desktop)
-		fontSize.display.desktop = defaultFont.display?.desktop
-	if (fontSize.display && !fontSize.display.mobile)
-		fontSize.display.mobile = defaultFont.display?.mobile
+export const resolveFonts = (fontSize: FontInterface): FontInterface => {
+	if (!fontSize) return defaultFont
 
-	if (!fontSize.title) fontSize.title = defaultFont.title
-	if (fontSize.title && !fontSize.title.desktop) fontSize.title.desktop = defaultFont.title?.desktop
-	if (fontSize.title && !fontSize.title.mobile) fontSize.title.mobile = defaultFont.title?.mobile
+	if (!fontSize.sizes) fontSize.sizes = defaultFont.sizes
+	if (!fontSize.bindings) fontSize.bindings = defaultFont.bindings
 
-	if (!fontSize.paragraph) fontSize.paragraph = defaultFont.paragraph
+	const sizes: Dict<string> = {}
 
-	fontSize = recursiveFunction(fontSize, (val) => normalizeFont(val))
+	Object.keys(fontSize.sizes).forEach((key) => {
+		const size = fontSize.sizes[key]
+		sizes[key] = normalizeFont(size)
+	})
+
+	fontSize.sizes = sizes as SizeInterface
+
+	Object.keys(fontSize.bindings).forEach((key) => {
+		const item = fontSize.bindings[key]
+
+		if (typeof fontSize.sizes[item] !== "undefined") fontSize.bindings[key] = fontSize.sizes[item]
+	})
 
 	return fontSize
 }
 
 export const resolveColors = (colors: Required<colorsInterface>): Required<colorsInterface> => {
-	/* Set NeutralColors if not set */
-	if (!colors.neutral) colors.neutral = defaultColors.neutral
-
 	/* Set missing colors for dark and light mode */
 	if (!colors.dark && !colors.light) {
 		colors.light = defaultColors.light
 		colors.dark = defaultColors.dark
+		return colors
 	} else if (!colors.light) {
 		colors.light = colors.dark
 		console.warn(
 			"Didn't find `seabedui.theme.colors.light` in tailwind.config.js so using `seabedui.theme.colors.dark` instead"
 		)
+		return colors
 	} else if (!colors.dark) {
 		colors.dark = colors.light
 		console.warn(
 			"Didn't find `seabedui.theme.colors.dark` in tailwind.config.js so using `seabedui.theme.colors.light` instead"
 		)
+		return colors
 	}
+
+	Object.keys(defaultColors.light).forEach((key) => {
+		const exclude = ["text", "error", "info", "disabled", "success", "warn"]
+		const clr = colors.light[key]
+		if (!exclude.includes(key) && !clr)
+			console.warn("Couldn't find colors for " + key + "key in `seabedui.theme.colors.light`.")
+	})
+
+	colors.dark = setStateColors(colors.dark, colors.light, defaultColors.dark)
+	colors.light = setStateColors(colors.light, colors.dark, defaultColors.light)
+
+	return colors
+}
+
+function setStateColors(colors: Colors, alternateColors: Colors, defaultClrs: Colors): Colors {
+	Object.keys(defaultClrs).forEach((key) => {
+		const exclude = ["accent", "primary", "secondary"]
+		const clr = colors[key]
+		if (!clr) {
+			if (!exclude.includes(key)) colors[key] = alternateColors[key] || defaultClrs[key] // Only replace stateful colors and text colors
+			console.warn("Couldn't find colors for " + key + "key in `seabedui.theme.colors.light`.")
+		}
+	})
 
 	return colors
 }
@@ -134,15 +158,4 @@ export const normalizeFont = (font: number | string): string => {
 	)
 
 	return font
-}
-
-export const recursiveFunction = <T>(usrObj: T, fn: (value: string) => string): T => {
-	const obj = usrObj as unknown as Dict<string | Dict<string>>
-	Object.keys(obj).forEach((key) => {
-		if (typeof obj[key] === "string" || typeof obj[key] === "number")
-			obj[key] = fn(obj[key] as string)
-		else obj[key] = recursiveFunction(obj[key], fn)
-	})
-
-	return obj as unknown as T
 }

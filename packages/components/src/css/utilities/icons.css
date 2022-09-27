@@ -1,0 +1,27 @@
+.tick {
+    position: relative;
+
+    &::after{
+        font-family: "Seabed-Icons";
+        content: "\d0000";
+    }
+
+    &::before{
+        font-family: "Seabed-Icons";
+        content: "\d0001";
+    }
+
+}
+.cross {
+    position: relative;
+
+    &::after{
+        font-family: "Seabed-Icons";
+        content: "\d0002";
+    }
+
+    &::before{
+        font-family: "Seabed-Icons";
+        content: "\d0003";
+    }
+}

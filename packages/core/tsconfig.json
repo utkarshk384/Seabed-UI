@@ -6,7 +6,7 @@
         "declaration": true,
         "allowJs": false,
         "declarationDir": "dist/types",
-        "resolveJsonModule": false,
+        "resolveJsonModule": true,
         "module": "CommonJS",
         "outDir": "dist/",
         "typeRoots": ["node_modules", "./typings"],

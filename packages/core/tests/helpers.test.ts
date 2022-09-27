@@ -1,10 +1,4 @@
-import {
-	SetDefaults,
-	resolveColors,
-	normalizeFont,
-	resolveBorderRadius,
-	recursiveFunction,
-} from "../src/helpers"
+import { SetDefaults, resolveColors, normalizeFont, resolveBorderRadius } from "../src/helpers"
 import { defaultTheme } from "../src/themes"
 
 import type { colorsInterface, InternalTheme, radiusInterface } from "@seabedui/types"
@@ -30,14 +24,20 @@ test("if colors are resolved correctly", () => {
 	const noColors = resolveColors({} as unknown as Required<colorsInterface>)
 	const withColors = resolveColors(colors as unknown as Required<colorsInterface>)
 
-	const expected = {
+	const expectedNoColors = {
 		dark: dark,
 		light: defaultTheme.colors?.light,
 		neutral: defaultTheme.colors?.neutral,
 	}
 
-	expect(noColors).toEqual(expected)
-	expect(withColors).toEqual(expected)
+	const expectedWithColors = {
+		dark: dark,
+		light: dark,
+		neutral: defaultTheme.colors?.neutral,
+	}
+
+	expect(noColors).toEqual(expectedNoColors)
+	expect(withColors).toEqual(expectedWithColors)
 })
 
 test("if fonts are normalized", () => {
@@ -53,38 +53,4 @@ test("if border radius is resolved correctly", () => {
 
 	expect(textBased).toEqual("0.375rem")
 	expect(numberBased).toEqual("10px")
-})
-
-test("if recursiveFunction works correctly", () => {
-	const addSuffix = (num: string): string => {
-		return `${num}px`
-	}
-
-	const obj = {
-		a: {
-			b: 1,
-		},
-		c: 3,
-		d: {
-			e: {
-				f: 4,
-			},
-		},
-	}
-
-	const output = recursiveFunction(obj, (val) => addSuffix(val))
-
-	const expected = {
-		a: {
-			b: "1px",
-		},
-		c: "3px",
-		d: {
-			e: {
-				f: "4px",
-			},
-		},
-	}
-
-	expect(output).toEqual(expected)
 })

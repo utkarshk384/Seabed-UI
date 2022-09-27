@@ -1,0 +1,71 @@
+.toast {
+    @apply p-6 rounded-default base:top-[80%] base:left-auto fixed text-paragraph-base base:text-[var(--text-title-desktop-lg)];
+    top: 90%;
+    left: 80%;
+    width: clamp(10rem, 20rem, 100%);
+    color: rgb(var(--text));
+}
+
+.toast-content {
+    @apply flex ml-8;
+    position: relative;
+}
+
+.toast-btn {
+    @apply absolute top-0 right-0;
+    color: rgb(var(--text));
+}
+
+.toast-solid{
+    background: rgb(var(--bg));
+}
+
+.toast-subtle {
+    background: rgb(var(--bg) / 0.2);
+}
+
+.toast-subtle, .toast-solid {
+    & .toast-content::after {
+        color: rgb(var(--bg));
+        font-family: "Seabed-Icons";
+        position: absolute;
+        font-size: 1.75rem;
+        left: -2.5rem;
+        top: -0.5rem;
+    }
+}
+
+.toast-left-accent {
+    border-left: 4px solid rgb(var(--bg));
+    background: rgb(var(--bg) / 0.2);
+
+    & .toast-content {
+        @apply ml-2;
+    }
+}
+
+.toast-success {
+    --bg: var(--success-background);
+    --text: var(--success-foreground);
+}
+
+.toast-error {
+    --bg: var(--error-background);
+    --text: var(--error-foreground);
+
+    &:not(.toast-border) .toast-content {
+        &::after{
+            content: "\d0001";
+        }
+    }
+}
+
+.toast-info {
+    --bg: var(--info-background);
+    --text: var(--info-foreground);
+}
+
+.toast-warn {
+    --bg: var(--warn-background);
+    --text: var(--warn-foreground);
+}

@@ -1,0 +1,72 @@
+.table {
+  /* Properties that can be overridden by tailwind classes */
+  @apply m-0 border-collapse inline-block;
+
+  --tw-text-opacity: 1;
+  --tw-bg-opacity: 1;
+
+  border-radius: var(--radius-default);
+  overflow: hidden;
+  outline: rgb(var(--primary-background) / 0.5) solid 2px;
+  outline-offset: 5px;
+  margin-top: 5px;
+
+  /* Properties that can't be overridden by tailwind classes */
+
+
+
+  th {
+    font-weight: bold;
+  }
+}
+
+.table th, .table td{
+  @apply py-5 px-6;
+}
+
+.table-basic, .table-normal {
+  @apply px-3;
+
+  display: inline-block !important;
+}
+
+.table-basic thead > tr:first-of-type,
+.table-basic tr:not(tbody > tr):first-child{
+  border-bottom: 2px solid rgb(var(--primary-background));
+}
+
+.table-normal {
+  tr:not(:last-child) {
+    border-bottom: 2px solid rgb(var(--primary-background) / 0.5);
+  }
+
+  td {
+    color: rgb(var(--neutral-text) 0.8);
+  }
+}
+
+.table-highlight thead > tr:first-of-type,
+.table-highlight tr:not(tbody > tr):first-child {
+  background-color: rgb(var(--primary-background) / 0.5);
+}
+
+/* TODO: Figure out how to use table zebra */
+
+.table-zebra tr:nth-child(even) {
+  --tw-bg-opacity: 1;
+
+  background: rgb(var(--primary-background) / 0.65);
+  color: rgb(var(--primary-foreground) / 1);
+  border-radius: var(--radius-default);
+
+}
+
+.table-zebra tr:nth-child(odd) {
+  color: rgb(var(--secondary-foreground) / 0.8);
+  border-radius: var(--radius-default);
+  background: rgb(var(--secondary-background) / 0.65);
+}
+
+.table-dense th, .table-dense td {
+  @apply py-2 px-3;
+}

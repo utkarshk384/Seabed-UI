@@ -11,17 +11,21 @@ test("Check if the given color is a HEX Color", () => {
 test("Check if the given color is a HSL Color", () => {
 	const hslOne = isHSL("hsl(0, 0%, 0%)")
 	const hslTwo = isHSL("rgb(0, 0, 0)")
+	const hslThree = isHSL("0, 0%, 0%")
 
 	expect(hslOne).toBe(true)
 	expect(hslTwo).toBe(false)
+	expect(hslThree).toBe(true)
 })
 
 test("Check if the given color is a rgb Color", () => {
 	const rgbOne = isRGB("hsl(0, 0%, 0%)")
 	const rgbTwo = isRGB("rgb(0, 0, 0)")
+	const rgbThree = isRGB("0, 0, 0")
 
 	expect(rgbOne).toBe(false)
 	expect(rgbTwo).toBe(true)
+	expect(rgbThree).toBe(true)
 })
 
 test("Convert RGB and HEX color format to HSL format", () => {

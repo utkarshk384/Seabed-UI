@@ -1,6 +1,6 @@
 import * as css from "csstype"
 import { DeepRequired, Dict, NestedDict } from "./general"
-import { FontType } from "./typography"
+import { FontInterface } from "./typography"
 
 /* Frequently used types */
 type BasicSizes = "xs" | "sm" | "base" | "lg" | "xl" | "2xl"
@@ -14,15 +14,11 @@ export type ColorsType = {
 	focus?: string
 	pressed?: string
 }
-export interface NeutralColors extends Dict<string | undefined> {
-	black?: string
-	white?: string
-	gray?: string
-}
-export interface BrandColors extends Dict<ColorsType | undefined> {
+export interface BrandColors extends Dict<ColorsType | undefined | string> {
 	primary?: ColorsType
 	secondary?: ColorsType
 	accent?: ColorsType
+	text?: string
 }
 
 export interface StatefulColors {
@@ -51,27 +47,13 @@ export type CSSStyles = {
 */
 export type radiusType = BasicSizes | "3xl"
 export interface radiusInterface extends Dict<string | undefined> {
-	xs?: string
-	sm?: string
-	base?: string
-	lg?: string
-	xl?: string
-	"2xl"?: string
-	"3xl"?: string
-}
-
-/* 
-	Types for breakpoints
-	Config Name: breakpoints
-*/
-export type breakpointType = BasicSizes
-export interface breakpointInterface extends Dict<string | number | undefined> {
-	xs?: string | number
-	sm?: string | number
-	base?: string | number
-	lg?: string | number
-	xl?: string | number
-	"2xl"?: string | number
+	xs: string
+	sm: string
+	base: string
+	lg: string
+	xl: string
+	"2xl": string
+	"3xl": string
 }
 
 /* 
@@ -80,16 +62,16 @@ export interface breakpointInterface extends Dict<string | number | undefined> {
 */
 export type shadowTypes = BasicSizes | "3xl" | "outline" | "inner" | "round"
 export interface shadowInterface extends Dict<string | undefined> {
-	xs?: string
-	sm?: string
-	base?: string
-	lg?: string
-	xl?: string
-	"2xl"?: string
-	"3xl"?: string
-	outline?: string
-	inner?: string
-	round?: string
+	xs: string
+	sm: string
+	base: string
+	lg: string
+	xl: string
+	outline: string
+	inner: string
+	round: string
+	"2xl": string
+	"3xl": string
 }
 
 /* 
@@ -101,31 +83,25 @@ export type Colors = BrandColors & StatefulColors
 export interface colorsInterface {
 	light?: Colors
 	dark?: Colors
-	neutral?: NeutralColors
 }
 
 export type Theme = Dict<unknown> & {
-	breakpoints?: breakpointInterface
-	shadows?: shadowInterface
+	shadows?: Partial<shadowInterface>
 	colors?: colorsInterface
-	radiusConfig?: radiusInterface
+	radiusConfig?: Partial<radiusInterface>
 	radius?: radiusType
-	fontSize?: FontType
+	fontSize?: Partial<FontInterface>
 	defaultTheme?: "light" | "dark" | "system"
 	css?: CustomCSS
 }
 
 export type InternalTheme = {
-	breakpoints: breakpointInterface
 	shadows: shadowInterface
 	colors: DeepRequired<colorsInterface>
 	radiusConfig: radiusInterface
 	radius: string
-	fontSize: FontType
+	fontSize: FontInterface
 	defaultTheme: "light" | "dark" | "system"
 	css?: CustomCSS
-	__dark: InternalStyles
-	__light: InternalStyles
+	disableComponents?: boolean
 } & Dict<unknown>
-
-export type InternalStyles = { css: Dict<string>; classes: NestedDict<string>[] }
