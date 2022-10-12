@@ -1,13 +1,7 @@
 /* Non overridable classes */
 .badge {
-    display: inline-block;
-    font-weight: bold;
-    text-transform: uppercase;
-}
+    @apply inline-block font-semibold uppercase rounded-default seabed-content;
 
-/* Overridable classes */
-.badge{
-    border-radius: var(--radius-default, 2px);
     padding: 0.375rem 0.75rem;
 
     background-color: rgb(var(--badge-bg));

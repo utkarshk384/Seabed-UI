@@ -2,7 +2,7 @@
 	<h2 class="text-title-lg text-left">Table</h2>
 
     <table class="table table-dense">
-		<tr class="seabed-content text-custom">
+		<tr>
 			<th>Name</th>
 			<th>Title</th>
 			<th>Email</th>

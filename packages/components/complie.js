@@ -110,6 +110,7 @@ cssFiles.forEach((currFilePath) => {
 	path = path.replace(`/${fileName}.css`, "")
 
 	const code = fs.readFileSync(currFilePath, "utf-8")
+	console.log(`${fileName}`)
 	const css = ParseCSS({ code })
 	fs.appendFileSync("./src/build.css", code)
 

@@ -1,0 +1,57 @@
+.radio {
+    @apply overflow-hidden appearance-none relative cursor-pointer;
+    width: var(--width);
+    height: var(--height);
+
+    border-radius: 50%;
+    outline: 2px solid rgb(var(--bg));
+    outline-offset: 2px;
+    
+    --width: ;
+    --height: ;
+    --text: var(--primary-foreground);
+    --bg: var(--primary-background);
+
+    transition: background-color 250ms ease-in-out, outline-offset 150ms ease-in;
+}
+
+.radio:hover {
+    background-color: rgb(var(--bg) / 0.5);
+}
+
+.radio:not(.radio:checked):hover{
+    outline-offset: 0px;
+}
+
+.radio:checked {
+    background-color: rgb(var(--bg));
+}
+
+.radio:disabled {
+    @apply outline-neutral-400;
+}
+
+.radio:disabled:checked {
+    @apply bg-neutral-400;
+}
+
+.radio-disabled {
+    --bg: 163 163 163;
+}
+
+/* Sizes */
+.radio-sm {
+    --width: 0.875rem;
+    --height: 0.875rem;
+}
+
+.radio-md {
+    --width: 1rem;
+    --height: 1rem;
+}
+
+.radio-lg {
+    --width: 1.125rem;
+    --height: 1.125rem;
+}
+

@@ -1,0 +1,71 @@
+.checkbox {
+    @apply rounded-default appearance-none overflow-hidden relative cursor-pointer;
+    width: var(--width);
+    height: var(--height);
+    border: 1px solid rgb(var(--border));
+    
+    --width: 1.125rem;
+    --height: 1.125rem;
+    --border: var(--primary-foreground);
+    --text: var(--primary-foreground);
+    --bg: var(--primary-background);
+    --tick: white;
+
+    transition: background-color 250ms ease-in-out;
+}
+
+.checkbox:hover {
+    background-color: rgb(var(--bg) / 0.5);
+}
+
+/* Sizes */
+.checkbox-sm {
+    --width: 1rem;
+    --height: 1rem;
+}
+
+.checkbox-md {
+    --width: 1.125rem;
+    --height: 1.125rem;
+}
+
+.checkbox-lg {
+    --width: 1.25rem;
+    --height: 1.25rem;
+}
+
+.checkbox-disabled {
+    --bg: 163 163 163;
+    --border: 163 163 163;
+}
+
+.checkbox:disabled {
+    @apply border-neutral-400;
+}
+
+/* TODO: Add indeterminate icon */
+.checkbox:indeterminate {
+    background-image: linear-gradient(90deg, transparent 80%, rgb(var(--bg)) 80%),
+                      linear-gradient(-90deg, transparent 80%, rgb(var(--bg)) 80%),
+                      linear-gradient(0deg, rgb(var(--bg)) 43%, rgb(var(--tick)) 43%, rgb(var(--tick)) 57%, rgb(var(--bg)) 57%);
+    background-repeat: no-repeat;
+}
+
+.checkbox:disabled:checked {
+    @apply bg-neutral-400;
+}
+
+.checkbox:checked{ 
+    background-color: rgb(var(--bg));
+
+    &::before {
+        font-family: "Seabed-Icons";
+        content: "\d0002";
+        color: var(--tick);
+        font-size: 1.25rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

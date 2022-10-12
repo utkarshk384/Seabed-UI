@@ -25,6 +25,7 @@ export type BindingsInterface = Dict<string> & {
 	h5: FontSizesType
 	h6: FontSizesType
 	content: FontSizesType
+	small: FontSizesType
 }
 
 export type SizeInterface = Dict<string> & {

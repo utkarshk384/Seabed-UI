@@ -1,6 +1,6 @@
 .table {
   /* Properties that can be overridden by tailwind classes */
-  @apply m-0 border-collapse inline-block;
+  @apply m-0 border-collapse inline-block seabed-content;
 
   --tw-text-opacity: 1;
   --tw-bg-opacity: 1;
@@ -12,12 +12,7 @@
   margin-top: 5px;
 
   /* Properties that can't be overridden by tailwind classes */
-
-
-
-  th {
-    font-weight: bold;
-  }
+  
 }
 
 .table th, .table td{

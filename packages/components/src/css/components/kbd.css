@@ -6,6 +6,8 @@
     will-change: filter;
     transition: filter 0.2s ease-in;
     user-select: none;
+
+    width: fit-content;
 }
 
 .kbd-disabled {

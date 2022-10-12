@@ -1,47 +1,47 @@
 .seabed-content {
   
-  &:where(h1) {
-    font-size: clamp(calc(var(--text-6xl) - 0.5rem), var(--text-6xl), var(--text-6xl));
+  & :where(h1) {
+    font-size: clamp(calc(var(--h1) - 0.5rem), var(--h1), var(--h1));
   }
 
-  &:where(h2) {
-    font-size: clamp(calc(var(--text-5xl) - 0.5rem), var(--text-5xl), var(--text-5xl));
+  & :where(h2) {
+    font-size: clamp(calc(var(--h2) - 0.5rem), var(--h2), var(--h2));
   }
 
-  &:where(h3) {
-    font-size: clamp(calc(var(--text-4xl) - 0.5rem), var(--text-4xl), var(--text-4xl));
+  & :where(h3) {
+    font-size: clamp(calc(var(--h3) - 0.5rem), var(--h3), var(--h3));
   }
 
-  &:where(h4) {
-    font-size: clamp(calc(var(--text-3xl) - 0.5rem), var(--text-3xl), var(--text-3xl));
+  & :where(h4) {
+    font-size: clamp(calc(var(--h4) - 0.5rem), var(--h4), var(--h4));
   }
 
-  &:where(h5) {
-    font-size: clamp(calc(var(--text-2xl) - 0.5rem), var(--text-2xl), var(--text-2xl));
+  & :where(h5) {
+    font-size: clamp(calc(var(--h5) - 0.5rem), var(--h5), var(--h5));
   }
 
-  &:where(h6) {
-    font-size: clamp(calc(var(--text-xl) - 0.5rem), var(--text-xl), var(--text-xl));
+  & :where(h6) {
+    font-size: clamp(calc(var(--h6) - 0.5rem), var(--h6), var(--h6));
   }
 
-  &:where(p, li, pre, th, td, em, strong, b, i, a) {
-    font-size: clamp(calc(var(--text-md) - 0.5rem), var(--text-md), var(--text-md));
+  & :where(p, li, pre, th, td, em, strong, span, b, i, a) {
+    font-size: clamp(calc(var(--content) - 0.5rem), var(--content), var(--content));
   }
 
-  &:where(small) {
-    font-size: clamp(calc(var(--text-sm) - 0.5rem), var(--text-sm), var(--text-sm));
+  & :where(small) {
+    font-size: clamp(calc(var(--small) - 0.5rem), var(--small), var(--small));
   }
 
-  &:where(th, strong, b, h1, h2, h3, h4, h5, h6) {
+  & :where(th, strong, b, h1, h2, h3, h4, h5, h6) {
     font-weight: bold;
   }
 
-  &:where(em, i) {
+  & :where(em, i) {
     font-style: italic;
   }
 
 }
 
 .seabed-spacing  {
-
+  
 }

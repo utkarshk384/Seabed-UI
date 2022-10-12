@@ -1,0 +1,1 @@
+<input type="checkbox" name="checkbox" class="checkbox checkbox-sm">

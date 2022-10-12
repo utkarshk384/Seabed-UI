@@ -1,0 +1,79 @@
+.progress {
+    --progress: 0;
+    @apply bg-gray-200 rounded-default relative seabed-content;
+    width: 10rem;
+    height: var(--height, 1rem);
+}
+
+.progress-text {
+    @apply absolute;
+    top: -1.25rem;
+    right: 0.5rem;
+}
+
+.progress::before{
+    content: "";
+    @apply rounded-default block;
+    
+    width: calc(var(--progress) * 1%);
+    height: 100%;
+    background-color: rgb(var(--bg, var(--success-background)));
+}
+
+.progress-primary {
+    --bg: var(--primary-background);
+}
+
+.progress-secondary {
+    --bg: var(--secondary-background);
+}
+
+.progress-accent {
+    --bg: var(--accent-background);
+}
+
+.progress-success {
+    --bg: var(--success-background);
+}
+
+.progress-error {
+    --bg: var(--error-background);
+}
+
+.progress-info {
+    --bg: var(--info-background);
+}
+
+.progress-warn {
+    --bg: var(--warn-background);
+}
+
+.progress-thin {
+    --height: 0.75rem;
+}
+
+.progress-sm {
+    --height: 1rem;
+}
+
+.progress-md {
+    --height: 1.125rem;
+}
+
+.progress-lg {
+    --height: 1.5rem;
+}
+
+.circle-progress {
+    @apply w-36 h-36 relative rounded-full seabed-content border-zinc-200 grid place-items-center;
+    border-width: 20px;
+    border-style: solid;
+}
+
+.circle-progress::before{
+    content: "";
+    @apply rounded-full block;
+    background: radial-gradient(farthest-side,currentColor 98%,#0000) top/1.2rem 1.2rem no-repeat,conic-gradient(currentColor calc(50 * 1%),#0000 0);
+    width: 100%;
+    height: 100%;
+}

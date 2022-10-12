@@ -76,8 +76,6 @@ const Main: PluginCreator = (tw) => {
 		".seabed-content": makeCSSVariables(bindings),
 	})
 
-	console.log(makeCSSVariables(bindings))
-
 	tw.addBase({ ":root": CSSProperties })
 
 	/* Custom States for Button, Link etc... */

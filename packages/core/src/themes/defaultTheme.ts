@@ -41,6 +41,7 @@ export const defaultFont: FontInterface = {
 		h5: "2xl",
 		h6: "xl",
 		content: "md",
+		small: "xs",
 	},
 }
 

@@ -1,25 +1,61 @@
-/* stylelint-disable function-whitespace-after */
-
-@each $color in primary, secondary, accent, success, info, warn, error, disabled {
-  .color-$(color) {
-    --tw-bg-opacity: 1;
-    --tw-text-opacity: 1;
-
-    color: hsla(var(--$(color)-foreground), var(--tw-text-opacity));
-    background-color: hsla(var(--$(color)-background), var(--tw-bg-opacity));
-  }
+.success {
+  --bg: var(--success-background);
+  --text: var(--success-foreground);
+  --border: var(--success-background);
+  --focus: var(--success-focus);
+  --pressed: var(--success-pressed);
 }
 
-@each $color in primary, secondary, accent, success, info, warn, error {
-  .focus-$(color):focus-visible {
-    --tw-outline-opacity: 1;
+.warn {
+  --bg: var(--warn-background);
+  --text: var(--warn-foreground);
+  --border: var(--warn-background);
+  --focus: var(--warn-focus);
+  --pressed: var(--warn-pressed);
+}
 
-    outline-color: hsla(var(--$(color)-focus), var(--tw-outline-opacity));
-  }
+.error {
+  --bg: var(--error-background);
+  --text: var(--error-foreground);
+  --border: var(--error-background);
+  --focus: var(--error-focus);
+  --pressed: var(--error-pressed);
+}
 
-  .pressed-$(color):focus-within {
-    --tw-bg-opacity: 1;
+.info {
+  --bg: var(--info-background);
+  --text: var(--info-foreground);
+  --border: var(--info-background);
+  --focus: var(--info-focus);
+  --pressed: var(--info-pressed);
+}
 
-    background-color: hsla(var(--$(color)-pressed), var(--tw-bg-opacity));
-  }
+.primary {
+  --bg: var(--primary-background);
+  --text: var(--primary-foreground);
+  --border: var(--primary-background);
+  --focus: var(--primary-focus);
+  --pressed: var(--primary-pressed);
+}
+
+.secondary {
+  --bg: var(--secondary-background);
+  --text: var(--secondary-foreground);
+  --border: var(--secondary-background);
+  --focus: var(--secondary-focus);
+  --pressed: var(--secondary-pressed);
+}
+
+.accent {
+  --bg: var(--accent-background);
+  --text: var(--accent-foreground);
+  --border: var(--accent-background);
+  --focus: var(--accent-focus);
+  --pressed: var(--accent-pressed);
+}
+
+.disabled {
+  --bg: var(--disabled-background);
+  --border: var(--disabled-background);
+  --text: var(--disabled-foreground);
 }

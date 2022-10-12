@@ -24,7 +24,16 @@
 
 	/* Sidebar Items */
 	const sideBarItems:SidebarListType = {
-		"Data Display": ["Table", "Badge", "Keyboard", "Toast"],
+		"Data Display": [
+			"Table", 
+			"Badge", 
+			"Keyboard", 
+			"Alert", 
+			"Progress", 
+			"Button", 
+			"Checkbox",
+			"Radio"
+		],
 		Layout: [],
 		Typography: [],
 	}

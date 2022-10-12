@@ -1,0 +1,127 @@
+.btn {
+    @apply seabed-content rounded-default px-5 py-3;
+    background: rgb(var(--bg));
+    color: rgb(var(--text));
+
+    width: fit-content;
+    transition: background var(--duration) ease-in-out, color var(--duration) ease-out;
+
+    --duration: 0.2s;
+    --border-width: 1px;
+    --hover-opacity: 0.5;
+    --active-opacity: 0.5;
+}
+
+/* Variants */
+.btn-solid {
+    background: rgb(var(--bg));
+    color: rgb(var(--text));
+
+    &:hover {
+        background: rgb(var(--focus));
+    }
+
+    &:active {
+        background: rgb(var(--pressed));
+    }
+
+    &:disabled{
+        @apply cursor-not-allowed;
+        background: rgb(var(--disabled-background));
+        color: rgb(var(--disabled-foreground));
+    }
+}
+
+.btn-ghost {
+    color: rgb(var(--text));
+    background: transparent;
+    &:hover {
+        background: rgb(var(--focus) / var(--hover-opacity));
+    }
+
+    &:active {
+        background: rgb(var(--pressed) / var(--active-opacity));
+    }
+
+    &:disabled{
+        @apply cursor-not-allowed;
+        background: transparent;
+        color: rgb(var(--disabled-foreground));
+    }
+}
+
+
+
+.btn-link {
+    color: rgb(var(--text));
+    background: transparent;
+
+    &:hover {
+        text-decoration: underline;
+        color: rgb(var(--focus));
+    }
+
+    &:active {
+        text-decoration: underline;
+        color: rgb(var(--pressed));
+    }
+
+    &:disabled{ 
+        @apply cursor-not-allowed underline;
+        color : rgb(var(--disabled-foreground));
+    }
+}
+
+.btn-outline {
+    color: rgb(var(--text));
+    border: var(--border-width) solid rgb(var(--text));
+    background: transparent;
+
+    &:hover {
+        background: rgb(var(--focus) / var(--hover-opacity));
+    }
+    
+    &:active {
+        background: rgb(var(--pressed) / var(--active-opacity));
+    }
+
+    &:disabled {
+        @apply cursor-not-allowed;
+        background: transparent;
+        color: rgb(var(--disabled-foreground));
+    }
+}
+
+/* Size */
+.btn-sm {
+    @apply px-4 py-3;
+
+    &.btn-wide {
+        @apply px-6 py-3;
+    }
+}
+
+.btn-md {
+    @apply px-5 py-3;
+
+    &.btn-wide {
+        @apply px-7 py-3;
+    }
+}
+
+.btn-lg {
+    @apply px-8 py-3;
+
+    &.btn-wide {
+        @apply px-10 py-3;
+    }
+}
+
+.btn-xl {
+    @apply px-10 py-5;
+
+    &.btn-wide {
+        @apply px-12 py-5;
+    }
+}
+

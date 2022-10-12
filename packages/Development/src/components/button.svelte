@@ -1,0 +1,1 @@
+<button class="btn warn btn-outline btn-md btn-wide">Button</button>
